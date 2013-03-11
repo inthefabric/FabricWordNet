@@ -8,8 +8,8 @@
     <ProjectGuid>{F4C6C48C-90EF-445D-B8F8-AD9B6767D9A8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LAIR.ResourceAPIs.WordNet</RootNamespace>
-    <AssemblyName>LAIR.ResourceAPIs.WordNet</AssemblyName>
+    <RootNamespace>Fabric.Apps.WordNet</RootNamespace>
+    <AssemblyName>WordNet</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -49,7 +49,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\..\Libraries\LAIR.ResourceAPIs.WordNet.XML</DocumentationFile>
+    <DocumentationFile>..\..\..\..\Libraries\WordNet.xml</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
@@ -57,14 +57,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="LAIR.Collections">
       <HintPath>..\..\Packages\LAIR\LAIR.Collections.dll</HintPath>
     </Reference>

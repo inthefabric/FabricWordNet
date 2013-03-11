@@ -15,7 +15,7 @@ using System.Linq;
 using System.Text;
 using LAIR.Collections.Generic;
 
-namespace Fabric.Apps.FabricWordNet
+namespace Fabric.Apps.WordNet
 {
     /// <summary>
     /// Provides WordNet-based semantic similarity measures

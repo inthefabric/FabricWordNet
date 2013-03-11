@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using LAIR.Collections.Generic;
-using System.Collections.Generic;
 
-namespace Fabric.Apps.FabricWordNet {
+namespace Fabric.Apps.WordNet {
 
 	/*================================================================================================*/
 	public class MainClass {
@@ -14,7 +14,7 @@ namespace Fabric.Apps.FabricWordNet {
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
-		public static void Main(string[] args) {
+		public static void Main(string[] pArgs) {
 			var m = new MainClass();
 			m.BuildEngine();
 		}

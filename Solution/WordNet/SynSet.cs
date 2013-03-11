@@ -19,7 +19,7 @@ using System.Collections.ObjectModel;
 using LAIR.Collections.Generic;
 using LAIR.Extensions;
 
-namespace Fabric.Apps.FabricWordNet
+namespace Fabric.Apps.WordNet
 {
     /// <summary>
     /// Represents a WordNet synset

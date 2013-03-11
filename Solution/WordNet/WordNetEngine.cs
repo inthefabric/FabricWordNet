@@ -19,7 +19,7 @@ using LAIR.Extensions;
 using LAIR.Collections.Generic;
 using LAIR.IO;
 
-namespace Fabric.Apps.FabricWordNet
+namespace Fabric.Apps.WordNet
 {
     /// <summary>
     /// Provides access to the WordNet resource via two alternative methods, in-memory and disk-based. The latter is blazingly
