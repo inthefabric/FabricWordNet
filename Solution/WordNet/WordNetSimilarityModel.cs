@@ -1,4 +1,15 @@
-﻿using System;
+﻿// This code was written by Matthew Garber:
+// https://ptl.sys.virginia.edu/ptl/members/matthew-gerber
+//
+// Original source found here:
+// https://ptl.sys.virginia.edu/ptl/members/matthew-gerber/software#wordnet
+//
+// Minor modifications may have been made to this code.
+//
+// The WordNet 3.1 database (by Princeton University) is available here:
+// http://wordnet.princeton.edu/wordnet/download/current-version/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

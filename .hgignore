@@ -1,0 +1,6 @@
+syntax: glob
+Solution/_ReSharper.FabricWordNet/*
+*.suo
+*.DotSettings
+*/obj/*
+*/bin/*
