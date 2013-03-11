@@ -5,25 +5,31 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordNet", "WordNet\WordNet.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabric", "Fabric\Fabric.csproj", "{4E40FAB2-5A6F-4500-9C77-64349966A7D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{9495672B-A7D3-4DD3-89A0-E7D5E1E74AD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4E40FAB2-5A6F-4500-9C77-64349966A7D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E40FAB2-5A6F-4500-9C77-64349966A7D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E40FAB2-5A6F-4500-9C77-64349966A7D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E40FAB2-5A6F-4500-9C77-64349966A7D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F4C6C48C-90EF-445D-B8F8-AD9B6767D9A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F4C6C48C-90EF-445D-B8F8-AD9B6767D9A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4C6C48C-90EF-445D-B8F8-AD9B6767D9A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4C6C48C-90EF-445D-B8F8-AD9B6767D9A8}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Fabric\Fabric.csproj
+		{4E40FAB2-5A6F-4500-9C77-64349966A7D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E40FAB2-5A6F-4500-9C77-64349966A7D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E40FAB2-5A6F-4500-9C77-64349966A7D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E40FAB2-5A6F-4500-9C77-64349966A7D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9495672B-A7D3-4DD3-89A0-E7D5E1E74AD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9495672B-A7D3-4DD3-89A0-E7D5E1E74AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9495672B-A7D3-4DD3-89A0-E7D5E1E74AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9495672B-A7D3-4DD3-89A0-E7D5E1E74AD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Fabric\Fabric.csproj
 	EndGlobalSection
 EndGlobal

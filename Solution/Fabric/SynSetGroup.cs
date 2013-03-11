@@ -1,114 +1,131 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
+using Fabric.Apps.WordNet.Data.Domain;
 using LAIR.Collections.Generic;
+using NHibernate;
 
 namespace Fabric.Apps.WordNet {
 
 	/*================================================================================================*/
 	public class SynSetGroup {
-	
+
+		private static Dictionary<string, Synset> SynsetCache;
+		private static Dictionary<string, Word> WordCache;
+
 		private readonly string vRootWord;
 		private readonly Set<SynSet> vGroup;
-		private readonly List<SynSet> vList;
 		
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
-		public SynSetGroup( string pRootWord, Set<SynSet> pGroup) {
+		public SynSetGroup(string pRootWord, Set<SynSet> pGroup) {
 			vRootWord = pRootWord;
 			vGroup = pGroup;
-			vList = vGroup.ToList();
-		}
-		
-		/*--------------------------------------------------------------------------------------------*/
-		public List<SynSet> GetList() {
-			return vList;
+
+			if ( SynsetCache == null ) {
+				SynsetCache = new Dictionary<string, Synset>();
+				WordCache = new Dictionary<string, Word>();
+			}
 		}
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
-		public void OutputAll() {
-			for ( int i = 0 ; i < vList.Count ; ++i ) {
-				OutputAt(i);
+		public void InsertSynSetsAndWords(ISession pSess) {
+			foreach ( SynSet ss in vGroup ) {
+				InsertSynSet(pSess, ss);
 			}
 		}
-		
+
 		/*--------------------------------------------------------------------------------------------*/
-		public void OutputAt(int pIndex) {
-			SynSet ss = vList[pIndex];
-
-			Console.WriteLine("-------------------------------------------");
-			Console.WriteLine();
-			Console.WriteLine("SynSet: "+ss.ID);
-			Console.WriteLine("POS:    "+ss.POS);
-			Console.Write("Words:  ");
-
-			foreach ( string word in ss.Words ) {
-				if ( word == vRootWord ) {
-					Console.Write("["+word+"], ");
-					continue;
-				}
-
-				Console.Write(word+", ");
-			}
-
-			Console.WriteLine();
-			Console.WriteLine("Gloss:  "+ss.Gloss);
-			Console.WriteLine();
-			
-			OutputLexical(ss.GetLexicallyRelatedWords());
-
-			Console.WriteLine("Semantic Relations:");
-			Console.WriteLine();
-
-			foreach ( WordNetEngine.SynSetRelation rel in ss.SemanticRelations ) {
-				OutputSemantic(ss, rel);
-			}
-			
-			Console.WriteLine();
-		}
-		
-		/*--------------------------------------------------------------------------------------------*/
-		private void OutputLexical(
-					Dictionary<WordNetEngine.SynSetRelation, Dictionary<string, Set<string>>> pDict) {
-			if ( pDict.Keys.Count == 0 ) {
+		private void InsertSynSet(ISession pSess, SynSet pSynSet) {
+			if ( SynsetCache.ContainsKey(pSynSet.ID) ) {
 				return;
 			}
 
-			Console.WriteLine("Lexical Relations:");
-			Console.WriteLine();
+			var dbSyn = new Synset();
+			dbSyn.SsId = pSynSet.ID;
+			dbSyn.PartOfSpeechId = (byte)pSynSet.POS;
+			dbSyn.Gloss = pSynSet.Gloss;
+			pSess.Save(dbSyn);
+			SynsetCache.Add(pSynSet.ID, dbSyn);
 
-			foreach ( WordNetEngine.SynSetRelation key in pDict.Keys ) {
-				var setDict = pDict[key];
+			foreach ( string word in pSynSet.Words ) {
+				if ( WordCache.ContainsKey(pSynSet.ID+"|"+word) ) {
+					continue;
+				}
+
+				var dbWord = new Word();
+				dbWord.Name = word;
+				dbWord.SynSet = dbSyn;
+				pSess.Save(dbWord);
+				WordCache.Add(pSynSet.ID+"|"+word, dbWord);
+			}
+		}
+
+		
+
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		/*--------------------------------------------------------------------------------------------*/
+		public static int GetCachedSynsetCount() {
+			return SynsetCache.Keys.Count;
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		public static bool InsertLexicalsAndSemantics(ISession pSess, WordNetEngine pEngine,
+																			int pStart, int pCount) {
+			int i = 0;
+
+			foreach ( string ssId in SynsetCache.Keys ) {
+				if ( i++ < pStart ) {
+					continue;
+				}
+
+				if ( i >= pStart+pCount ) {
+					break;
+				}
+
+				InsertLexAndSemForSynSet(pSess, ssId, pEngine.GetSynSet(ssId));
+			}
+
+			return (i < SynsetCache.Keys.Count);
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		private static void InsertLexAndSemForSynSet(ISession pSess, string pSynSetId, SynSet pSynSet) {
+			Synset dbSynSet = SynsetCache[pSynSetId];
+
+			Dictionary<WordNetEngine.SynSetRelation, Dictionary<string, Set<string>>> lexMap = 
+				pSynSet.GetLexicallyRelatedWords();
+
+			foreach ( WordNetEngine.SynSetRelation rel in lexMap.Keys ) {
+				var setDict = lexMap[rel];
 				
 				foreach ( string setDictKey in setDict.Keys ) {
 					var strSet = setDict[setDictKey];
 					
 					foreach ( string s in strSet ) {
-						Console.Write(" - "+key+" > ");
-						Console.Write(setDictKey == vRootWord ? "["+setDictKey+"]" : setDictKey);
-						Console.Write(setDictKey == s ? "" : " > "+s);
-						Console.WriteLine();
+						var dbLex = new Lexical();
+						dbLex.SynSet = dbSynSet;
+						dbLex.RelationId = (byte)rel;
+						dbLex.Word = setDictKey;
+						dbLex.RelatedWord = (setDictKey == s ? null : s);
+						pSess.Save(dbLex);
 					}
 				}
 			}
 
-			Console.WriteLine();
-		}
+			foreach ( WordNetEngine.SynSetRelation rel in pSynSet.SemanticRelations ) {
+				Set<SynSet> relSet = pSynSet.GetRelatedSynSets(rel, false);
 
-		/*--------------------------------------------------------------------------------------------*/
-		private void OutputSemantic(SynSet pSynSet, WordNetEngine.SynSetRelation pRel) {
-			Set<SynSet> relSet = pSynSet.GetRelatedSynSets(pRel, false);
-			Console.WriteLine(" - "+pRel);
-			Console.WriteLine();
-
-			foreach ( SynSet rs in relSet ) {
-				Console.WriteLine("   - "+String.Join(", ", rs.Words));
+				foreach ( SynSet rs in relSet ) {
+					var dbSem = new Semantic();
+					dbSem.SynSet = dbSynSet;
+					dbSem.RelationId = (byte)rel;
+					//if ( !SynsetCache.ContainsKey(rs.ID) ) { continue; } //TEST
+					dbSem.TargetSynSet = SynsetCache[rs.ID];
+					pSess.Save(dbSem);
+				}
 			}
-
-			Console.WriteLine();
 		}
 		
 	}
