@@ -13,7 +13,18 @@ namespace Fabric.Apps.WordNet {
 		public static List<WordNetEngine.SynSetRelation> Relations =
 			Enum.GetValues(typeof(WordNetEngine.SynSetRelation))
 				.Cast<WordNetEngine.SynSetRelation>().ToList();
-		
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		/*--------------------------------------------------------------------------------------------*/
+		public static void PrintAll(ISession pSess) {
+			Console.WriteLine();
+			PrintLexicalCountsByRel(pSess);
+			Console.WriteLine();
+			PrintSemanticCountsByRel(pSess);
+			Console.WriteLine();
+		}
+
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
@@ -27,8 +38,10 @@ namespace Fabric.Apps.WordNet {
 				.OrderBy(Projections.Count<Lexical>(x => x.RelationId)).Desc
 				.List<object[]>();
 
+			Console.WriteLine("Lexical Stats:");
+
 			foreach ( object[] vals in lexCounts ) {
-				Console.WriteLine("Lexical "+Relations[int.Parse(vals[0]+"")]+": "+vals[1]);
+				Console.WriteLine(" - "+Relations[int.Parse(vals[0]+"")]+": "+vals[1]);
 			}
 		}
 
@@ -43,12 +56,14 @@ namespace Fabric.Apps.WordNet {
 				.OrderBy(Projections.Count<Semantic>(x => x.RelationId)).Desc
 				.List<object[]>();
 
+			Console.WriteLine("Semantic Stats:");
+
 			foreach ( object[] vals in semCounts ) {
-				Console.WriteLine("Semantic "+Relations[int.Parse(vals[0]+"")]+": "+vals[1]);
+				Console.WriteLine(" - "+Relations[int.Parse(vals[0]+"")]+": "+vals[1]);
 			}
 		}
 
-		/*--------------------------------------------------------------------------------------------*/
+		/*--------------------------------------------------------------------------------------------* /
 		public static void PrintHypernymMismatches(ISession pSess) {
 			IList<Semantic> hyperList = pSess.QueryOver<Semantic>()
 				.Where(x => x.RelationId == (byte)WordNetEngine.SynSetRelation.Hypernym)
@@ -102,7 +117,7 @@ namespace Fabric.Apps.WordNet {
 				string words = ss.WordList.Aggregate("", (x,w) => x+(w.Name+", "));
 				Console.WriteLine("Synset "+id+" = "+words);
 			}
-		}
+		}*/
 
 	}
 	
