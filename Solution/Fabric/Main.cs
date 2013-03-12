@@ -17,11 +17,13 @@ namespace Fabric.Apps.WordNet {
 		public static void Main(string[] pArgs) {
 			DbBuilder.InitOnce();
 
-			Console.WriteLine("Building WordNet engine...");
-			string root = Directory.GetCurrentDirectory();
-			Engine = new WordNetEngine(root+"/../../../../Data/WordNetDb-3.1", true);
-			Console.WriteLine("WordNet engine complete.");
-			Console.WriteLine("");
+			using ( ISession sess = new SessionProvider().OpenSession() ) {
+				Console.WriteLine();
+				Stats.PrintLexicalCountsByRel(sess);
+				Console.WriteLine();
+				Stats.PrintSemanticCountsByRel(sess);
+				Console.WriteLine();
+			}
 
 			//BuildBaseDb();
 		}
@@ -30,6 +32,12 @@ namespace Fabric.Apps.WordNet {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public static void BuildBaseDb() {
+			Console.WriteLine("Building WordNet engine...");
+			string root = Directory.GetCurrentDirectory();
+			Engine = new WordNetEngine(root+"/../../../../Data/WordNetDb-3.1", true);
+			Console.WriteLine("WordNet engine complete.");
+			Console.WriteLine("");
+
 			DbBuilder.EraseAndRebuildDatabase();
 			var sessProv = new SessionProvider();
 
