@@ -4,3 +4,4 @@ Solution/_ReSharper.FabricWordNet/*
 *.DotSettings
 */obj/*
 */bin/*
+*.DotSettings.user

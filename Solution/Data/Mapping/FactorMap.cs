@@ -30,6 +30,11 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 			Map(x => x.IdentorTypeId).Nullable();
 			Map(x => x.IdentorValue).Nullable();
 			Map(x => x.ActualIdentorId).Nullable();
+			
+			Map(x => x.DirectorTypeId).Nullable();
+			Map(x => x.PrimaryDirectorActionId).Nullable();
+			Map(x => x.RelatedDirectorActionId).Nullable();
+			Map(x => x.ActualDirectorId).Nullable();
 		}
 
 	}

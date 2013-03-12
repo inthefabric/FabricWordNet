@@ -80,7 +80,7 @@ namespace Fabric.Apps.WordNet {
 					continue;
 				}
 
-				if ( i >= pStart+pCount ) {
+				if ( i > pStart+pCount ) {
 					break;
 				}
 

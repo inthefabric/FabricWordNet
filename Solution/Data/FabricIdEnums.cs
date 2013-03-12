@@ -49,4 +49,34 @@
 		Key
 	}
 
+	/*================================================================================================*/
+	public enum DirectorActionId {
+		Read = 1,
+		Listen,
+		View,
+		Consume,
+		Perform,
+		Produce,
+		Destroy,
+		Modify,
+		Obtain,
+		Locate,
+		Travel,
+		Become,
+		Explain,
+		Give,
+		Learn,
+		Start,
+		Stop
+	}
+
+	/*================================================================================================*/
+	public enum DirectorTypeId {
+		Hyperlink = 1,
+		DefinedPath,
+		SuggestPath,
+		AvoidPath,
+		Causality
+	}
+
 }

@@ -16,6 +16,7 @@ namespace Fabric.Apps.WordNet {
 		/*--------------------------------------------------------------------------------------------*/
 		public static void Main(string[] pArgs) {
 			DbBuilder.InitOnce();
+			//BuildBaseDb();
 
 			using ( ISession sess = new SessionProvider().OpenSession() ) {
 				Console.WriteLine();
@@ -23,9 +24,9 @@ namespace Fabric.Apps.WordNet {
 				Console.WriteLine();
 				Stats.PrintSemanticCountsByRel(sess);
 				Console.WriteLine();
+				Stats.PrintHypernymMismatches(sess);
+				Console.WriteLine();
 			}
-
-			//BuildBaseDb();
 		}
 
 

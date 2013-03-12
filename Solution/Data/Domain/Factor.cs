@@ -21,6 +21,11 @@
 		public virtual string IdentorValue { get; set; }
 		public virtual long ActualIdentorId { get; set; }
 
+		public virtual byte DirectorTypeId { get; set; }
+		public virtual byte PrimaryDirectorActionId { get; set; }
+		public virtual byte RelatedDirectorActionId { get; set; }
+		public virtual long ActualDirectorId { get; set; }
+
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
