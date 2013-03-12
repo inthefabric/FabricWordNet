@@ -42,8 +42,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Build.cs" />
+    <Compile Include="BuildWordNet.cs" />
+    <Compile Include="BuildArtifacts.cs" />
     <Compile Include="Stats.cs" />
+    <Compile Include="Structures\TreeNode.cs" />
+    <Compile Include="Structures\HypernymTree.cs" />
     <Compile Include="SynSetGroup.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

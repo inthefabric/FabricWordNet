@@ -14,6 +14,10 @@ namespace Fabric.Apps.WordNet {
 			Enum.GetValues(typeof(WordNetEngine.SynSetRelation))
 				.Cast<WordNetEngine.SynSetRelation>().ToList();
 
+		public static List<WordNetEngine.POS> PartsOfSpeech =
+			Enum.GetValues(typeof(WordNetEngine.POS))
+				.Cast<WordNetEngine.POS>().ToList();
+
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/

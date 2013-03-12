@@ -28,7 +28,7 @@ namespace Fabric.Apps.WordNet.Data {
 
 			string root = Directory.GetCurrentDirectory();
 			string path = Path.GetFullPath(root+"/../../../../Data/"+DbFile);
-			Console.WriteLine("Conn: "+"Data Source="+path+";Version=3");
+			Console.WriteLine("Database File: "+path);
 
 			IPersistenceConfigurer conn = SQLiteConfiguration
 				.Standard

@@ -14,6 +14,24 @@ namespace Fabric.Apps.WordNet {
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
+		public static void SetDbStateBeforeBatchInsert(ISession pSess) {
+			pSess.CreateSQLQuery("VACUUM").UniqueResult();
+			pSess.CreateSQLQuery("PRAGMA synchronous = OFF").UniqueResult();
+			pSess.CreateSQLQuery("PRAGMA journal_mode = WAL").UniqueResult();
+			//pSess.CreateSQLQuery("PRAGMA journal_mode = DELETE").UniqueResult();
+			pSess.CreateSQLQuery("PRAGMA cache_size = 10000").UniqueResult();
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		public static void SetDbStateAfterBatchInsert(ISession pSess) {
+			pSess.CreateSQLQuery("PRAGMA cache_size = 2000").UniqueResult();
+			pSess.CreateSQLQuery("PRAGMA journal_mode = DELETE").UniqueResult();
+			pSess.CreateSQLQuery("PRAGMA synchronous = NORMAL").UniqueResult();
+		}
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		/*--------------------------------------------------------------------------------------------*/
 		public static void BuildBaseDb(ISession pSess) {
 			Console.WriteLine("Building WordNet engine...");
 			string root = Directory.GetCurrentDirectory();
@@ -22,20 +40,14 @@ namespace Fabric.Apps.WordNet {
 			Console.WriteLine("");
 
 			DbBuilder.EraseAndRebuildDatabase();
-
-			pSess.CreateSQLQuery("VACUUM").UniqueResult();
-			pSess.CreateSQLQuery("PRAGMA synchronous = OFF").UniqueResult();
-			pSess.CreateSQLQuery("PRAGMA journal_mode = WAL").UniqueResult();
-			pSess.CreateSQLQuery("PRAGMA cache_size = 60000").UniqueResult();
+			SetDbStateBeforeBatchInsert(pSess);
 
 			using ( ITransaction tx = pSess.BeginTransaction() ) {
 				BuildBaseDbInserts(pSess);
 				tx.Commit();
 			}
 
-			pSess.CreateSQLQuery("PRAGMA cache_size = 2000").UniqueResult();
-			pSess.CreateSQLQuery("PRAGMA journal_mode = DELETE").UniqueResult();
-			pSess.CreateSQLQuery("PRAGMA synchronous = NORMAL").UniqueResult();
+			SetDbStateAfterBatchInsert(pSess);
 		}
 
 		/*--------------------------------------------------------------------------------------------*/

@@ -5,3 +5,5 @@ Solution/_ReSharper.FabricWordNet/*
 */obj/*
 */bin/*
 *.DotSettings.user
+Data/SortedSynsets.txt
+Data/HypernymTree.txt
