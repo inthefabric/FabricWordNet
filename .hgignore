@@ -7,3 +7,4 @@ Solution/_ReSharper.FabricWordNet/*
 *.DotSettings.user
 Data/SortedSynsets.txt
 Data/HypernymTree.txt
+Data/FabWordNet_*.db

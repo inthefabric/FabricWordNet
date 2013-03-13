@@ -33,13 +33,13 @@ namespace Fabric.Apps.WordNet.Artifacts {
 			ResolveArtifactDuplicates(pSess);
 			Console.WriteLine("HypernymTree Artifacts: "+total);
 
-			using ( ITransaction tx = pSess.BeginTransaction() ) {
+			/*using ( ITransaction tx = pSess.BeginTransaction() ) {
 				foreach ( HypArt ha in vList ) {
 					pSess.Save(ha.Art);
 				}
 
 				tx.Commit();
-			}
+			}*/
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -56,8 +56,9 @@ namespace Fabric.Apps.WordNet.Artifacts {
 				string pos = Stats.PartsOfSpeech[ss.PartOfSpeechId]+"";
 
 				Artifact art = new Artifact();
-				art.Name = string.Join(", ", words);
-				art.Note = pos+": "+ss.Gloss;
+				art.Name = string.Join(", ", (words.Count > 5 ? words.GetRange(0,5) : words));
+				art.Name = TruncateString(art.Name, 128);
+				art.Note = TruncateString(pos+": "+ss.Gloss, 256);
 				art.Synset = ss;
 				art.Word = (words.Count == 1 ? ss.WordList[0] : null);
 				vList.Add(new HypArt { Art = art, Node = n, Word = art.Word });
@@ -76,8 +77,8 @@ namespace Fabric.Apps.WordNet.Artifacts {
 					vInsertMap.Add("w"+w.Id);
 
 					art = new Artifact();
-					art.Name = words[i];
-					art.Note = pos+": "+ss.Gloss;
+					art.Name = TruncateString(words[i], 128);
+					art.Note = TruncateString(pos+": "+ss.Gloss, 256);
 					art.Word = w;
 					vList.Add(new HypArt { Art = art, Node = n, Word = art.Word, IsWord = true });
 				}
@@ -120,10 +121,33 @@ namespace Fabric.Apps.WordNet.Artifacts {
 
 					foreach ( HypArt ha in haList ) {
 						ha.SetDisambLevel(level, vTree, pSess);
+						ha.Art.Disamb = TruncateString(ha.Art.Disamb, 128);
 					}
 				}
 
-				Console.WriteLine("Duplicate count at level "+(level-1)+": "+dupCount);
+
+				int nulls = 0;
+				int commas = 0;
+				int semis = 0;
+				int parens = 0;
+				int bracks = 0;
+				int depths = 0;
+				int ellips = 0;
+
+				foreach ( HypArt ha in vList ) {
+					string d = ha.Art.Disamb;
+					if ( d == null ) { ++nulls; continue; }
+					if ( d.IndexOf(',') != -1 ) { ++commas; }
+					if ( d.IndexOf(';') != -1 ) { ++semis; }
+					if ( d.IndexOf('(') != -1 ) { ++parens; }
+					if ( d.IndexOf('[') != -1 ) { ++bracks; }
+					if ( d.IndexOf('>') != -1 ) { ++depths; }
+					if ( d.IndexOf("...") != -1 ) { ++ellips; }
+				}
+
+				Console.WriteLine("Duplicate count at level "+level+": "+dupCount+", stats: "+
+					"n="+nulls+", c="+commas+", s="+semis+", p="+parens+
+					", b="+bracks+", d="+depths+", e="+ellips);
 
 				if ( dupCount == 0 ) {
 					break;
@@ -147,6 +171,19 @@ namespace Fabric.Apps.WordNet.Artifacts {
 		/*--------------------------------------------------------------------------------------------*/
 		private static string FixWordName(Word pWord) {
 			return pWord.Name.Replace('_', ' ');
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		private static string TruncateString(string pString, int pMaxLen) {
+			if ( pString == null ) {
+				return null;
+			}
+
+			if ( pString.Length <= pMaxLen ) {
+				return pString;
+			}
+
+			return pString.Substring(0, pMaxLen-3)+"...";
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -193,48 +230,58 @@ namespace Fabric.Apps.WordNet.Artifacts {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public void SetDisambLevel(int pLevel, HypernymTree pTree, ISession pSess) {
-			if ( pLevel <= 12 ) {
-				int lev = pLevel-1;
-				int depth = (lev/2)/3+1;
-				int width = (lev/2)%3+1;
-				int holos = (lev%2 == 1 ? width : 0);
+			switch ( pLevel ) {
+				case 1:
+				case 2:
+				case 3:
+					Art.Disamb = (IsWord ?
+						GetWordHyperDisamb(Node, Art.Name, pLevel, 1) :
+						GetSynsetHyperDisamb(Node, Art.Name, pLevel, 1));
+					break;
 
-				Art.Disamb = (IsWord ?
-					GetWordHyperDisamb(Node, Art.Name, width, depth) :
-					GetSynsetHyperDisamb(Node, Art.Name, width, depth));
+				case 4:
+				case 5:
+				case 6:
+					Art.Disamb = (IsWord ?
+						GetWordHyperDisamb(Node, Art.Name, (pLevel-3), 2) :
+						GetSynsetHyperDisamb(Node, Art.Name, (pLevel-3), 2));
+					break;
 
-				if ( Node.SynSet.Gloss.IndexOf('(', 0, 1) == 0 ) {
-					int endI = Node.SynSet.Gloss.IndexOf(')');
-					Art.Disamb += " "+Node.SynSet.Gloss.Substring(0, endI+1);
-				}
-
-				if ( holos > 0 ) {
-					string holo = GetHolonymDisamb(pSess, Node, Art.Name, pTree, holos);
+				case 7:
+				case 8:
+					Art.Disamb = (IsWord ?
+						GetWordHyperDisamb(Node, Art.Name, 2, (pLevel-6)) :
+						GetSynsetHyperDisamb(Node, Art.Name, 2, (pLevel-6)));
+					
+					string holo = GetHolonymDisamb(pSess, Node, Art.Name, pTree, 2);
 					
 					if ( holo.Length > 0 ) {
-						Art.Disamb += "; ["+holo+"]";
+						Art.Disamb += " ["+holo+"]";
 					}
-				}
-			}
+					break;
 
-			/*if ( pLevel == 12 ) {
-				Console.WriteLine(" - "+Art.Name+" // "+
-					(IsWord ? "w"+Word.Id : "s"+Node.SynSet.Id)+" // "+Art.Disamb);
-			}*/
-
-			switch ( pLevel ) {
-				case 13:
+				case 9:
 					Art.Disamb = HypernymArtifacts.GlossToDisamb(Node.SynSet.Gloss, true);
 					//Console.WriteLine("Disamb "+(IsWord ? "w"+Word.Id : "s"+Node.SynSet.Id)+": "+
 					//	Art.Name+" // "+Art.Disamb);
 					break;
 
-				case 14:
+				case 10:
 					Art.Disamb = HypernymArtifacts.GlossToDisamb(Node.SynSet.Gloss, false);
 					//Console.WriteLine("FullDisamb "+(IsWord ? "w"+Word.Id : "s"+Node.SynSet.Id)+": "+
 					//	Art.Name+" // "+Art.Disamb);
 					break;
 			}
+
+			if ( pLevel <= 6 && Node.SynSet.Gloss.IndexOf('(', 0, 1) == 0 ) {
+				int endI = Node.SynSet.Gloss.IndexOf(')');
+				Art.Disamb += " "+Node.SynSet.Gloss.Substring(0, endI+1);
+			}
+
+			/*if ( pLevel == 8 ) {
+				Console.WriteLine(" - "+Art.Name+" // "+
+					(IsWord ? "w"+Word.Id : "s"+Node.SynSet.Id)+" // "+Art.Disamb);
+			}*/
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -250,7 +297,7 @@ namespace Fabric.Apps.WordNet.Artifacts {
 			}
 
 			if ( pDepth > 1 ) {
-				d += " > ";
+				string d2 = "";
 				int count = 0;
 
 				foreach ( TreeNode hn in pNode.Hypernyms ) {
@@ -260,12 +307,14 @@ namespace Fabric.Apps.WordNet.Artifacts {
 						continue;
 					}
 
-					d += (count == 0 ? "" : "; ")+hd;
+					d2 += (count == 0 ? "" : "; ")+hd;
 
 					if ( ++count >= pWidth ) {
 						break;
 					}
 				}
+
+				d = d2+" > "+d;
 			}
 
 			return d;
@@ -273,6 +322,10 @@ namespace Fabric.Apps.WordNet.Artifacts {
 
 		/*--------------------------------------------------------------------------------------------*/
 		private string GetWordHyperDisamb(TreeNode pNode, string pSkipWord, int pWidth, int pDepth) {
+			if ( pDepth > 1 ) {
+				return GetSynsetHyperDisamb(pNode, pSkipWord, pWidth, pDepth-1);
+			}
+
 			var dList = new List<string>();
 			List<string> words = HypernymArtifacts.GetWordList(pNode.SynSet);
 
@@ -284,13 +337,7 @@ namespace Fabric.Apps.WordNet.Artifacts {
 				dList.Add(words[i]);
 			}
 
-			string d = string.Join(", ", dList);
-
-			if ( pDepth > 1 ) {
-				d += " > "+GetSynsetHyperDisamb(pNode, pSkipWord, pWidth, pDepth-1);
-			}
-
-			return d;
+			return string.Join(", ", dList);
 		}
 
 		/*--------------------------------------------------------------------------------------------*/

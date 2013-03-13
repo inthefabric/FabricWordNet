@@ -14,8 +14,8 @@ namespace Fabric.Apps.WordNet {
 		/*--------------------------------------------------------------------------------------------*/
 		public static void InsertWordAndSynsetArtifacts(ISession pSess) {
 			BuildWordNet.SetDbStateBeforeBatchInsert(pSess);
-			pSess.CreateSQLQuery("DELETE FROM "+typeof(Artifact).Name+" WHERE 1=1").UniqueResult();
-			pSess.CreateSQLQuery("VACUUM").UniqueResult();
+			//pSess.CreateSQLQuery("DELETE FROM "+typeof(Artifact).Name+" WHERE 1=1").UniqueResult();
+			//pSess.CreateSQLQuery("VACUUM").UniqueResult();
 			InsertWithHypernymTree(pSess);
 			BuildWordNet.SetDbStateAfterBatchInsert(pSess);
 		}
