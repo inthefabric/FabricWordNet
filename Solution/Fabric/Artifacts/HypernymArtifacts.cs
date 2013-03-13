@@ -10,8 +10,6 @@ namespace Fabric.Apps.WordNet.Artifacts {
 	/*================================================================================================*/
 	public class HypernymArtifacts {
 
-		//SELECT Name, Disamb, COUNT(Name) FROM Artifact GROUP BY Name, Disamb HAVING COUNT(Name) > 1 ORDER BY COUNT(Name) DESC
-
 		private readonly HypernymTree vTree;
 		private readonly HashSet<string> vInsertMap;
 		private readonly List<HypArt> vList;
@@ -19,8 +17,8 @@ namespace Fabric.Apps.WordNet.Artifacts {
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
-		public HypernymArtifacts(ISession pSess) {
-			vTree = new HypernymTree(pSess);
+		public HypernymArtifacts(HypernymTree pTree, ISession pSess) {
+			vTree = pTree;
 			List<TreeNode> nodes = vTree.GetSortedNodeList();
 
 			int total = nodes.Count;
@@ -125,7 +123,6 @@ namespace Fabric.Apps.WordNet.Artifacts {
 					}
 				}
 
-
 				int nulls = 0;
 				int commas = 0;
 				int semis = 0;
@@ -169,12 +166,12 @@ namespace Fabric.Apps.WordNet.Artifacts {
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
-		private static string FixWordName(Word pWord) {
+		internal static string FixWordName(Word pWord) {
 			return pWord.Name.Replace('_', ' ');
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
-		private static string TruncateString(string pString, int pMaxLen) {
+		internal static string TruncateString(string pString, int pMaxLen) {
 			if ( pString == null ) {
 				return null;
 			}

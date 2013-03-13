@@ -8,3 +8,4 @@ Solution/_ReSharper.FabricWordNet/*
 Data/SortedSynsets.txt
 Data/HypernymTree.txt
 Data/FabWordNet_*.db
+Data/SortedSemanticNodes.txt
