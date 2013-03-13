@@ -24,7 +24,7 @@ namespace Fabric.Apps.WordNet.Structures {
 			BuildMaps(pSess);
 			EntityNode = NodeMap[59724];
 			BuildSortedNodeList();
-			WriteSortedHypernymList();
+			//WriteSortedHypernymList();
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -61,16 +61,16 @@ namespace Fabric.Apps.WordNet.Structures {
 			NodeList = new List<SemanticNode>();
 			var queue = new List<SemanticNode>(new[] { EntityNode });
 			var map = NodeMap.Keys.ToDictionary(key => key, val => false);
+			map[queue[0].SynSet.Id] = true;
 
 			while ( queue.Count > 0 ) {
 				SemanticNode n = queue[0];
 				queue.RemoveAt(0);
-
 				NodeList.Add(n);
-				map[n.SynSet.Id] = true;
 
 				foreach ( SemanticNode sub in n.Relations[WordNetEngine.SynSetRelation.Hyponym] ) {
 					if ( !map[sub.SynSet.Id] ) {
+						map[sub.SynSet.Id] = true;
 						queue.Add(sub);
 					}
 				}

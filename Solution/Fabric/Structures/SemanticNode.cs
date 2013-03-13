@@ -8,7 +8,7 @@ namespace Fabric.Apps.WordNet.Structures {
 	public class SemanticNode {
 
 		public Synset SynSet { get; private set; }
-		public IDictionary<WordNetEngine.SynSetRelation, IList<SemanticNode>>
+		public IDictionary<WordNetEngine.SynSetRelation, List<SemanticNode>>
 																		Relations { get; private set; }
 		
 
@@ -16,7 +16,7 @@ namespace Fabric.Apps.WordNet.Structures {
 		/*--------------------------------------------------------------------------------------------*/
 		public SemanticNode(Synset pSynSet) {
 			SynSet = pSynSet;
-			Relations = new Dictionary<WordNetEngine.SynSetRelation, IList<SemanticNode>>();
+			Relations = new Dictionary<WordNetEngine.SynSetRelation, List<SemanticNode>>();
 
 			foreach ( WordNetEngine.SynSetRelation ssr in Stats.Relations ) {
 				Relations.Add(ssr, new List<SemanticNode>());
