@@ -18,7 +18,8 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 			Map(x => x.RelationId);
 			Map(x => x.Word);
 			Map(x => x.RelatedWord);
-			References(x => x.CreatedFactor).Nullable();
+
+			HasMany(x => x.FactorList); //0 or 1
 		}
 
 	}

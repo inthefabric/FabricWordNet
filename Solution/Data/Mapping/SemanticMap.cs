@@ -17,7 +17,8 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 			References(x => x.SynSet);
 			Map(x => x.RelationId);
 			References(x => x.TargetSynSet);
-			References(x => x.CreatedFactor).Nullable();
+
+			HasMany(x => x.FactorList); //0 or 1
 		}
 
 	}

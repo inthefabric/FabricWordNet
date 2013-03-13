@@ -14,12 +14,12 @@ namespace Fabric.Apps.WordNet {
 		/*--------------------------------------------------------------------------------------------*/
 		public static void Main(string[] pArgs) {
 			DbBuilder.InitOnce();
+			//DbBuilder.UpdateSchema();
 			var sessProv = new SessionProvider();
 
 			using ( ISession sess = sessProv.OpenSession() ) {
 				//BuildWordNet.BuildBaseDb(sess);
 				//Stats.PrintAll(sess);
-
 				//sessProv.OutputSql = true;
 				BuildArtifacts.InsertWordAndSynsetArtifacts(sess);
 			}

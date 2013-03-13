@@ -19,6 +19,9 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 			Map(x => x.AssertionId);
             Map(x => x.IsDefining);
             Map(x => x.Note);
+
+			References(x => x.Lexical).Nullable();
+			References(x => x.Semantic).Nullable();
 			Map(x => x.ActualFactorId).Nullable();
 
 			Map(x => x.DescriptorTypeId).Nullable();

@@ -9,6 +9,9 @@
 		public virtual byte AssertionId { get; set; }
 		public virtual bool IsDefining { get; set; }
 		public virtual string Note { get; set; }
+
+		public virtual Lexical Lexical { get; set; }
+		public virtual Semantic Semantic { get; set; }
 		public virtual long ActualFactorId { get; set; }
 
 		public virtual byte DescriptorTypeId { get; set; }

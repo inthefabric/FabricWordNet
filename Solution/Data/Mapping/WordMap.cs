@@ -16,7 +16,8 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 
 			References(x => x.SynSet);
 			Map(x => x.Name);
-			References(x => x.CreatedArtifact).Nullable();
+
+			HasMany(x => x.ArtifactList); //0 or 1
 		}
 
 	}

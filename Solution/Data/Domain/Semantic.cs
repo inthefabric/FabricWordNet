@@ -1,4 +1,6 @@
-﻿namespace Fabric.Apps.WordNet.Data.Domain {
+﻿using System.Collections.Generic;
+
+namespace Fabric.Apps.WordNet.Data.Domain {
 	
 	/*================================================================================================*/
 	public class Semantic {
@@ -7,7 +9,9 @@
 		public virtual Synset SynSet { get; set; }
 		public virtual byte RelationId { get; set; }
 		public virtual Synset TargetSynSet { get; set; }
-		public virtual Factor CreatedFactor { get; set; }
+
+		public virtual IList<Factor> FactorList { get; set; } //0 or 1
+
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////

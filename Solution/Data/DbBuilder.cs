@@ -3,6 +3,7 @@ using System.IO;
 using Fabric.Apps.WordNet.Data.Mapping;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
+using FluentNHibernate.Conventions.Helpers;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
@@ -36,7 +37,15 @@ namespace Fabric.Apps.WordNet.Data {
 
 			SessionFactory = Fluently.Configure()
 				.Database(conn)
-				.Mappings(m => m.FluentMappings.AddFromAssemblyOf<ArtifactMap>())
+				.Mappings(m => m
+					.FluentMappings
+						.AddFromAssemblyOf<ArtifactMap>()
+					.Conventions
+						.Add(
+							PrimaryKey.Name.Is(x => "Id"),
+							ForeignKey.EndsWith("Id")
+						)
+				)
 				.ExposeConfiguration(c => { Config = c; })
 				.BuildSessionFactory();
 		}

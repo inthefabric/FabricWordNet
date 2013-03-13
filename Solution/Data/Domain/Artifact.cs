@@ -9,6 +9,9 @@ namespace Fabric.Apps.WordNet.Data.Domain {
 		public virtual string Name { get; set; }
 		public virtual string Disamb { get; set; }
 		public virtual string Note { get; set; }
+
+		public virtual Synset Synset { get; set; }
+		public virtual Word Word { get; set; }
 		public virtual long ActualArtifactId { get; set; }
 
 		public virtual IList<Factor> FactorList { get; set; }

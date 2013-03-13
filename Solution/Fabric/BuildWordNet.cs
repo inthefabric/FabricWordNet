@@ -18,13 +18,10 @@ namespace Fabric.Apps.WordNet {
 			pSess.CreateSQLQuery("VACUUM").UniqueResult();
 			pSess.CreateSQLQuery("PRAGMA synchronous = OFF").UniqueResult();
 			pSess.CreateSQLQuery("PRAGMA journal_mode = WAL").UniqueResult();
-			//pSess.CreateSQLQuery("PRAGMA journal_mode = DELETE").UniqueResult();
-			pSess.CreateSQLQuery("PRAGMA cache_size = 10000").UniqueResult();
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
 		public static void SetDbStateAfterBatchInsert(ISession pSess) {
-			pSess.CreateSQLQuery("PRAGMA cache_size = 2000").UniqueResult();
 			pSess.CreateSQLQuery("PRAGMA journal_mode = DELETE").UniqueResult();
 			pSess.CreateSQLQuery("PRAGMA synchronous = NORMAL").UniqueResult();
 		}
