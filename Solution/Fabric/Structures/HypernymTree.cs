@@ -11,9 +11,8 @@ namespace Fabric.Apps.WordNet.Structures {
 	/*================================================================================================*/
 	public class HypernymTree {
 
-		private readonly Dictionary<int, Synset> vSynMap;
-		private readonly Dictionary<int, TreeNode> vNodeMap;
-
+		public Dictionary<int, Synset> SynMap { get; private set; }
+		public Dictionary<int, TreeNode> NodeMap { get; private set; }
 		public TreeNode Root { get; private set; }
 
 
@@ -35,31 +34,31 @@ namespace Fabric.Apps.WordNet.Structures {
 
 			Console.WriteLine(" - Found "+synList.Count+" Synsets");
 			Console.WriteLine(" - Building Synset and TreeNode maps...");
-			vSynMap = synList.ToDictionary(ss => ss.Id);
-			vNodeMap = new Dictionary<int, TreeNode>();
+			SynMap = synList.ToDictionary(ss => ss.Id);
+			NodeMap = new Dictionary<int, TreeNode>();
 
 			foreach ( Semantic hyper in hyperList ) {
 				int id = hyper.SynSet.Id;
 				int tid = hyper.TargetSynSet.Id;
-				bool hasN = vNodeMap.ContainsKey(id);
-				bool hasTn = vNodeMap.ContainsKey(tid);
+				bool hasN = NodeMap.ContainsKey(id);
+				bool hasTn = NodeMap.ContainsKey(tid);
 
-				TreeNode n = (hasN ? vNodeMap[id] : new TreeNode(vSynMap[id]));
-				TreeNode tn = (hasTn ? vNodeMap[tid] : new TreeNode(vSynMap[tid]));
+				TreeNode n = (hasN ? NodeMap[id] : new TreeNode(SynMap[id]));
+				TreeNode tn = (hasTn ? NodeMap[tid] : new TreeNode(SynMap[tid]));
 
 				if ( !hasN ) {
-					vNodeMap.Add(id, n);
+					NodeMap.Add(id, n);
 				}
 
 				if ( !hasTn ) {
-					vNodeMap.Add(tid, tn);
+					NodeMap.Add(tid, tn);
 				}
 
 				n.Hypernyms.Add(tn);
 				tn.Hyponyms.Add(n);
 			}
 
-			Root = vNodeMap[59724];
+			Root = NodeMap[59724];
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -68,7 +67,7 @@ namespace Fabric.Apps.WordNet.Structures {
 
 			var queue = new List<TreeNode>(new[] { Root });
 			var list = new List<TreeNode>();
-			var map = vNodeMap.Keys.ToDictionary(key => key, val => false);
+			var map = NodeMap.Keys.ToDictionary(key => key, val => false);
 
 			while ( queue.Count > 0 ) {
 				TreeNode n = queue[0];

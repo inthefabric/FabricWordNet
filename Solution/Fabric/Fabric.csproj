@@ -42,6 +42,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Artifacts\HypernymArtifacts.cs" />
     <Compile Include="BuildWordNet.cs" />
     <Compile Include="BuildArtifacts.cs" />
     <Compile Include="Stats.cs" />
