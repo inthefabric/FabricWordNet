@@ -68,6 +68,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LexicalRelation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SynSet.cs" />
     <Compile Include="WordNetEngine.cs" />

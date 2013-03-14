@@ -92,11 +92,35 @@ namespace Fabric.Apps.WordNet.Artifacts {
 
 		/*--------------------------------------------------------------------------------------------*/
 		private void ResolveArtifactDuplicates() {
-			int level = 1;
+			int level = 0;
+
+			var dupSets = new List<List<ArtNode>>();
 
 			while ( true ) {
+				foreach ( List<ArtNode> dups in dupSets ) {
+					foreach ( ArtNode an in dups ) {
+						if ( level == 1 ) {
+							an.Art.Disamb = an.GetUniqueDisambString(dups, true);
+						}
+						else {
+							int val = level-2; //starts at 0
+							int size = val/2+1; //1,1,2,2,3,3
+							bool pos = (level%2 == 1); //f,t,f,t,f,t
+							an.Art.Disamb = an.GetGlossString(size, pos);
+
+							if ( size > 1 ) {
+								Console.WriteLine(an.Art.Name+": "+an.Art.Disamb);
+							}
+						}
+
+						an.Art.Disamb = an.Art.Disamb;
+						an.Art.Note = level+"> "+an.Art.Note;
+						//an.Art.Disamb = ArtNode.TruncateString(an.Art.Disamb, 128);
+					}
+				}
+
 				Dictionary<string, List<ArtNode>> dupMap = GetDuplicateMap();
-				var dupSets = new List<List<ArtNode>>();
+				dupSets = new List<List<ArtNode>>();
 				int dupCount = 0;
 
 				foreach ( string key in dupMap.Keys ) {
@@ -104,43 +128,26 @@ namespace Fabric.Apps.WordNet.Artifacts {
 
 					if ( list.Count > 1 ) {
 						dupSets.Add(list);
-						dupCount += dupSets.Count;
+						dupCount += list.Count;
+						continue;
+					}
+
+					foreach ( ArtNode an in list ) { //all non-duplicates
+						if ( an.Art.Disamb == null ) {
+							an.Art.Disamb = an.GetSimpleDisambString(true);
+							an.Art.Note = "[SIMPLE] "+an.Art.Note;
+						}
 					}
 				}
 
-				Console.WriteLine("Duplicate count before level "+level+": "+
+				Console.WriteLine("Duplicate count after level "+level+": "+
 					dupSets.Count+" / "+dupCount);
 
 				if ( dupSets.Count == 0 ) {
 					break;
 				}
 
-				foreach ( List<ArtNode> dups in dupSets ) {
-					foreach ( ArtNode an in dups ) {
-						switch ( level ) {
-							case 1:
-								an.Art.Disamb = an.GetUniqueWordString(dups);
-								break;
-
-							case 2:
-								an.Art.Disamb = ArtNode.GlossToDisamb(an.Node.SynSet.Gloss, true);
-								break;
-
-							case 3:
-								an.Art.Disamb = ArtNode.GlossToDisamb(an.Node.SynSet.Gloss, false);
-								break;
-
-							case 4:
-								an.Art.Disamb = an.Node.SynSet.Gloss;
-								break;
-						}
-
-						an.Art.Disamb = level+") "+an.Art.Disamb;
-						an.Art.Disamb = ArtNode.TruncateString(an.Art.Disamb, 128);
-					}
-				}
-
-				if ( ++level > 6 ) {
+				if ( ++level > 10 ) {
 					break;
 				}
 			}

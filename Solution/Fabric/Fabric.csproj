@@ -43,13 +43,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Artifacts\InsertAllArtifacts.cs" />
-    <Compile Include="BuildWordNet.cs" />
-    <Compile Include="BuildArtifacts.cs" />
+    <Compile Include="Wordnet\BuildWordNet.cs" />
+    <Compile Include="Artifacts\BuildArtifacts.cs" />
     <Compile Include="Stats.cs" />
     <Compile Include="Structures\ArtNode.cs" />
     <Compile Include="Structures\SemanticNode.cs" />
     <Compile Include="Structures\SemanticNodes.cs" />
-    <Compile Include="SynSetGroup.cs" />
+    <Compile Include="Wordnet\SynSetGroup.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -4,7 +4,7 @@ using Fabric.Apps.WordNet.Data;
 using LAIR.Collections.Generic;
 using NHibernate;
 
-namespace Fabric.Apps.WordNet {
+namespace Fabric.Apps.WordNet.Wordnet {
 
 	/*================================================================================================*/
 	public static class BuildWordNet {
@@ -70,11 +70,7 @@ namespace Fabric.Apps.WordNet {
 						Console.WriteLine("Syn/Word: \t"+count+" of "+total+
 							" \t"+(DateTime.UtcNow.Ticks-start)/10000/1000.0+" sec");
 					}
-
-					//if ( count > 20000 ) { break; } //TEST
 				}
-
-				//if ( count > 20000 ) { break; } //TEST
 			}
 
 			count = 0;

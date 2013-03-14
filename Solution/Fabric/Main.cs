@@ -1,4 +1,5 @@
 using System.IO;
+using Fabric.Apps.WordNet.Artifacts;
 using Fabric.Apps.WordNet.Data;
 using NHibernate;
 

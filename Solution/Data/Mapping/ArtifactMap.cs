@@ -11,7 +11,7 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 		/*--------------------------------------------------------------------------------------------*/
 		public ArtifactMap() {
 			Id(x => x.Id)
-				.Column("ArtifactId")
+				.Column(typeof(Artifact).Name+"Id")
 				.GeneratedBy.Native();
 
 			Map(x => x.Name);
@@ -22,7 +22,11 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 			References(x => x.Word).Nullable();
 			Map(x => x.ActualArtifactId).Nullable();
 
-			HasMany(x => x.FactorList);
+			HasMany(x => x.FactorPrimaryList).KeyColumn("PrimaryClassId");
+			HasMany(x => x.FactorRelatedList).KeyColumn("RelatedClassId");
+			HasMany(x => x.FactorDescTypeList).KeyColumn("DescriptorTypeRefineId");
+			HasMany(x => x.FactorDescPrimaryList).KeyColumn("PrimaryClassRefineId");
+			HasMany(x => x.FactorDescRelatedList).KeyColumn("RelatedClassRefineId");
 		}
 
 	}

@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fabric.Apps.WordNet.Data.Domain;
 using LAIR.Collections.Generic;
 using NHibernate;
 
-namespace Fabric.Apps.WordNet {
+namespace Fabric.Apps.WordNet.Wordnet {
 
 	/*================================================================================================*/
 	public class SynSetGroup {
@@ -56,7 +58,7 @@ namespace Fabric.Apps.WordNet {
 
 				var dbWord = new Word();
 				dbWord.Name = word;
-				dbWord.SynSet = dbSyn;
+				dbWord.Synset = dbSyn;
 				pSess.Save(dbWord);
 				WordCache.Add(pSynSet.ID+"|"+word, dbWord);
 			}
@@ -73,45 +75,33 @@ namespace Fabric.Apps.WordNet {
 		/*--------------------------------------------------------------------------------------------*/
 		public static bool InsertLexicalsAndSemantics(ISession pSess, WordNetEngine pEngine,
 																			int pStart, int pCount) {
-			int i = 0;
+			List<string> keys = SynsetCache.Keys.ToList();
+			int i = pStart;
 
-			foreach ( string ssId in SynsetCache.Keys ) {
-				if ( i++ < pStart ) {
-					continue;
-				}
-
-				if ( i > pStart+pCount ) {
+			for (  ; i < pStart+pCount ; ++i ) {
+				if ( i >= keys.Count ) {
 					break;
 				}
 
-				InsertLexAndSemForSynSet(pSess, ssId, pEngine.GetSynSet(ssId));
+				InsertLexAndSemForSynSet(pSess, keys[i], pEngine.GetSynSet(keys[i]));
 			}
 
-			return (i < SynsetCache.Keys.Count);
+			return (i < keys.Count);
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
 		private static void InsertLexAndSemForSynSet(ISession pSess, string pSynSetId, SynSet pSynSet) {
 			Synset dbSynSet = SynsetCache[pSynSetId];
+			List<LexicalRelation> lexRels = pSynSet.GetLexicallyRelated();
 
-			Dictionary<WordNetEngine.SynSetRelation, Dictionary<string, Set<string>>> lexMap = 
-				pSynSet.GetLexicallyRelatedWords();
-
-			foreach ( WordNetEngine.SynSetRelation rel in lexMap.Keys ) {
-				var setDict = lexMap[rel];
-				
-				foreach ( string setDictKey in setDict.Keys ) {
-					var strSet = setDict[setDictKey];
-					
-					foreach ( string s in strSet ) {
-						var dbLex = new Lexical();
-						dbLex.SynSet = dbSynSet;
-						dbLex.RelationId = (byte)rel;
-						dbLex.Word = setDictKey;
-						dbLex.RelatedWord = (setDictKey == s ? null : s);
-						pSess.Save(dbLex);
-					}
-				}
+			foreach ( LexicalRelation lr in lexRels ) {
+				var dbLex = new Lexical();
+				dbLex.Synset = dbSynSet;
+				dbLex.Word = WordCache[dbLex.Synset.SsId+"|"+lr.FromWord];
+				dbLex.RelationId = (byte)lr.Relation;
+				dbLex.TargetSynset = SynsetCache[lr.ToSyn.ID];
+				dbLex.TargetWord = WordCache[dbLex.TargetSynset.SsId+"|"+lr.ToWord];
+				pSess.Save(dbLex);
 			}
 
 			foreach ( WordNetEngine.SynSetRelation rel in pSynSet.SemanticRelations ) {
@@ -119,10 +109,9 @@ namespace Fabric.Apps.WordNet {
 
 				foreach ( SynSet rs in relSet ) {
 					var dbSem = new Semantic();
-					dbSem.SynSet = dbSynSet;
+					dbSem.Synset = dbSynSet;
 					dbSem.RelationId = (byte)rel;
-					//if ( !SynsetCache.ContainsKey(rs.ID) ) { continue; } //TEST
-					dbSem.TargetSynSet = SynsetCache[rs.ID];
+					dbSem.TargetSynset = SynsetCache[rs.ID];
 					pSess.Save(dbSem);
 				}
 			}

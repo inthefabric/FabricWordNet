@@ -11,13 +11,14 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 		/*--------------------------------------------------------------------------------------------*/
 		public LexicalMap() {
 			Id(x => x.Id)
-				.Column("LexicalId")
+				.Column(typeof(Lexical).Name+"Id")
 				.GeneratedBy.Native();
 
-			References(x => x.SynSet);
+			References(x => x.Synset);
+			References(x => x.Word);
 			Map(x => x.RelationId);
-			Map(x => x.Word);
-			Map(x => x.RelatedWord);
+			References(x => x.TargetSynset);
+			References(x => x.TargetWord);
 
 			HasMany(x => x.FactorList); //0 or 1
 		}

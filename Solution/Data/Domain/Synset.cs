@@ -11,6 +11,10 @@ namespace Fabric.Apps.WordNet.Data.Domain {
 		public virtual string Gloss { get; set; }
 
 		public virtual IList<Word> WordList { get; set; }
+		public virtual IList<Semantic> SemanticList { get; set; }
+		public virtual IList<Semantic> SemanticTargetList { get; set; }
+		public virtual IList<Lexical> LexicalList { get; set; }
+		public virtual IList<Lexical> LexicalTargetList { get; set; }
 		public virtual IList<Artifact> ArtifactList { get; set; } //0 or 1
 
 
@@ -18,6 +22,11 @@ namespace Fabric.Apps.WordNet.Data.Domain {
 		/*--------------------------------------------------------------------------------------------*/
 		public Synset() {
 			WordList = new List<Word>();
+			SemanticList = new List<Semantic>();
+			SemanticTargetList = new List<Semantic>();
+			LexicalList = new List<Lexical>();
+			LexicalTargetList = new List<Lexical>();
+			ArtifactList = new List<Artifact>();
 		}
 
 	}

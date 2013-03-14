@@ -11,7 +11,7 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 		/*--------------------------------------------------------------------------------------------*/
 		public SynsetMap() {
 			Id(x => x.Id)
-				.Column("SynsetId")
+				.Column(typeof(Synset).Name+"Id")
 				.GeneratedBy.Native();
 
 			Map(x => x.SsId);
@@ -19,6 +19,10 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 			Map(x => x.Gloss);
 
 			HasMany(x => x.WordList);
+			HasMany(x => x.SemanticList);
+			HasMany(x => x.SemanticTargetList).KeyColumn("Target"+typeof(Synset).Name+"Id");
+			HasMany(x => x.LexicalList);
+			HasMany(x => x.LexicalTargetList).KeyColumn("Target"+typeof(Synset).Name+"Id");
 			HasMany(x => x.ArtifactList); //0 or 1
 		}
 

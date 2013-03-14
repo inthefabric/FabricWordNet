@@ -1,9 +1,10 @@
-using Fabric.Apps.WordNet.Artifacts;
+using System;
 using Fabric.Apps.WordNet.Data.Domain;
 using Fabric.Apps.WordNet.Structures;
+using Fabric.Apps.WordNet.Wordnet;
 using NHibernate;
 
-namespace Fabric.Apps.WordNet {
+namespace Fabric.Apps.WordNet.Artifacts {
 
 	/*================================================================================================*/
 	public static class BuildArtifacts {
@@ -18,6 +19,7 @@ namespace Fabric.Apps.WordNet {
 			BuildWordNet.SetDbStateBeforeBatchInsert(pSess);
 
 			var nodes = new SemanticNodes(pSess);
+			GC.Collect();
 			
 			var iaa = new InsertAllArtifacts(nodes);
 			iaa.Insert(pSess);

@@ -644,6 +644,35 @@ namespace Fabric.Apps.WordNet
             return relatedWords;
         }
 
+		//ZK
+		public List<LexicalRelation> GetLexicallyRelated() {
+			var lexRels = new List<LexicalRelation>();
+
+			foreach ( WordNetEngine.SynSetRelation rel in _lexicalRelations.Keys ) {
+				foreach ( SynSet relSs in _lexicalRelations[rel].Keys ) {
+					if ( !relSs.Instantiated ) {
+						relSs.Instantiate();
+					}
+
+					foreach ( int srcWordI in _lexicalRelations[rel][relSs].Keys ) {
+						string srcWord = _words[srcWordI-1];
+
+						foreach ( int targWordI in _lexicalRelations[rel][relSs][srcWordI] ) {
+							var lr = new LexicalRelation();
+							lr.FromSyn = this;
+							lr.FromWord = srcWord;
+							lr.Relation = rel;
+							lr.ToSyn = relSs;
+							lr.ToWord = relSs.Words[targWordI-1];
+							lexRels.Add(lr);
+						}
+					}
+				}
+			}
+
+			return lexRels;
+		}
+
         /// <summary>
         /// Gets hash code for this synset
         /// </summary>

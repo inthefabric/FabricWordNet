@@ -11,7 +11,7 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 		/*--------------------------------------------------------------------------------------------*/
 		public FactorMap() {
 			Id(x => x.Id)
-				.Column("FactorId")
+				.Column(typeof(Factor).Name+"Id")
 				.GeneratedBy.Native();
 
 			References(x => x.PrimaryClass);

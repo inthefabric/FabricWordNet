@@ -14,13 +14,21 @@ namespace Fabric.Apps.WordNet.Data.Domain {
 		public virtual Word Word { get; set; }
 		public virtual long ActualArtifactId { get; set; }
 
-		public virtual IList<Factor> FactorList { get; set; }
+		public virtual IList<Factor> FactorPrimaryList { get; set; }
+		public virtual IList<Factor> FactorRelatedList { get; set; }
+		public virtual IList<Factor> FactorDescTypeList { get; set; }
+		public virtual IList<Factor> FactorDescPrimaryList { get; set; }
+		public virtual IList<Factor> FactorDescRelatedList { get; set; }
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public Artifact() {
-			FactorList = new List<Factor>();
+			FactorPrimaryList = new List<Factor>();
+			FactorRelatedList = new List<Factor>();
+			FactorDescTypeList = new List<Factor>();
+			FactorDescPrimaryList = new List<Factor>();
+			FactorDescRelatedList = new List<Factor>();
 		}
 
 	}

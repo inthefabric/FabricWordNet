@@ -33,6 +33,10 @@ namespace Fabric.Apps.WordNet.Structures {
 			IList<Semantic> semList = pSess.QueryOver<Semantic>().List();
 			Console.WriteLine(" - Found "+semList.Count+" Semantics");
 
+			Console.WriteLine(" - Getting all Lexicals...");
+			IList<Lexical> lexList = pSess.QueryOver<Lexical>().List();
+			Console.WriteLine(" - Found "+lexList.Count+" Lexicals");
+
 			Console.WriteLine(" - Getting all Synsets, filled with Words...");
 			IList<Synset> synList = pSess.QueryOver<Synset>()
 				.Fetch(x => x.WordList).Eager
@@ -49,9 +53,16 @@ namespace Fabric.Apps.WordNet.Structures {
 			}
 
 			foreach ( Semantic sem in semList ) {
-				SemanticNode n = NodeMap[sem.SynSet.Id];
-				n.AddRelation(Stats.Relations[sem.RelationId], NodeMap[sem.TargetSynSet.Id]);
+				SemanticNode n = NodeMap[sem.Synset.Id];
+				n.AddRelation(Stats.Relations[sem.RelationId], NodeMap[sem.TargetSynset.Id]);
 			}
+
+			foreach ( Lexical lex in lexList ) {
+				SemanticNode n = NodeMap[lex.Synset.Id];
+				n.AddLexical(Stats.Relations[lex.RelationId], NodeMap[lex.TargetSynset.Id]);
+			}
+
+			pSess.Clear();
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
