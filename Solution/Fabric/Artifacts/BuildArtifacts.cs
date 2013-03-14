@@ -19,9 +19,17 @@ namespace Fabric.Apps.WordNet.Artifacts {
 			BuildWordNet.SetDbStateBeforeBatchInsert(pSess);
 
 			var nodes = new SemanticNodes(pSess);
+
+			Console.WriteLine("Garbage collection...");
 			GC.Collect();
+			Console.WriteLine("Garbage collection complete");
 			
 			var iaa = new InsertAllArtifacts(nodes);
+
+			Console.WriteLine("Garbage collection...");
+			GC.Collect();
+			Console.WriteLine("Garbage collection complete");
+
 			iaa.Insert(pSess);
 
 			BuildWordNet.SetDbStateAfterBatchInsert(pSess);

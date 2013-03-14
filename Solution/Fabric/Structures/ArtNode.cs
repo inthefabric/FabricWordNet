@@ -24,7 +24,6 @@ namespace Fabric.Apps.WordNet.Structures {
 			}
 
 			WordMap = new HashSet<string>();
-			const int max = 3;
 
 			if ( IsWord ) {
 				foreach ( Word w in Node.SynSet.WordList ) {
@@ -90,25 +89,15 @@ namespace Fabric.Apps.WordNet.Structures {
 			List<string> words = GetDisambWordMap(pIncludeHypers).ToList();
 
 			if ( words.Count == 0 ) {
-				string test = "FIX: ";
-
-				foreach ( KeyValuePair<WordNetEngine.SynSetRelation, List<SemanticNode>> pair 
-						in Node.Relations ) {
-					foreach ( SemanticNode sn in pair.Value ) {
-						test += pair.Key+"|"+sn.SynSet.Id+"; ";
-					}
-				}
-
-				return test;
+				return GetGlossString(1);
 			}
 
 			words = words.GetRange(0, Math.Min(words.Count, 3));
-			return string.Join(", ", words);
+			return string.Join(" / ", words);
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
 		public string GetUniqueDisambString(List<ArtNode> pDupSet, bool pIncludeHypers) {
-			//Console.WriteLine(" - guds() A: "+Art.Name);
 			IEnumerable<string> dupSetMap = new HashSet<string>();
 
 			foreach ( ArtNode dup in pDupSet ) {
@@ -116,12 +105,10 @@ namespace Fabric.Apps.WordNet.Structures {
 					dupSetMap = dupSetMap.Union(dup.GetDisambWordMap(pIncludeHypers));
 				}
 			}
-			//Console.WriteLine(" - guds() B");
 			HashSet<string> nodeWordMap = GetDisambWordMap(pIncludeHypers);
 			List<string> words = (nodeWordMap.Count == 0 ? 
 				new List<string>() : nodeWordMap.Except(dupSetMap).ToList());
 
-			//Console.WriteLine(" - guds() C");
 			if ( words.Count >= 3 ) {
 				words = words.GetRange(0, 3);
 			}
@@ -134,12 +121,11 @@ namespace Fabric.Apps.WordNet.Structures {
 				}
 			}
 
-			//Console.WriteLine(" - guds() D");
-			return string.Join(", ", words);
+			return string.Join(" / ", words);
 		}
 		
 		/*--------------------------------------------------------------------------------------------*/
-		public string GetGlossString(int pSize, bool pShowPos) {
+		public string GetGlossString(int pSize) {
 			string str = "";
 
 			switch ( pSize ) {
@@ -154,10 +140,6 @@ namespace Fabric.Apps.WordNet.Structures {
 				case 3:
 					str += Node.SynSet.Gloss;
 					break;
-			}
-
-			if ( pShowPos ) {
-				str += " ["+Stats.PartsOfSpeech[Node.SynSet.PartOfSpeechId]+"]";
 			}
 
 			return str;
@@ -178,7 +160,10 @@ namespace Fabric.Apps.WordNet.Structures {
 
 		/*--------------------------------------------------------------------------------------------*/
 		public static string FixWordName(Word pWord) {
-			return pWord.Name.Replace('_', ' ');
+			return pWord.Name
+				.Replace('_', ' ')
+				.Replace("(a)", "")
+				.Replace("(p)", "");
 		}
 
 		/*--------------------------------------------------------------------------------------------*/

@@ -48,7 +48,7 @@ namespace Fabric.Apps.WordNet.Artifacts {
 				string pos = Stats.PartsOfSpeech[ss.PartOfSpeechId]+"";
 
 				Artifact art = new Artifact();
-				art.Name = string.Join(", ", (words.Count > 5 ? words.GetRange(0,5) : words));
+				art.Name = string.Join(" / ", (words.Count > 5 ? words.GetRange(0,5) : words));
 				art.Name = ArtNode.TruncateString(art.Name, 128);
 				art.Note = ArtNode.TruncateString(pos+": "+ss.Gloss, 256);
 				art.Synset = ss;
@@ -103,10 +103,8 @@ namespace Fabric.Apps.WordNet.Artifacts {
 							an.Art.Disamb = an.GetUniqueDisambString(dups, true);
 						}
 						else {
-							int val = level-2; //starts at 0
-							int size = val/2+1; //1,1,2,2,3,3
-							bool pos = (level%2 == 1); //f,t,f,t,f,t
-							an.Art.Disamb = an.GetGlossString(size, pos);
+							int size = level-1; //starts at 1
+							an.Art.Disamb = an.GetGlossString(size);
 
 							if ( size > 1 ) {
 								Console.WriteLine(an.Art.Name+": "+an.Art.Disamb);
@@ -114,8 +112,7 @@ namespace Fabric.Apps.WordNet.Artifacts {
 						}
 
 						an.Art.Disamb = an.Art.Disamb;
-						an.Art.Note = level+"> "+an.Art.Note;
-						//an.Art.Disamb = ArtNode.TruncateString(an.Art.Disamb, 128);
+						an.Art.Disamb = ArtNode.TruncateString(an.Art.Disamb, 128);
 					}
 				}
 
@@ -133,9 +130,8 @@ namespace Fabric.Apps.WordNet.Artifacts {
 					}
 
 					foreach ( ArtNode an in list ) { //all non-duplicates
-						if ( an.Art.Disamb == null ) {
-							an.Art.Disamb = an.GetSimpleDisambString(true);
-							an.Art.Note = "[SIMPLE] "+an.Art.Note;
+						if ( string.IsNullOrEmpty(an.Art.Disamb) ) {
+							an.Art.Disamb = an.GetSimpleDisambString(false);
 						}
 					}
 				}
