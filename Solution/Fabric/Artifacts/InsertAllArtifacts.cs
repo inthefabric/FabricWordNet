@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fabric.Apps.WordNet.Data.Domain;
 using Fabric.Apps.WordNet.Structures;
 using NHibernate;
@@ -58,7 +59,7 @@ namespace Fabric.Apps.WordNet.Artifacts {
 				vList.Add(new ArtNode { Art = art, Node = n, Word = art.Word });
 
 				if ( test.ContainsKey("s"+ss.Id) ) {
-					//Console.WriteLine("S: "+ss.Id+": "+test["s"+ss.Id].Name);
+					Console.WriteLine("S: "+ss.Id+": "+test["s"+ss.Id].Name);
 					continue;
 				}
 
@@ -78,7 +79,7 @@ namespace Fabric.Apps.WordNet.Artifacts {
 					vList.Add(new ArtNode { Art = art, Node = n, Word = art.Word, IsWord = true });
 
 					if ( test.ContainsKey("w"+w.Id) ) {
-						//Console.WriteLine("W: "+w.Id+": "+test["w"+w.Id].Name);
+						Console.WriteLine("W: "+w.Id+": "+test["w"+w.Id].Name);
 						continue;
 					}
 
@@ -112,13 +113,13 @@ namespace Fabric.Apps.WordNet.Artifacts {
 
 			while ( true ) {
 				Dictionary<string, List<ArtNode>> dupMap = GetDuplicateMap();
-				var dups = new List<ArtNode>();
+				var dupSets = new List<List<ArtNode>>();
 
 				foreach ( string key in dupMap.Keys ) {
 					List<ArtNode> list = dupMap[key];
 
 					if ( list.Count > 1 ) {
-						dups.AddRange(list);
+						dupSets.Add(list);
 					}
 				}
 
@@ -141,22 +142,77 @@ namespace Fabric.Apps.WordNet.Artifacts {
 					if ( d.IndexOf("...") != -1 ) { ++ellips; }
 				}
 
-				Console.WriteLine("Duplicate count before level "+level+": "+dups.Count+",\t stats: "+
+				Console.WriteLine("Duplicate count before level "+level+": "+dupSets.Count+",\t stats: "+
 					"n="+nulls+", c="+commas+", s="+semis+", p="+parens+
 					", b="+bracks+", d="+depths+", e="+ellips);
 
-				if ( dups.Count == 0 ) {
+				if ( dupSets.Count == 0 ) {
 					break;
 				}
 
-				foreach ( ArtNode an in dups ) {
-					an.SetDisambLevel(level);
-					an.Art.Disamb = ArtNode.TruncateString(an.Art.Disamb, 128);
+				const int relLevels = 8;
+
+				foreach ( List<ArtNode> dups in dupSets ) {
+					foreach ( ArtNode a in dups ) {
+						string pos = " ["+Stats.PartsOfSpeech[a.Node.SynSet.PartOfSpeechId]+"]";
+
+						if ( level <= 4 ) {
+							if ( a.IsWord ) {
+								List<string> wordStrs = ArtNode.GetWordList(a.Node.SynSet);
+								var dList = new List<string>();
+								var max = (level-1)/2+2; //2,2,3,3
+
+								for ( int i = 0 ; i < wordStrs.Count && dList.Count < max ; ++i ) {
+									if ( wordStrs[i] != a.Art.Name ) {
+										dList.Add(wordStrs[i]);
+									}
+								}
+
+								a.Art.Disamb = level+") "+string.Join(", ", dList)+
+									(level%2 == 0 ? pos : "");
+							}
+							else {
+								List<SemanticNode> hypers = 
+									a.Node.Relations[WordNetEngine.SynSetRelation.Hypernym];
+								hypers.AddRange(
+									a.Node.Relations[WordNetEngine.SynSetRelation.InstanceHypernym]);
+								var max = Math.Min(hypers.Count, (level-1)/2+1); //1,1,2,2
+
+								a.Art.Disamb = string.Join(", ", 
+									hypers.GetRange(0, max).Select(x => x.SynSet.Id).ToList())+
+									(level%2 == 0 ? pos : "");
+							}
+						}
+						else if ( level <= relLevels ) {
+							List<SemanticNode> nonA = dups.Where(x => x != a)
+								.Select(x => x.Node).ToList();
+							IDictionary<string, SemanticNode> uniMap = SemanticNode.GetRelationUnion(nonA);
+							a.RelationDiff = a.Node.GetRelationDiff(uniMap);
+
+							int count = Math.Min(a.RelationDiff.Keys.Count, (level-3)/2+1); //2,2,3,3
+							List<string> keys = a.RelationDiff.Keys.ToList().GetRange(0, count);
+							a.Art.Disamb = level+") "+string.Join("; ", keys)+
+								(level%2 == 0 ? pos : "");
+						}
+						else if ( level == relLevels+1 || level == relLevels+2 ) {
+							a.Art.Disamb = level+") "+ArtNode.GlossToDisamb(a.Node.SynSet.Gloss, true)+
+								(level == relLevels+2 ? pos : "");
+						}
+						else if ( level == relLevels+3 || level == relLevels+4 ) {
+							a.Art.Disamb = level+") "+ArtNode.GlossToDisamb(a.Node.SynSet.Gloss, false)+
+								(level == relLevels+4 ? pos : "");
+						}
+						else if ( level == relLevels+5 || level == relLevels+6 ) {
+							a.Art.Disamb = level+") "+a.Node.SynSet.Gloss+
+								(level == relLevels+6 ? pos : "");
+						}
+
+						//an.SetDisambLevel(level);
+						//an.Art.Disamb = ArtNode.TruncateString(an.Art.Disamb, 128);
+					}
 				}
 
-				level++;
-
-				if ( level > 12 ) {
+				if ( ++level > 20 ) {
 					break;
 				}
 			}

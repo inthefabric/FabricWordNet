@@ -12,6 +12,7 @@ namespace Fabric.Apps.WordNet.Structures {
 		public SemanticNode Node { get; set; }
 		public Word Word { get; set; }
 		public bool IsWord { get; set; }
+		public IDictionary<string, SemanticNode> RelationDiff { get; set; }
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
