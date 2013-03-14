@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Fabric.Apps.WordNet.Data.Domain;
 using Fabric.Apps.WordNet.Structures;
 using NHibernate;
@@ -43,8 +42,6 @@ namespace Fabric.Apps.WordNet.Artifacts {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private void BuildArtifacts() {
-			var test = new Dictionary<string, Artifact>();
-
 			foreach ( SemanticNode n in vNodes.NodeList ) {
 				Synset ss = n.SynSet;
 				List<string> words = ArtNode.GetWordList(ss);
@@ -58,13 +55,6 @@ namespace Fabric.Apps.WordNet.Artifacts {
 				art.Word = (words.Count == 1 ? ss.WordList[0] : null);
 				vList.Add(new ArtNode { Art = art, Node = n, Word = art.Word });
 
-				if ( test.ContainsKey("s"+ss.Id) ) {
-					Console.WriteLine("S: "+ss.Id+": "+test["s"+ss.Id].Name);
-					continue;
-				}
-
-				test.Add("s"+ss.Id, art);
-
 				if ( art.Word != null ) {
 					continue;
 				}
@@ -77,13 +67,6 @@ namespace Fabric.Apps.WordNet.Artifacts {
 					art.Note = ArtNode.TruncateString(pos+": "+ss.Gloss, 256);
 					art.Word = w;
 					vList.Add(new ArtNode { Art = art, Node = n, Word = art.Word, IsWord = true });
-
-					if ( test.ContainsKey("w"+w.Id) ) {
-						Console.WriteLine("W: "+w.Id+": "+test["w"+w.Id].Name);
-						continue;
-					}
-
-					test.Add("w"+w.Id, art);
 				}
 			}
 
@@ -114,105 +97,50 @@ namespace Fabric.Apps.WordNet.Artifacts {
 			while ( true ) {
 				Dictionary<string, List<ArtNode>> dupMap = GetDuplicateMap();
 				var dupSets = new List<List<ArtNode>>();
+				int dupCount = 0;
 
 				foreach ( string key in dupMap.Keys ) {
 					List<ArtNode> list = dupMap[key];
 
 					if ( list.Count > 1 ) {
 						dupSets.Add(list);
+						dupCount += dupSets.Count;
 					}
 				}
 
-				int nulls = 0;
-				int commas = 0;
-				int semis = 0;
-				int parens = 0;
-				int bracks = 0;
-				int depths = 0;
-				int ellips = 0;
-
-				foreach ( ArtNode an in vList ) {
-					string d = an.Art.Disamb;
-					if ( d == null ) { ++nulls; continue; }
-					if ( d.IndexOf(',') != -1 ) { ++commas; }
-					if ( d.IndexOf(';') != -1 ) { ++semis; }
-					if ( d.IndexOf('(') != -1 ) { ++parens; }
-					if ( d.IndexOf('[') != -1 ) { ++bracks; }
-					if ( d.IndexOf('>') != -1 ) { ++depths; }
-					if ( d.IndexOf("...") != -1 ) { ++ellips; }
-				}
-
-				Console.WriteLine("Duplicate count before level "+level+": "+dupSets.Count+",\t stats: "+
-					"n="+nulls+", c="+commas+", s="+semis+", p="+parens+
-					", b="+bracks+", d="+depths+", e="+ellips);
+				Console.WriteLine("Duplicate count before level "+level+": "+
+					dupSets.Count+" / "+dupCount);
 
 				if ( dupSets.Count == 0 ) {
 					break;
 				}
 
-				const int relLevels = 8;
-
 				foreach ( List<ArtNode> dups in dupSets ) {
-					foreach ( ArtNode a in dups ) {
-						string pos = " ["+Stats.PartsOfSpeech[a.Node.SynSet.PartOfSpeechId]+"]";
+					foreach ( ArtNode an in dups ) {
+						switch ( level ) {
+							case 1:
+								an.Art.Disamb = an.GetUniqueWordString(dups);
+								break;
 
-						if ( level <= 4 ) {
-							if ( a.IsWord ) {
-								List<string> wordStrs = ArtNode.GetWordList(a.Node.SynSet);
-								var dList = new List<string>();
-								var max = (level-1)/2+2; //2,2,3,3
+							case 2:
+								an.Art.Disamb = ArtNode.GlossToDisamb(an.Node.SynSet.Gloss, true);
+								break;
 
-								for ( int i = 0 ; i < wordStrs.Count && dList.Count < max ; ++i ) {
-									if ( wordStrs[i] != a.Art.Name ) {
-										dList.Add(wordStrs[i]);
-									}
-								}
+							case 3:
+								an.Art.Disamb = ArtNode.GlossToDisamb(an.Node.SynSet.Gloss, false);
+								break;
 
-								a.Art.Disamb = level+") "+string.Join(", ", dList)+
-									(level%2 == 0 ? pos : "");
-							}
-							else {
-								List<SemanticNode> hypers = 
-									a.Node.Relations[WordNetEngine.SynSetRelation.Hypernym];
-								hypers.AddRange(
-									a.Node.Relations[WordNetEngine.SynSetRelation.InstanceHypernym]);
-								var max = Math.Min(hypers.Count, (level-1)/2+1); //1,1,2,2
-
-								a.Art.Disamb = string.Join(", ", 
-									hypers.GetRange(0, max).Select(x => x.SynSet.Id).ToList())+
-									(level%2 == 0 ? pos : "");
-							}
-						}
-						else if ( level <= relLevels ) {
-							List<SemanticNode> nonA = dups.Where(x => x != a)
-								.Select(x => x.Node).ToList();
-							IDictionary<string, SemanticNode> uniMap = SemanticNode.GetRelationUnion(nonA);
-							a.RelationDiff = a.Node.GetRelationDiff(uniMap);
-
-							int count = Math.Min(a.RelationDiff.Keys.Count, (level-3)/2+1); //2,2,3,3
-							List<string> keys = a.RelationDiff.Keys.ToList().GetRange(0, count);
-							a.Art.Disamb = level+") "+string.Join("; ", keys)+
-								(level%2 == 0 ? pos : "");
-						}
-						else if ( level == relLevels+1 || level == relLevels+2 ) {
-							a.Art.Disamb = level+") "+ArtNode.GlossToDisamb(a.Node.SynSet.Gloss, true)+
-								(level == relLevels+2 ? pos : "");
-						}
-						else if ( level == relLevels+3 || level == relLevels+4 ) {
-							a.Art.Disamb = level+") "+ArtNode.GlossToDisamb(a.Node.SynSet.Gloss, false)+
-								(level == relLevels+4 ? pos : "");
-						}
-						else if ( level == relLevels+5 || level == relLevels+6 ) {
-							a.Art.Disamb = level+") "+a.Node.SynSet.Gloss+
-								(level == relLevels+6 ? pos : "");
+							case 4:
+								an.Art.Disamb = an.Node.SynSet.Gloss;
+								break;
 						}
 
-						//an.SetDisambLevel(level);
-						//an.Art.Disamb = ArtNode.TruncateString(an.Art.Disamb, 128);
+						an.Art.Disamb = level+") "+an.Art.Disamb;
+						an.Art.Disamb = ArtNode.TruncateString(an.Art.Disamb, 128);
 					}
 				}
 
-				if ( ++level > 20 ) {
+				if ( ++level > 6 ) {
 					break;
 				}
 			}
