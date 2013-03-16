@@ -13,6 +13,7 @@
 	public enum DescriptorTypeId {
 		IsRelatedTo = 1,
 		IsA,
+		IsAnInstanceOf,
 		HasA,
 		IsLike,
 		IsNotLike,

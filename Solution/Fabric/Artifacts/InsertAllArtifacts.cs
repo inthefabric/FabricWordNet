@@ -85,6 +85,10 @@ namespace Fabric.Apps.WordNet.Artifacts {
 				}
 
 				map[key].Add(an);
+
+				if ( an.IsFinal && map[key].Count > 1 ) {
+					Console.WriteLine("Finalized ArtNode is still a duplicate: "+key);
+				}
 			}
 
 			return map;
@@ -100,19 +104,16 @@ namespace Fabric.Apps.WordNet.Artifacts {
 				foreach ( List<ArtNode> dups in dupSets ) {
 					foreach ( ArtNode an in dups ) {
 						if ( level == 1 ) {
-							an.Art.Disamb = an.GetUniqueDisambString(dups, true);
+							an.SetUniqueDisambString(dups);
 						}
 						else {
 							int size = level-1; //starts at 1
-							an.Art.Disamb = an.GetGlossString(size);
+							an.SetGlossString(size);
 
 							if ( size > 1 ) {
-								Console.WriteLine(an.Art.Name+": "+an.Art.Disamb);
+								Console.WriteLine(" * "+an.Art.Name+": "+an.Art.Disamb);
 							}
 						}
-
-						an.Art.Disamb = an.Art.Disamb;
-						an.Art.Disamb = ArtNode.TruncateString(an.Art.Disamb, 128);
 					}
 				}
 
@@ -130,9 +131,17 @@ namespace Fabric.Apps.WordNet.Artifacts {
 					}
 
 					foreach ( ArtNode an in list ) { //all non-duplicates
-						if ( string.IsNullOrEmpty(an.Art.Disamb) ) {
-							an.Art.Disamb = an.GetSimpleDisambString(false);
+						if ( an.IsFinal ) {
+							continue;
 						}
+
+						if ( string.IsNullOrEmpty(an.Art.Disamb) ) {
+							an.SetSimpleDisambString();
+						}
+
+						//an.Art.Note = "["+level+"/"+an.DisType+"/"+an.DisVal+"/"+an.FillCount+"] "+
+						//	an.Art.Note;
+						an.IsFinal = true;
 					}
 				}
 

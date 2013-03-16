@@ -9,16 +9,28 @@ namespace Fabric.Apps.WordNet.Structures {
 	/*================================================================================================*/
 	public class ArtNode {
 
+		public enum DisambType {
+			Unique = 1,
+			Simple,
+			Gloss
+		}
+
 		public Artifact Art { get; set; }
 		public SemanticNode Node { get; set; }
 		public Word Word { get; set; }
 		public bool IsWord { get; set; }
+
 		public HashSet<string> WordMap { get; set; }
+		public DisambType DisType { get; set; }
+		public int DisVal { get; set; }
+		public int DisCount { get; set; }
+		public int FillCount { get; set; }
+		public bool IsFinal { get; set; }
 
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
-		public HashSet<string> GetDisambWordMap(bool pIncludeHypers) {
+		public HashSet<string> GetDisambWordMap(bool pIncludeHypers, ArtNode pRequester=null) {
 			if ( WordMap != null ) {
 				return WordMap;
 			}
@@ -27,8 +39,10 @@ namespace Fabric.Apps.WordNet.Structures {
 
 			if ( IsWord ) {
 				foreach ( Word w in Node.SynSet.WordList ) {
-					if ( w.Name != Art.Name ) {
-						WordMap.Add(FixWordName(w));
+					string fix = FixWordName(w);
+
+					if ( fix != Art.Name ) {
+						WordMap.Add(fix);
 					}
 				}
 			}
@@ -43,6 +57,10 @@ namespace Fabric.Apps.WordNet.Structures {
 				List<SemanticNode> hyperRels = rels.ToList();
 
 				foreach ( SemanticNode hyper in hyperRels ) {
+					if ( pRequester != null && hyper == pRequester.Node ) {
+						continue;
+					}
+
 					rels.AddRange(hyper.Relations[WordNetEngine.SynSetRelation.Hypernym]);
 					rels.AddRange(hyper.Relations[WordNetEngine.SynSetRelation.InstanceHypernym]);
 				}
@@ -66,9 +84,15 @@ namespace Fabric.Apps.WordNet.Structures {
 			rels.AddRange(Node.Lexicals[WordNetEngine.SynSetRelation.SimilarTo]);
 
 			foreach ( SemanticNode sn in rels ) {
+				if ( pRequester != null && sn == pRequester.Node ) {
+					continue;
+				}
+
 				foreach ( Word w in sn.SynSet.WordList ) {
-					if ( w.Name != Art.Name ) {
-						WordMap.Add(FixWordName(w));
+					string fix = FixWordName(w);
+
+					if ( fix != Art.Name ) {
+						WordMap.Add(fix);
 					}
 				}
 			}
@@ -85,64 +109,104 @@ namespace Fabric.Apps.WordNet.Structures {
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
-		public string GetSimpleDisambString(bool pIncludeHypers) {
-			List<string> words = GetDisambWordMap(pIncludeHypers).ToList();
+		private void SetDisamb(string pDisamb) {
+			string pos = " ["+Stats.PartsOfSpeech[Node.SynSet.PartOfSpeechId]+"]";
+			Art.Disamb = TruncateString(pDisamb, 128-pos.Length)+pos;
+		}
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		/*--------------------------------------------------------------------------------------------*/
+		public void SetSimpleDisambString() {
+			List<string> words = GetDisambWordMap(false).ToList();
 
 			if ( words.Count == 0 ) {
-				return GetGlossString(1);
+				SetGlossString(1);
+				DisType = DisambType.Simple;
+				DisVal = 0;
+				return;
+			}
+
+			DisType = DisambType.Simple;
+			DisVal = 1;
+
+			if ( words.Count < 3 ) {
+				words = GetDisambWordMap(true).ToList();
+				DisVal = 2;
 			}
 
 			words = words.GetRange(0, Math.Min(words.Count, 3));
-			return string.Join(" / ", words);
+			SetDisamb(string.Join(" / ", words));
+			DisCount = words.Count;
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
-		public string GetUniqueDisambString(List<ArtNode> pDupSet, bool pIncludeHypers) {
+		public void SetUniqueDisambString(List<ArtNode> pDupSet) {
 			IEnumerable<string> dupSetMap = new HashSet<string>();
+			DisType = DisambType.Unique;
+			DisVal = 1;
 
 			foreach ( ArtNode dup in pDupSet ) {
 				if ( dup != this ) {
-					dupSetMap = dupSetMap.Union(dup.GetDisambWordMap(pIncludeHypers));
+					dupSetMap = dupSetMap.Union(dup.GetDisambWordMap(true, this));
 				}
 			}
-			HashSet<string> nodeWordMap = GetDisambWordMap(pIncludeHypers);
+
+			HashSet<string> nodeWordMap = GetDisambWordMap(true);
 			List<string> words = (nodeWordMap.Count == 0 ? 
 				new List<string>() : nodeWordMap.Except(dupSetMap).ToList());
+			
+			if ( words.Count == 0 ) {
+				SetGlossString(1);
+				DisType = DisambType.Unique;
+				DisVal = 0;
+				return;
+			}
 
 			if ( words.Count >= 3 ) {
 				words = words.GetRange(0, 3);
-			}
-			else {
-				List<string> nodeWords = nodeWordMap.ToList();
-
-				while ( words.Count < 3 && nodeWords.Count > 0 ) {
-					words.Add(nodeWords[0]);
-					nodeWords.RemoveAt(0);
-				}
+				DisVal = 2;
 			}
 
-			return string.Join(" / ", words);
+			SetDisamb(string.Join(" / ", words));
+			DisCount = words.Count;
 		}
 		
 		/*--------------------------------------------------------------------------------------------*/
-		public string GetGlossString(int pSize) {
-			string str = "";
+		public void SetGlossString(int pSize) {
+			DisType = DisambType.Gloss;
+			DisVal = pSize;
+			DisCount = -1;
 
 			switch ( pSize ) {
 				case 1:
-					str += GlossToDisamb(Node.SynSet.Gloss, true);
-					break;
+					SetDisamb(GlossToDisamb(Node.SynSet.Gloss, true));
+					return;
 
 				case 2:
-					str += GlossToDisamb(Node.SynSet.Gloss, false);
-					break;
+					SetDisamb(GlossToDisamb(Node.SynSet.Gloss, false));
+					return;
 
 				case 3:
-					str += Node.SynSet.Gloss;
-					break;
+					SetDisamb(Node.SynSet.Gloss);
+					return;
 			}
 
-			return str;
+			throw new Exception("Invalid GlossString size: "+pSize);
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		public void EnsureFilledDisamb() {
+			if ( DisCount == -1 || DisCount >= 3 ) {
+				return;
+			}
+			
+			List<string> nodeWords = GetDisambWordMap(false).ToList();
+			FillCount = Math.Min(3-DisCount, nodeWords.Count);
+
+			for ( int i = 0 ; i < FillCount ; ++i ) {
+				Art.Disamb += (i == 0 && DisCount == 0 ? "" : " / ")+nodeWords[i];
+			}
 		}
 
 
