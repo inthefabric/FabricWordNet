@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DbBuilder.cs" />
+    <Compile Include="Domain\Export.cs" />
     <Compile Include="Domain\Word.cs" />
     <Compile Include="Domain\Synset.cs" />
     <Compile Include="Domain\Semantic.cs" />
@@ -40,6 +41,7 @@
     <Compile Include="Domain\Factor.cs" />
     <Compile Include="Domain\Artifact.cs" />
     <Compile Include="ISessionProvider.cs" />
+    <Compile Include="Mapping\ExportMap.cs" />
     <Compile Include="Mapping\WordMap.cs" />
     <Compile Include="Mapping\SynsetMap.cs" />
     <Compile Include="Mapping\LexicalMap.cs" />

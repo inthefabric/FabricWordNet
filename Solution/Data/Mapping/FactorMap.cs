@@ -22,7 +22,6 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 
 			References(x => x.Lexical).Nullable();
 			References(x => x.Semantic).Nullable();
-			Map(x => x.ActualFactorId).Nullable();
 
 			Map(x => x.DescriptorTypeId).Nullable();
 			References(x => x.DescriptorTypeRefine).Nullable();
@@ -38,6 +37,8 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 			Map(x => x.PrimaryDirectorActionId).Nullable();
 			Map(x => x.RelatedDirectorActionId).Nullable();
 			Map(x => x.ActualDirectorId).Nullable();
+
+			HasMany(x => x.ExportList);
 		}
 
 	}

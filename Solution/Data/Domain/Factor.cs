@@ -1,4 +1,6 @@
-﻿namespace Fabric.Apps.WordNet.Data.Domain {
+﻿using System.Collections.Generic;
+
+namespace Fabric.Apps.WordNet.Data.Domain {
 	
 	/*================================================================================================*/
 	public class Factor {
@@ -12,7 +14,6 @@
 
 		public virtual Lexical Lexical { get; set; }
 		public virtual Semantic Semantic { get; set; }
-		public virtual long ActualFactorId { get; set; }
 
 		public virtual byte DescriptorTypeId { get; set; }
 		public virtual Artifact DescriptorTypeRefine { get; set; }
@@ -29,11 +30,13 @@
 		public virtual byte RelatedDirectorActionId { get; set; }
 		public virtual long ActualDirectorId { get; set; }
 
+		public virtual IList<Export> ExportList { get; set; } //0 or 1
+
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public Factor() {
-
+			ExportList = new List<Export>();
 		}
 
 	}
