@@ -135,7 +135,9 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private void ThreadAction(Artifact pArt, ParallelLoopState pState, long pIndex) {
-			try {;
+			try {
+				long t = DateTime.UtcNow.Ticks;
+
 				ThreadPrint(pIndex, "Exporting Artifact ["+pArt.Id+":  "+pArt.Name+"]...");
 				FabResponse<FabClass> fr = ThreadAddFabricClass(pArt, pIndex);
 				FabClass c = fr.FirstDataItem();
@@ -147,9 +149,13 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				double perc = vThreadDoneCount/(double)vArtCount;
 				double time = (DateTime.UtcNow.Ticks-vThreadStartTime)/10000000.0;
 				double perSec = vThreadDoneCount/time;
-				ThreadPrint(pIndex, " * ---------------------------------------------------- Done! "+
-					GetSecs(vThreadStartTime)+" / "+(perc*100)+"% / "+
-					perSec.ToString("##.000")+" exp/sec ---");
+				ThreadPrint(pIndex, 
+					" * ........................................................................... "+
+					"Finished "+vThreadDoneCount+" of "+vArtCount+" \t"+
+					GetSecs(t)+" thr \t"+
+					GetSecs(vThreadStartTime)+" tot \t"+
+					(perc*100).ToString("##0.000")+"% \t"+
+					perSec.ToString("#0.000")+" exp/sec");
 			}
 			catch ( Exception e ) {
 				ThreadPrint(pIndex, " # EXCEPTION: "+e);
@@ -212,8 +218,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 		/*--------------------------------------------------------------------------------------------*/
 		private static string GetSecs(long pFromTime) {
-			long milli = (DateTime.UtcNow.Ticks-pFromTime)/10000;
-			return (milli/1000.0)+" sec";
+			return ((DateTime.UtcNow.Ticks-pFromTime)/10000000.0).ToString("##0.000")+" sec";
 		}
 
 	}
