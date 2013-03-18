@@ -26,7 +26,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		/*--------------------------------------------------------------------------------------------*/
 		public ExportCommand(ICommandIo pCommIo, MatchCollection pMatches) : base(pCommIo) {
 			vArtCount = 10;
-			vThreadCount = 3;
+			vThreadCount = 5;
 
 			if ( pMatches.Count > 3 ) {
 				CommIo.Print("Invalid parameter count. Expected <= 2 parameters.");
@@ -105,19 +105,41 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 		/*--------------------------------------------------------------------------------------------*/
 		public void RunThreads() {
+			try {
+				CommIo.Print("Authenticating Fabric DataProvider...");
+				var f = new FabricClient();
+				f.AppDataProvSession.RefreshTokenIfNecessary();
+				f.UseDataProviderPerson = true;
+
+				if ( !f.AppDataProvSession.IsAuthenticated ) {
+					throw  new Exception("DataProvider is not authenticated.");
+				}
+
+				CommIo.Print("DataProvider authenticated.");
+			}
+			catch ( Exception e ) {
+				CommIo.Print("Authentication exception: "+e);
+				return;
+			}
+
 			vThreadStartTime = DateTime.UtcNow.Ticks;
 			vThreadDoneCount = 0;
-			Parallel.ForEach(vArtifactList, ThreadAction);
+
+			var opt = new ParallelOptions();
+			opt.MaxDegreeOfParallelism = vThreadCount;
+
+			Parallel.ForEach(vArtifactList, opt, ThreadAction);
 		}
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private void ThreadAction(Artifact pArt, ParallelLoopState pState, long pIndex) {
-			try {
+			try {;
+				ThreadPrint(pIndex, "Exporting Artifact ["+pArt.Id+":  "+pArt.Name+"]...");
 				FabResponse<FabClass> fr = ThreadAddFabricClass(pArt, pIndex);
 				FabClass c = fr.FirstDataItem();
-				ThreadPrint(pIndex, "Export success: Artifact "+pArt.Id+" == FabClass "+c.ClassId);
+				ThreadPrint(pIndex, " * Export success: Artifact "+pArt.Id+" == FabClass "+c.ClassId);
 
 				ThreadAddExport(pArt, fr, c, pIndex);
 
@@ -125,22 +147,21 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				double perc = vThreadDoneCount/(double)vArtCount;
 				double time = (DateTime.UtcNow.Ticks-vThreadStartTime)/10000000.0;
 				double perSec = vThreadDoneCount/time;
-				ThreadPrint(pIndex, "--- Done! T="+GetSecs(vThreadStartTime)+" / "+
-					(perc*100)+"% done / "+perSec+" exp/sec ---");
+				ThreadPrint(pIndex, " * ---------------------------------------------------- Done! "+
+					GetSecs(vThreadStartTime)+" / "+(perc*100)+"% / "+
+					perSec.ToString("##.000")+" exp/sec ---");
 			}
 			catch ( Exception e ) {
-				ThreadPrint(pIndex, "EXCEPTION: "+e);
+				ThreadPrint(pIndex, " # EXCEPTION: "+e);
 			}
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
 		private FabResponse<FabClass> ThreadAddFabricClass(Artifact pArt, long pIndex) {
-			ThreadPrint(pIndex, "Exporting Artifact "+pArt.Id+" / "+pArt.Name+" to Fabric...");
-
 			var f = new FabricClient();
 			f.AppDataProvSession.RefreshTokenIfNecessary();
 			f.UseDataProviderPerson = true;
-			ThreadPrint(pIndex, "FabricClient authenticated.");
+			//ThreadPrint(pIndex, "FabricClient authenticated.");
 
 			if ( !f.AppDataProvSession.IsAuthenticated ) {
 				throw new Exception("Could not authenticate.");
@@ -164,7 +185,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		/*--------------------------------------------------------------------------------------------*/
 		private void ThreadAddExport(Artifact pArt, FabResponse<FabClass> pFabResp,
 																		FabClass pClass, long pIndex) {
-			ThreadPrint(pIndex, "Adding Export item to the database...");
+			//ThreadPrint(pIndex, " * Adding Export item to the database...");
 
 			using ( ISession sess = vSessProv.OpenSession() ) {
 				using ( ITransaction tx = sess.BeginTransaction() ) {
@@ -186,7 +207,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 		/*--------------------------------------------------------------------------------------------*/
 		private void ThreadPrint(long pIndex, string pText) {
-			CommIo.Print("Thread "+pIndex+": "+pText);
+			CommIo.Print("T"+pIndex+": \t"+pText);
 		}
 
 		/*--------------------------------------------------------------------------------------------*/

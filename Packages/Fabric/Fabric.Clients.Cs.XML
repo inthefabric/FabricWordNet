@@ -1090,7 +1090,7 @@
         <member name="T:Fabric.Clients.Cs.FabricClientConfig">
             <summary />
         </member>
-        <member name="M:Fabric.Clients.Cs.FabricClientConfig.#ctor(System.String,System.String,System.Int32,System.String,System.Int32,System.String,Fabric.Clients.Cs.FabricClientConfig.SessionContainerProvider)">
+        <member name="M:Fabric.Clients.Cs.FabricClientConfig.#ctor(System.String,System.String,System.Int64,System.String,System.Int64,System.String,Fabric.Clients.Cs.FabricClientConfig.SessionContainerProvider)">
             <summary />
         </member>
         <member name="M:Fabric.Clients.Cs.FabricClientConfig.GetSessionContainer">
