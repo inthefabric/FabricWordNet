@@ -144,6 +144,11 @@
               Create a new Class.
             </summary>
         </member>
+        <member name="P:Fabric.Clients.Cs.Api.IModifyService.AddClasses">
+            <summary>
+              MISSING:Modify_AddClasses
+            </summary>
+        </member>
         <member name="P:Fabric.Clients.Cs.Api.IModifyService.AddFactor">
             <summary>
               Create a new Factor.
@@ -600,6 +605,22 @@
             </param>
             <param name="Note">
               A brief description of the new Class. It can be useful for helping others understand the creator's intended purpose or meaning.
+            </param>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IAddClassesOperation">
+            <summary>
+              MISSING:Modify_AddClasses
+            </summary>
+            <remarks>
+              <para>MISSING:Modify_AddClasses</para>
+            </remarks>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.IAddClassesOperation.Post(Fabric.Clients.Cs.Api.FabBatchNewClass[])">
+            <summary>
+              Perform the operation.
+            </summary>
+            <param name="Classes">
+              MISSING:Modify_AddClasses_Classes
             </param>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IAddFactorOperation">
@@ -2699,6 +2720,65 @@
         <member name="P:Fabric.Clients.Cs.Api.FabArtifactType.ArtifactTypeId">
             <summary>
               Uniquely identifies this object amongst all other objects of this type.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabBatchNewClass">
+            <summary>
+              MISSING:BatchNewClass
+            </summary>
+            <remarks>
+              <para>MISSING:BatchNewClass</para>
+            </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabBatchNewObject">
+            <summary>
+              MISSING:BatchNewObject
+            </summary>
+            <remarks>
+              <para>MISSING:BatchNewObject</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewObject.BatchId">
+            <summary>
+              MISSING:BatchNewObject_BatchId
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewClass.Disamb">
+            <summary>
+              MISSING:BatchNewClass_Disamb
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewClass.Name">
+            <summary>
+              MISSING:BatchNewClass_Name
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewClass.Note">
+            <summary>
+              MISSING:BatchNewClass_Note
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabBatchResult">
+            <summary>
+              MISSING:BatchResult
+            </summary>
+            <remarks>
+              <para>MISSING:BatchResult</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchResult.BatchId">
+            <summary>
+              MISSING:BatchResult_BatchId
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchResult.Error">
+            <summary>
+              MISSING:BatchResult_Error
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchResult.ResultId">
+            <summary>
+              MISSING:BatchResult_ResultId
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabClass">

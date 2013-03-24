@@ -22,10 +22,15 @@ namespace Fabric.Apps.WordNet.Export {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private static void InitFabricClient() {
-			var config = new FabricClientConfig("WordNetExport", "http://api.inthefabric.com",
-				159747403417649152, "4e0037f6ce2f4028b4d69646bd24df3d", 159747300745281536, 
+			var config = new FabricClientConfig("WordNetExport", "http://localhost:9000",
+				2, "0123456789abcdefghijkLMNOPqrstuv", 4,
 				"http://localhost:49316/OAuth/FabricRedirect",
 				FabSess.FabricSessionContainerProvider);
+
+			/*var config = new FabricClientConfig("WordNetExport", "http://api.inthefabric.com",
+				159747403417649152, "4e0037f6ce2f4028b4d69646bd24df3d", 159747300745281536, 
+				"http://localhost:49316/OAuth/FabricRedirect",
+				FabSess.FabricSessionContainerProvider);*/
 			config.Logger = new FabLog();
 
 			FabricClient.InitOnce(config);

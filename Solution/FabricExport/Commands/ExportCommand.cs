@@ -14,9 +14,12 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 	/*================================================================================================*/
 	public class ExportCommand : Command {
 
-		private readonly int vArtCount;
+		private readonly int vBatchSize;
+		private readonly int vBatchCount;
 		private readonly int vThreadCount;
 		private IList<Artifact> vArtifactList;
+		private IList<IList<Artifact>> vBatchList;
+		private Job vJob;
 		private SessionProvider vSessProv;
 		private long vThreadStartTime;
 		private long vThreadDoneCount;
@@ -25,38 +28,41 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public ExportCommand(ICommandIo pCommIo, MatchCollection pMatches) : base(pCommIo) {
-			vArtCount = 10;
+			vBatchSize = 10;
+			vBatchCount = 10;
 			vThreadCount = 5;
 
-			if ( pMatches.Count > 3 ) {
-				CommIo.Print("Invalid parameter count. Expected <= 2 parameters.");
+			if ( pMatches.Count != 4 ) {
+				CommIo.Print("Invalid parameter count. Expected 3 parameters.");
 				IsError = true;
 				return;
 			}
 
-			if ( pMatches.Count >= 2 ) {
-				int ac;
-				
-				if ( !int.TryParse(pMatches[1].Value, out ac) ) {
-					CommIo.Print("Invalid ArtCount parameter. Expected an integer.");
-					IsError = true;
-					return;
-				}
-
-				vArtCount = ac;
+			int bs;
+			int bc;
+			int tc;
+			
+			if ( !int.TryParse(pMatches[1].Value, out bs) ) {
+				CommIo.Print("Invalid BatchSize parameter. Expected an integer.");
+				IsError = true;
+				return;
 			}
 
-			if ( pMatches.Count == 3 ) {
-				int tc;
-
-				if ( !int.TryParse(pMatches[2].Value, out tc) ) {
-					CommIo.Print("Invalid ThreadCount parameter. Expected an integer.");
-					IsError = true;
-					return;
-				}
-
-				vThreadCount = tc;
+			if ( !int.TryParse(pMatches[2].Value, out bc) ) {
+				CommIo.Print("Invalid BatchCount parameter. Expected an integer.");
+				IsError = true;
+				return;
 			}
+
+			if ( !int.TryParse(pMatches[3].Value, out tc) ) {
+				CommIo.Print("Invalid ThreadCount parameter. Expected an integer.");
+				IsError = true;
+				return;
+			}
+
+			vBatchSize = bs;
+			vBatchCount = bc;
+			vThreadCount = tc;
 		}
 
 
@@ -73,6 +79,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 			
 			using ( ISession sess = vSessProv.OpenSession() ) {
 				GetArtifacts(sess);
+				CreateJob(sess);
 				RunThreads();
 			}
 		}
@@ -85,7 +92,9 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public void GetArtifacts(ISession pSess) {
-			CommIo.Print("Loading (up to) "+vArtCount+" un-exported Artifacts...");
+			int artCount = vBatchSize*vBatchCount;
+
+			CommIo.Print("Loading (up to) "+artCount+" un-exported Artifacts...");
 			Artifact artAlias = null;
 
 			vArtifactList = pSess.QueryOver<Artifact>(() => artAlias)
@@ -93,14 +102,41 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				.Where(x => x.Artifact == null)
 				.Fetch(x => x.ExportList).Eager
 				.OrderBy(() => artAlias.Id).Asc
-				.Take(vArtCount)
+				.Take(artCount)
 				.List();
 
 			CommIo.Print("Found "+vArtifactList.Count+" Artifacts.");
 
-			/*foreach ( Artifact a in vArtifactList ) {
-				CommIo.Print(" - "+a.Name+" / "+a.ExportList.Count);
+			vBatchList = new List<IList<Artifact>>();
+			int a = 0;
+
+			for ( int i = 0 ; i < vBatchCount ; ++i ) {
+				vBatchList.Add(new List<Artifact>());
+				int max = Math.Min(a+vBatchSize, vArtifactList.Count);
+
+				for ( ; a < max ; ++a ) {
+					vBatchList[i].Add(vArtifactList[a]);
+				}
+			}
+
+			/*foreach ( IList<Artifact> batch in vBatchList ) {
+				CommIo.Print(" - Batch");
+
+				foreach ( Artifact art in batch ) {
+					CommIo.Print("    * "+art.Name+" / "+art.ExportList.Count);
+				}
 			}*/
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		public void CreateJob(ISession pSess) {
+			using ( ITransaction tx = pSess.BeginTransaction() ) {
+				vJob = new Job();
+				vJob.TimeStart = DateTime.UtcNow.Ticks;
+				pSess.Save(vJob);
+
+				tx.Commit();
+			}
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -128,30 +164,40 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 			var opt = new ParallelOptions();
 			opt.MaxDegreeOfParallelism = vThreadCount;
 
-			Parallel.ForEach(vArtifactList, opt, ThreadAction);
+			Parallel.ForEach(vBatchList, opt, ThreadAction);
+			CloseJob();
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		public void CloseJob() {
+			using ( ISession sess = vSessProv.OpenSession() ) {
+				using ( ITransaction tx = sess.BeginTransaction() ) {
+					vJob = sess.Get<Job>(vJob.Id);
+					vJob.TimeEnd = DateTime.UtcNow.Ticks;
+					sess.SaveOrUpdate(vJob);
+
+					tx.Commit();
+				}
+			}
 		}
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
-		private void ThreadAction(Artifact pArt, ParallelLoopState pState, long pIndex) {
+		private void ThreadAction(IList<Artifact> pBatch, ParallelLoopState pState, long pIndex) {
 			try {
 				long t = DateTime.UtcNow.Ticks;
 
-				ThreadPrint(pIndex, "Exporting Artifact ["+pArt.Id+":  "+pArt.Name+"]...");
-				FabResponse<FabClass> fr = ThreadAddFabricClass(pArt, pIndex);
-				FabClass c = fr.FirstDataItem();
-				ThreadPrint(pIndex, " * Export success: Artifact "+pArt.Id+" == FabClass "+c.ClassId);
-
-				ThreadAddExport(pArt, fr, c, pIndex);
+				FabResponse<FabBatchResult> fr = ThreadAddFabricClasses(pBatch, pIndex);
+				ThreadAddBatchExport(fr, pIndex);
 
 				++vThreadDoneCount;
-				double perc = vThreadDoneCount/(double)vArtCount;
+				double perc = vThreadDoneCount/(double)vBatchCount;
 				double time = (DateTime.UtcNow.Ticks-vThreadStartTime)/10000000.0;
-				double perSec = vThreadDoneCount/time;
+				double perSec = (vThreadDoneCount*vBatchSize)/time;
 				ThreadPrint(pIndex, 
 					" * ........................................................................... "+
-					"Finished "+vThreadDoneCount+" of "+vArtCount+" \t"+
+					"Finished batch "+vThreadDoneCount+" of "+vBatchCount+" \t"+
 					GetSecs(t)+" thr \t"+
 					GetSecs(vThreadStartTime)+" tot \t"+
 					(perc*100).ToString("##0.000")+"% \t"+
@@ -163,48 +209,80 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
-		private FabResponse<FabClass> ThreadAddFabricClass(Artifact pArt, long pIndex) {
+		private FabResponse<FabBatchResult> ThreadAddFabricClasses(IList<Artifact> pBatch, long pIndex){
 			var f = new FabricClient();
 			f.AppDataProvSession.RefreshTokenIfNecessary();
 			f.UseDataProviderPerson = true;
-			//ThreadPrint(pIndex, "FabricClient authenticated.");
 
 			if ( !f.AppDataProvSession.IsAuthenticated ) {
 				throw new Exception("Could not authenticate.");
 			}
 
-			FabResponse<FabClass> fr = 
-				f.Services.Modify.AddClass.Post(pArt.Name, pArt.Disamb, pArt.Note);
+			ThreadPrint(pIndex, "Starting batch...");
+			var classes = new FabBatchNewClass[pBatch.Count];
+
+			for ( int i = 0 ; i < pBatch.Count ; ++i ) {
+				Artifact a = pBatch[i];
+				ThreadPrint(pIndex, " - Export Artifact ["+a.Id+": "+a.Name+"]");
+
+				var b = new FabBatchNewClass();
+				b.BatchId = a.Id;
+				b.Name = a.Name;
+				b.Disamb = a.Disamb;
+				b.Note = a.Note;
+				classes[i] = b;
+			}
+
+			FabResponse<FabBatchResult> fr = f.Services.Modify.AddClasses.Post(classes);
 
 			if ( fr.Error != null ) {
 				FabError e = fr.Error;
-				throw new Exception("FabError "+e.Code+": "+e.Name+" / "+e.Message);
+				throw new Exception(" - FabError "+e.Code+": "+e.Name+" / "+e.Message);
 			}
 
 			if ( fr.Data == null ) {
-				throw new Exception("FabResponse.Data is null.");
+				throw new Exception(" - FabResponse.Data is null.");
+			}
+
+			foreach ( FabBatchResult br in fr.Data ) {
+				ThreadPrint(pIndex, " * Export success: Artifact "+
+					br.BatchId+" == FabClass "+br.ResultId);
 			}
 
 			return fr;
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
-		private void ThreadAddExport(Artifact pArt, FabResponse<FabClass> pFabResp,
-																		FabClass pClass, long pIndex) {
+		private void ThreadAddBatchExport(FabResponse<FabBatchResult> pFabResp, long pIndex) {
 			//ThreadPrint(pIndex, " * Adding Export item to the database...");
 
 			using ( ISession sess = vSessProv.OpenSession() ) {
 				using ( ITransaction tx = sess.BeginTransaction() ) {
-					var e = new Data.Domain.Export();
-					e.FabricId = pClass.ClassId;
-					e.Artifact = pArt;
-					e.Factor = null;
+					var b = new Batch();
+					b.Job = sess.Load<Job>(vJob.Id);
+					b.Size = vBatchSize;
+					b.Count = vBatchCount;
+					b.Threads = vThreadCount;
+					b.Timestamp = pFabResp.Timestamp;
+					b.DataLen = pFabResp.DataLen;
+					b.DbMs = pFabResp.DbMs;
+					b.TotalMs = pFabResp.TotalMs;
+					sess.Save(b);
 
-					e.Timestamp = pFabResp.Timestamp;
-					e.DataLen = pFabResp.DataLen;
-					e.DbMs = pFabResp.DbMs;
-					e.TotalMs = pFabResp.TotalMs;
-					sess.Save(e);
+					foreach ( FabBatchResult br in pFabResp.Data ) {
+						if ( br.Error != null ) {
+							ThreadPrint(pIndex, " # ERROR: "+br.Error.Name+
+								" ("+br.Error.Code+"): "+br.Error.Message);
+							continue;
+						}
+
+						var e = new Data.Domain.Export();
+						e.Batch = b;
+						e.FabricId = br.ResultId;
+						e.Artifact = sess.Load<Artifact>((int)br.BatchId);
+						e.Factor = null;
+						sess.Save(e);
+					}
 
 					tx.Commit();
 				}

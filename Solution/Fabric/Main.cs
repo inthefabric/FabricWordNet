@@ -1,6 +1,7 @@
 using System.IO;
 using Fabric.Apps.WordNet.Artifacts;
 using Fabric.Apps.WordNet.Data;
+using Fabric.Apps.WordNet.Wordnet;
 using NHibernate;
 
 namespace Fabric.Apps.WordNet {
@@ -15,7 +16,7 @@ namespace Fabric.Apps.WordNet {
 		/*--------------------------------------------------------------------------------------------*/
 		public static void Main(string[] pArgs) {
 			DbBuilder.InitOnce();
-			DbBuilder.UpdateSchema();
+			//DbBuilder.UpdateSchema();
 			var sessProv = new SessionProvider();
 
 			using ( ISession sess = sessProv.OpenSession() ) {
