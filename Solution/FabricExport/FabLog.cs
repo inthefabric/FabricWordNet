@@ -24,7 +24,7 @@ namespace Fabric.Apps.WordNet.Export {
 
 		/*--------------------------------------------------------------------------------------------*/
 		public void Error(IFabricClientConfig pConfig, string pText) {
-			//Out("Error", pConfig, pText);
+			Out("Error", pConfig, pText);
 		}
 
 		/*--------------------------------------------------------------------------------------------*/

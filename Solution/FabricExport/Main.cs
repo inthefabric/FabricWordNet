@@ -22,15 +22,29 @@ namespace Fabric.Apps.WordNet.Export {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private static void InitFabricClient() {
-			var config = new FabricClientConfig("WordNetExport", "http://localhost:9000",
-				2, "0123456789abcdefghijkLMNOPqrstuv", 4,
-				"http://localhost:49316/OAuth/FabricRedirect",
-				FabSess.FabricSessionContainerProvider);
+			const bool LOCAL = true;
+			const bool BYFAB = false;
+			FabricClientConfig config;
 
-			/*var config = new FabricClientConfig("WordNetExport", "http://api.inthefabric.com",
-				159747403417649152, "4e0037f6ce2f4028b4d69646bd24df3d", 159747300745281536, 
-				"http://localhost:49316/OAuth/FabricRedirect",
-				FabSess.FabricSessionContainerProvider);*/
+			if ( LOCAL ) {
+				config = new FabricClientConfig("WordNetExport", "http://localhost:9000",
+					2, "0123456789abcdefghijkLMNOPqrstuv", 4,
+					"http://localhost:49316/OAuth/FabricRedirect",
+					FabSess.FabricSessionContainerProvider);
+			}
+			else if ( BYFAB ) {
+				config = new FabricClientConfig("WordNetExport", "http://api.inthefabric.com",
+					1, "abcdefghijklmnopqrstuvwxyZ012345", 1,
+					"http://localhost:49316/OAuth/FabricRedirect",
+					FabSess.FabricSessionContainerProvider);
+			}
+			else {
+				config = new FabricClientConfig("WordNetExport", "http://api.inthefabric.com",
+					40779472528474112, "b0dee7dff1484f1ca20a67c9cd949c6f", 40779451267547136,
+					"http://localhost:49316/OAuth/FabricRedirect",
+					FabSess.FabricSessionContainerProvider);
+			}
+			
 			config.Logger = new FabLog();
 
 			FabricClient.InitOnce(config);

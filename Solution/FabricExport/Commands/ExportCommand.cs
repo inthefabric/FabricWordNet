@@ -14,6 +14,8 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 	/*================================================================================================*/
 	public class ExportCommand : Command {
 
+		private const bool DEBUG = false;
+
 		private readonly int vBatchSize;
 		private readonly int vBatchCount;
 		private readonly int vThreadCount;
@@ -23,6 +25,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		private SessionProvider vSessProv;
 		private long vThreadStartTime;
 		private long vThreadDoneCount;
+		private long vFailureCount;
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
@@ -160,12 +163,14 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 			vThreadStartTime = DateTime.UtcNow.Ticks;
 			vThreadDoneCount = 0;
+			vFailureCount = 0;
 
 			var opt = new ParallelOptions();
 			opt.MaxDegreeOfParallelism = vThreadCount;
 
 			Parallel.ForEach(vBatchList, opt, ThreadAction);
 			CloseJob();
+			CommIo.Print("Job "+vJob.Id+" complete! Failure count: "+vFailureCount);
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -196,7 +201,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				double time = (DateTime.UtcNow.Ticks-vThreadStartTime)/10000000.0;
 				double perSec = (vThreadDoneCount*vBatchSize)/time;
 				ThreadPrint(pIndex, 
-					" * ........................................................................... "+
+					(DEBUG ? " * .............................................................. " : "")+
 					"Finished batch "+vThreadDoneCount+" of "+vBatchCount+" \t"+
 					GetSecs(t)+" thr \t"+
 					GetSecs(vThreadStartTime)+" tot \t"+
@@ -218,12 +223,12 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				throw new Exception("Could not authenticate.");
 			}
 
-			ThreadPrint(pIndex, "Starting batch...");
+			if ( DEBUG ) ThreadPrint(pIndex, "Starting batch...");
 			var classes = new FabBatchNewClass[pBatch.Count];
 
 			for ( int i = 0 ; i < pBatch.Count ; ++i ) {
 				Artifact a = pBatch[i];
-				ThreadPrint(pIndex, " - Export Artifact ["+a.Id+": "+a.Name+"]");
+				if ( DEBUG ) ThreadPrint(pIndex, " - Export Artifact ["+a.Id+": "+a.Name+"]");
 
 				var b = new FabBatchNewClass();
 				b.BatchId = a.Id;
@@ -237,16 +242,20 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 			if ( fr.Error != null ) {
 				FabError e = fr.Error;
+				vFailureCount += vBatchSize;
 				throw new Exception(" - FabError "+e.Code+": "+e.Name+" / "+e.Message);
 			}
 
 			if ( fr.Data == null ) {
+				vFailureCount += vBatchSize;
 				throw new Exception(" - FabResponse.Data is null.");
 			}
 
-			foreach ( FabBatchResult br in fr.Data ) {
-				ThreadPrint(pIndex, " * Export success: Artifact "+
-					br.BatchId+" == FabClass "+br.ResultId);
+			if ( DEBUG ) {
+				foreach ( FabBatchResult br in fr.Data ) {
+					ThreadPrint(pIndex, " * Export success: Artifact "+
+						br.BatchId+" == FabClass "+br.ResultId);
+				}
 			}
 
 			return fr;
@@ -271,8 +280,10 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 					foreach ( FabBatchResult br in pFabResp.Data ) {
 						if ( br.Error != null ) {
+							vFailureCount++;
 							ThreadPrint(pIndex, " # ERROR: "+br.Error.Name+
-								" ("+br.Error.Code+"): "+br.Error.Message);
+								" ("+br.Error.Code+"): "+br.Error.Message+
+								" ["+br.BatchId+" / "+br.ResultId+"]");
 							continue;
 						}
 
