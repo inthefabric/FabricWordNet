@@ -20,10 +20,10 @@ namespace Fabric.Apps.WordNet {
 			var sessProv = new SessionProvider();
 
 			using ( ISession sess = sessProv.OpenSession() ) {
-				//BuildWordNet.BuildBaseDb(sess);
-				//Stats.PrintAll(sess);
+				BuildWordNet.BuildBaseDb(sess);
+				Stats.PrintAll(sess);
 				//sessProv.OutputSql = true;
-				//BuildArtifacts.InsertWordAndSynsetArtifacts(sess);
+				BuildArtifacts.InsertWordAndSynsetArtifacts(sess);
 			}
 		}
 	}

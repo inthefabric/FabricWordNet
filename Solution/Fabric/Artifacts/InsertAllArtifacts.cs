@@ -29,6 +29,12 @@ namespace Fabric.Apps.WordNet.Artifacts {
 
 			using ( ITransaction tx = pSess.BeginTransaction() ) {
 				foreach ( ArtNode an in vList ) {
+					an.Art.Name = an.Art.Name.Replace("`", "'");
+
+					if ( an.Art.Disamb != null ) {
+						an.Art.Disamb = an.Art.Disamb.Replace("`", "'");
+					}
+
 					pSess.Save(an.Art);
 				}
 
