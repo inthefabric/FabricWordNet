@@ -43,6 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Artifacts\InsertAllArtifacts.cs" />
+    <Compile Include="Factors\BuildFactors.cs" />
+    <Compile Include="Factors\SemanticFactors.cs" />
+    <Compile Include="Structures\ArtifactSet.cs" />
     <Compile Include="Wordnet\BuildWordNet.cs" />
     <Compile Include="Artifacts\BuildArtifacts.cs" />
     <Compile Include="Stats.cs" />
@@ -75,4 +78,5 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
 </Project>

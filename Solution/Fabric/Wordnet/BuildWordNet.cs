@@ -15,7 +15,7 @@ namespace Fabric.Apps.WordNet.Wordnet {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public static void SetDbStateBeforeBatchInsert(ISession pSess) {
-			pSess.CreateSQLQuery("VACUUM").UniqueResult();
+			//pSess.CreateSQLQuery("VACUUM").UniqueResult();
 			pSess.CreateSQLQuery("PRAGMA synchronous = OFF").UniqueResult();
 			pSess.CreateSQLQuery("PRAGMA journal_mode = WAL").UniqueResult();
 		}
