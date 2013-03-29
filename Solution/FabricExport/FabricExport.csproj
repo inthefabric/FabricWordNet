@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="Commander.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\ArtifactCommand.cs" />
+    <Compile Include="Commands\ConfirmJobCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\StopExportCommand.cs" />
     <Compile Include="Commands\ICommandIo.cs" />

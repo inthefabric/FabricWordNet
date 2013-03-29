@@ -118,6 +118,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				int max = Math.Min(a+vBatchSize, vArtifactList.Count);
 
 				for ( ; a < max ; ++a ) {
+					vArtifactList[a].Note = vArtifactList[a].Note.Replace("&", "%26");
 					vBatchList[i].Add(vArtifactList[a]);
 				}
 			}

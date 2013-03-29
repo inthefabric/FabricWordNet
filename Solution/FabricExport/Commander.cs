@@ -12,6 +12,8 @@ namespace Fabric.Apps.WordNet.Export {
 
 		public enum Command {
 			Export = 1,
+			Artifact,
+			ConfirmJob,
 			//StopExport
 			Exit
 		}
@@ -27,6 +29,8 @@ namespace Fabric.Apps.WordNet.Export {
 		public Commander() {
 			CommandText = new Dictionary<string, Command>();
 			CommandText.Add("export", Command.Export);
+			CommandText.Add("art", Command.Artifact);
+			CommandText.Add("confirmjob", Command.ConfirmJob);
 			//CommandText.Add("stopExport", Command.StopExport);
 			CommandText.Add("exit", Command.Exit);
 
@@ -51,6 +55,16 @@ namespace Fabric.Apps.WordNet.Export {
 					case Command.Export:
 						var ex = new ExportCommand(this, matches);
 						ex.Start();
+						break;
+
+					case Command.Artifact:
+						var ar = new ArtifactCommand(this, matches);
+						ar.Start();
+						break;
+
+					case Command.ConfirmJob:
+						var cj = new ConfirmJobCommand(this, matches);
+						cj.Start();
 						break;
 
 					/*case Command.StopExport:
