@@ -33,6 +33,9 @@ namespace Fabric.Apps.WordNet.Factors {
 			var sf = new SemanticFactors(artSet);
 			sf.Start();
 
+			var lf = new LexicalFactors(artSet);
+			lf.Start();
+
 			using ( ISession sess = sessProv.OpenSession() ) {
 				BuildWordNet.SetDbStateAfterBatchInsert(sess);
 			}

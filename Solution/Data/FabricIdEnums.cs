@@ -27,6 +27,7 @@
 		ParticipatesIn,
 		IsFoundIn,
 		BelongsTo,
+		Requires,
 
 		LooksLike,
 		SmellsLike,

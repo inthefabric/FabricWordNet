@@ -54,7 +54,7 @@ namespace Fabric.Apps.WordNet
             Pertainym,
             RegionDomain,
             RegionDomainMember,
-            SimilarTo,
+            SimilarTo, //=20
             SubstanceHolonym,
             SubstanceMeronym,
             TopicDomain,
