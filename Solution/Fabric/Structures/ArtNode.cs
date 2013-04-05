@@ -25,6 +25,7 @@ namespace Fabric.Apps.WordNet.Structures {
 		public int DisVal { get; set; }
 		public int DisCount { get; set; }
 		public int FillCount { get; set; }
+		public bool IsSkipped { get; set; }
 		public bool IsFinal { get; set; }
 
 		

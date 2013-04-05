@@ -17,16 +17,28 @@ namespace Fabric.Apps.WordNet {
 		/*--------------------------------------------------------------------------------------------*/
 		public static void Main(string[] pArgs) {
 			DbBuilder.InitOnce();
-			DbBuilder.UpdateSchema();
-			/*var sessProv = new SessionProvider();
+			//DbBuilder.UpdateSchema();
+			const int step = 2;
 
-			using ( ISession sess = sessProv.OpenSession() ) {
-				//BuildWordNet.BuildBaseDb(sess);
-				//Stats.PrintAll(sess);
-				//BuildArtifacts.InsertWordAndSynsetArtifacts(sess);
-			}*/
+			switch ( step ) {
+				case 0:
+					using ( ISession sess = new SessionProvider().OpenSession() ) {
+						BuildWordNet.BuildBaseDb(sess);
+						//Stats.PrintAll(sess);
+					}
+					break;
 
-			BuildFactors.GetSemanticList();
+				case 1:
+					using ( ISession sess = new SessionProvider().OpenSession() ) {
+						BuildArtifacts.InsertWordAndSynsetArtifacts(sess);
+					}
+					break;
+
+				case 2:
+					BuildFactors.InsertAllFactors();
+					break;
+
+			}
 		}
 	}
 	

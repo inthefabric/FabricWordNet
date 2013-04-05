@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Fabric.Apps.WordNet.Data.Domain;
 using Fabric.Apps.WordNet.Structures;
 using NHibernate;
+using NHibernate.Mapping;
 
 namespace Fabric.Apps.WordNet.Artifacts {
 
@@ -11,6 +12,7 @@ namespace Fabric.Apps.WordNet.Artifacts {
 
 		private readonly SemanticNodes vNodes;
 		private readonly List<ArtNode> vList;
+		private int vSkipCount;
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
@@ -18,6 +20,7 @@ namespace Fabric.Apps.WordNet.Artifacts {
 		public InsertAllArtifacts(SemanticNodes pNodes) {
 			vNodes = pNodes;
 			vList = new List<ArtNode>();
+			vSkipCount = 0;
 
 			BuildArtifacts();
 			ResolveArtifactDuplicates();
@@ -25,10 +28,14 @@ namespace Fabric.Apps.WordNet.Artifacts {
 
 		/*--------------------------------------------------------------------------------------------*/
 		public void Insert(ISession pSess) {
-			Console.WriteLine("Inserting "+vList.Count+" Artifacts...");
+			Console.WriteLine("Inserting "+(vList.Count-vSkipCount)+" Artifacts...");
 
 			using ( ITransaction tx = pSess.BeginTransaction() ) {
 				foreach ( ArtNode an in vList ) {
+					if ( an.IsSkipped ) {
+						continue;
+					}
+
 					an.Art.Name = an.Art.Name.Replace("`", "'");
 
 					if ( an.Art.Disamb != null ) {
@@ -76,7 +83,7 @@ namespace Fabric.Apps.WordNet.Artifacts {
 				}
 			}
 
-			Console.WriteLine("Created "+vList.Count+" Artifacts...");
+			Console.WriteLine("Created "+vList.Count+" Artifacts");
 		}
 		
 		/*--------------------------------------------------------------------------------------------*/
@@ -84,7 +91,15 @@ namespace Fabric.Apps.WordNet.Artifacts {
 			var map = new Dictionary<string, List<ArtNode>>();
 
 			foreach ( ArtNode an in vList ) {
-				string key = an.Art.Name+"||"+an.Art.Disamb;
+				if ( an.IsSkipped ) {
+					continue;
+				}
+
+				string key = an.Art.Name.ToLower();
+
+				if ( an.Art.Disamb != null ) {
+					key += "`|`"+an.Art.Disamb.ToLower();
+				}
 
 				if ( !map.ContainsKey(key) ) {
 					map.Add(key, new List<ArtNode>());
@@ -121,6 +136,10 @@ namespace Fabric.Apps.WordNet.Artifacts {
 							}
 						}
 					}
+				}
+
+				if ( level == 2 ) {
+					SkipSpecialArtifactDuplicates(dupSets);
 				}
 
 				Dictionary<string, List<ArtNode>> dupMap = GetDuplicateMap();
@@ -164,6 +183,50 @@ namespace Fabric.Apps.WordNet.Artifacts {
 			}
 
 			Console.WriteLine("Duplicate Artifact resolution complete");
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		private void SkipSpecialArtifactDuplicates(IEnumerable<List<ArtNode>> pDupSets) {
+			Console.WriteLine("Skipping special duplicates...");
+
+			var map = new Dictionary<string, ArtNode>();
+
+			foreach ( List<ArtNode> dups in pDupSets ) {
+				foreach ( ArtNode an in dups ) {
+					string key = an.Art.Name.ToLower()+"`|`"+an.Art.Note.ToLower();
+
+					if ( !map.ContainsKey(key) ) {
+						map.Add(key, an);
+						continue;
+					}
+
+					Console.WriteLine(" - "+key);
+					an.IsSkipped = true;
+					++vSkipCount;
+
+					ArtNode an2 = map[key];
+
+					if ( an.Node.SynSet.Id == an2.Node.SynSet.Id ) {
+						if ( an.Node.SynSet.WordList.Count == 2 ) {
+							an2.IsSkipped = true;
+							++vSkipCount;
+						}
+						else {
+							an2.Art.Name += " / "+an.Art.Name;
+							Console.WriteLine("    * Renamed: "+
+								an2.Node.SynSet.Id+" | "+an2.Art.Name+" | "+an2.Art.Disamb);
+						}
+					}
+					else {
+						Console.WriteLine("    * Keep: "+
+							an2.Node.SynSet.Id+" | "+an2.Art.Name+" | "+an2.Art.Disamb);
+						Console.WriteLine("    * Skip: "+
+							an.Node.SynSet.Id+" | "+an.Art.Name+" | "+an.Art.Disamb);
+					}
+				}
+			}
+
+			Console.WriteLine("Skipped "+vSkipCount+" Artifacts");
 		}
 
 	}

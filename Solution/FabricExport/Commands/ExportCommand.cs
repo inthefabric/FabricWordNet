@@ -203,6 +203,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				double perSec = (vThreadDoneCount*vBatchSize)/time;
 
 				long bar = (DateTime.UtcNow.Ticks-t)/1000000; //tenths of a second
+				bar = (bar*100)/vBatchSize;
 				string barStr = new string('#', (int)bar);
 
 				ThreadPrint(pIndex, 

@@ -13,7 +13,7 @@ namespace Fabric.Apps.WordNet.Factors {
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
-		public static void GetSemanticList() {
+		public static void InsertAllFactors() {
 			var sessProv = new SessionProvider();
 
 			var descMap = new Dictionary<WordNetEngine.SynSetRelation, DescriptorTypeId>();
