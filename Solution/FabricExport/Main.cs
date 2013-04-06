@@ -22,7 +22,7 @@ namespace Fabric.Apps.WordNet.Export {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private static void InitFabricClient() {
-			const bool LOCAL = true;
+			const bool LOCAL = false;
 			FabricClientConfig config;
 
 			if ( LOCAL ) {
@@ -33,7 +33,7 @@ namespace Fabric.Apps.WordNet.Export {
 			}
 			else {
 				config = new FabricClientConfig("WordNetExport", "http://api.inthefabric.com",
-					40949086160945152, "847e1a71c60146acaa4f4d0fbd6fd180", 40949076406042624,
+					41726164196130816, "e15569e20ffc45e3af0d1de1c4dc8b14", 41726154925670400,
 					"http://localhost:49316/OAuth/FabricRedirect",
 					FabSess.FabricSessionContainerProvider);
 			}

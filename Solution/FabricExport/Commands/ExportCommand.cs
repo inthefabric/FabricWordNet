@@ -191,6 +191,12 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private void ThreadAction(IList<Artifact> pBatch, ParallelLoopState pState, long pIndex) {
+			if ( pBatch == null || pBatch.Count == 0 ) {
+				ThreadPrint(pIndex, "Batch is empty, leaving thread");
+				++vThreadDoneCount;
+				return;
+			}
+
 			try {
 				long t = DateTime.UtcNow.Ticks;
 
@@ -203,7 +209,6 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				double perSec = (vThreadDoneCount*vBatchSize)/time;
 
 				long bar = (DateTime.UtcNow.Ticks-t)/1000000; //tenths of a second
-				bar = (bar*100)/vBatchSize;
 				string barStr = new string('#', (int)bar);
 
 				ThreadPrint(pIndex, 
@@ -244,7 +249,9 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				classes[i] = b;
 			}
 
+			//var t = DateTime.UtcNow;
 			FabResponse<FabBatchResult> fr = f.Services.Modify.AddClasses.Post(classes);
+			//ThreadPrint(pIndex, " ... batch time: "+(int)(DateTime.UtcNow-t).TotalMilliseconds);
 
 			if ( fr.Error != null ) {
 				FabError e = fr.Error;
@@ -290,6 +297,29 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 							ThreadPrint(pIndex, " # ERROR: "+br.Error.Name+
 								" ("+br.Error.Code+"): "+br.Error.Message+
 								" ["+br.BatchId+" / "+br.ResultId+"]");
+
+							const bool REPAIR = false;
+
+							if ( REPAIR && br.Error.Name == "UniqueConstraintViolation" ) {
+								const string idStr = "ClassId=";
+								string msg = br.Error.Message;
+								int idIndex = msg.IndexOf(idStr);
+
+								if ( idIndex != -1 ) {
+									idIndex += idStr.Length;
+									int dotIndex = msg.IndexOf(".", idIndex);
+									string classId = msg.Substring(idIndex, dotIndex-idIndex);
+									ThreadPrint(pIndex, "Repair: "+br.BatchId+", "+b.Id+", "+classId);
+
+									var e2 = new Data.Domain.Export();
+									e2.Batch = b;
+									e2.FabricId = long.Parse(classId);
+									e2.Artifact = sess.Load<Artifact>((int)br.BatchId);
+									e2.Factor = null;
+									sess.Save(e2);
+								}
+							}
+
 							continue;
 						}
 

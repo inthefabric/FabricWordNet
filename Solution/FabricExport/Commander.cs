@@ -14,6 +14,7 @@ namespace Fabric.Apps.WordNet.Export {
 			Export = 1,
 			Artifact,
 			ConfirmJob,
+			ConfirmAllJobs,
 			//StopExport
 			Exit
 		}
@@ -31,6 +32,7 @@ namespace Fabric.Apps.WordNet.Export {
 			CommandText.Add("export", Command.Export);
 			CommandText.Add("art", Command.Artifact);
 			CommandText.Add("confirmjob", Command.ConfirmJob);
+			CommandText.Add("confirmalljobs", Command.ConfirmAllJobs);
 			//CommandText.Add("stopExport", Command.StopExport);
 			CommandText.Add("exit", Command.Exit);
 
@@ -65,6 +67,11 @@ namespace Fabric.Apps.WordNet.Export {
 					case Command.ConfirmJob:
 						var cj = new ConfirmJobCommand(this, matches);
 						cj.Start();
+						break;
+
+					case Command.ConfirmAllJobs:
+						var caj = new ConfirmAllJobsCommand(this, matches);
+						caj.Start();
 						break;
 
 					/*case Command.StopExport:

@@ -1165,6 +1165,15 @@
         <member name="T:Fabric.Clients.Cs.Api.IFabAppStep">
             <summary />
         </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabArtifactStep`1">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabNodeStep`1">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabObjectStep`1">
+            <summary />
+        </member>
         <member name="T:Fabric.Clients.Cs.Api.IFuncAs">
             <summary />
         </member>
@@ -1177,15 +1186,81 @@
         <member name="T:Fabric.Clients.Cs.Api.IFuncWhereId">
             <summary />
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabAppStep.HasArtifact">
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InMemberCreates">
             <summary>
-              Links an App to the Artifact that it owns. (OutToOne FabArtifact)
+              Links a Member to the Artifact that it created. (InFromOne FabMember)
             </summary>
             <remarks>
-              <para>Links an App to the Artifact that it owns.</para>
-              <para>Type: AppHasArtifact</para>
-              <para>Relation: Has</para>
-              <para>Connection: OutToOne</para>
+              <para>Links a Member to the Artifact that it created.</para>
+              <para>Type: MemberCreatesArtifact</para>
+              <para>Relation: Creates</para>
+              <para>Connection: InFromOne</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InFactorListUsesPrimary">
+            <summary>
+              Links a Factor to its primary Artifact, which represents the starting point of the Factor's directional Artifact relationship. (InFromZeroOrMore FabFactor)
+            </summary>
+            <remarks>
+              <para>Links a Factor to its primary Artifact, which represents the starting point of the Factor's directional Artifact relationship.</para>
+              <para>Type: FactorUsesPrimaryArtifact</para>
+              <para>Relation: UsesPrimary</para>
+              <para>Connection: InFromZeroOrMore</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InFactorListUsesRelated">
+            <summary>
+              Links a Factor to its related Artifact, which represents the ending point of the Factor's directional Artifact relationship. (InFromZeroOrMore FabFactor)
+            </summary>
+            <remarks>
+              <para>Links a Factor to its related Artifact, which represents the ending point of the Factor's directional Artifact relationship.</para>
+              <para>Type: FactorUsesRelatedArtifact</para>
+              <para>Relation: UsesRelated</para>
+              <para>Connection: InFromZeroOrMore</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InDescriptorListRefinesPrimaryWith">
+            <summary>
+              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact. (InFromZeroOrMore FabDescriptor)
+            </summary>
+            <remarks>
+              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact.</para>
+              <para>Type: DescriptorRefinesPrimaryWithArtifact</para>
+              <para>Relation: RefinesPrimaryWith</para>
+              <para>Connection: InFromZeroOrMore</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InDescriptorListRefinesRelatedWith">
+            <summary>
+              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact. (InFromZeroOrMore FabDescriptor)
+            </summary>
+            <remarks>
+              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact.</para>
+              <para>Type: DescriptorRefinesRelatedWithArtifact</para>
+              <para>Relation: RefinesRelatedWith</para>
+              <para>Connection: InFromZeroOrMore</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InDescriptorListRefinesTypeWith">
+            <summary>
+              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose. (InFromZeroOrMore FabDescriptor)
+            </summary>
+            <remarks>
+              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose.</para>
+              <para>Type: DescriptorRefinesTypeWithArtifact</para>
+              <para>Relation: RefinesTypeWith</para>
+              <para>Connection: InFromZeroOrMore</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InVectorListUsesAxis">
+            <summary>
+              Links a Vector to an Artifact that 'labels' its value's axis. (InFromZeroOrMore FabVector)
+            </summary>
+            <remarks>
+              <para>Links a Vector to an Artifact that 'labels' its value's axis.</para>
+              <para>Type: VectorUsesAxisArtifact</para>
+              <para>Relation: UsesAxis</para>
+              <para>Connection: InFromZeroOrMore</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabAppStep.DefinesMemberList">
@@ -1199,181 +1274,22 @@
               <para>Connection: OutToOneOrMore</para>
             </remarks>
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabArtifactStep">
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewClassStep">
             <summary />
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InAppHas">
-            <summary>
-              Links an App to the Artifact that it owns. (InFromZeroOrOne FabApp)
-            </summary>
-            <remarks>
-              <para>Links an App to the Artifact that it owns.</para>
-              <para>Type: AppHasArtifact</para>
-              <para>Relation: Has</para>
-              <para>Connection: InFromZeroOrOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.UsesArtifactType">
-            <summary>
-              Links an Artifact to an ArtifactType that describes the type of the associated ArtifactOwnerNode. (OutToOne FabArtifactType)
-            </summary>
-            <remarks>
-              <para>Links an Artifact to an ArtifactType that describes the type of the associated ArtifactOwnerNode.</para>
-              <para>Type: ArtifactUsesArtifactType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InClassHas">
-            <summary>
-              Links an App to the Class that it owns. (InFromZeroOrOne FabClass)
-            </summary>
-            <remarks>
-              <para>Links an App to the Class that it owns.</para>
-              <para>Type: ClassHasArtifact</para>
-              <para>Relation: Has</para>
-              <para>Connection: InFromZeroOrOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InInstanceHas">
-            <summary>
-              Links an App to the Instance that it owns. (InFromZeroOrOne FabInstance)
-            </summary>
-            <remarks>
-              <para>Links an App to the Instance that it owns.</para>
-              <para>Type: InstanceHasArtifact</para>
-              <para>Relation: Has</para>
-              <para>Connection: InFromZeroOrOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InMemberCreates">
-            <summary>
-              Links a Member to the Artifact that it created. (InFromOne FabMember)
-            </summary>
-            <remarks>
-              <para>Links a Member to the Artifact that it created.</para>
-              <para>Type: MemberCreatesArtifact</para>
-              <para>Relation: Creates</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InUrlHas">
-            <summary>
-              Links a Url to the Artifact that it owns. (InFromZeroOrOne FabUrl)
-            </summary>
-            <remarks>
-              <para>Links a Url to the Artifact that it owns.</para>
-              <para>Type: UrlHasArtifact</para>
-              <para>Relation: Has</para>
-              <para>Connection: InFromZeroOrOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InUserHas">
-            <summary>
-              Links a User to the Artifact that it owns. (InFromZeroOrOne FabUser)
-            </summary>
-            <remarks>
-              <para>Links a User to the Artifact that it owns.</para>
-              <para>Type: UserHasArtifact</para>
-              <para>Relation: Has</para>
-              <para>Connection: InFromZeroOrOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InFactorListUsesPrimary">
-            <summary>
-              Links a Factor to its primary Artifact, which represents the starting point of the Factor's directional Artifact relationship. (InFromZeroOrMore FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its primary Artifact, which represents the starting point of the Factor's directional Artifact relationship.</para>
-              <para>Type: FactorUsesPrimaryArtifact</para>
-              <para>Relation: UsesPrimary</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InFactorListUsesRelated">
-            <summary>
-              Links a Factor to its related Artifact, which represents the ending point of the Factor's directional Artifact relationship. (InFromZeroOrMore FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its related Artifact, which represents the ending point of the Factor's directional Artifact relationship.</para>
-              <para>Type: FactorUsesRelatedArtifact</para>
-              <para>Relation: UsesRelated</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InDescriptorListRefinesPrimaryWith">
-            <summary>
-              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact. (InFromZeroOrMore FabDescriptor)
-            </summary>
-            <remarks>
-              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact.</para>
-              <para>Type: DescriptorRefinesPrimaryWithArtifact</para>
-              <para>Relation: RefinesPrimaryWith</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InDescriptorListRefinesRelatedWith">
-            <summary>
-              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact. (InFromZeroOrMore FabDescriptor)
-            </summary>
-            <remarks>
-              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact.</para>
-              <para>Type: DescriptorRefinesRelatedWithArtifact</para>
-              <para>Relation: RefinesRelatedWith</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InDescriptorListRefinesTypeWith">
-            <summary>
-              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose. (InFromZeroOrMore FabDescriptor)
-            </summary>
-            <remarks>
-              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose.</para>
-              <para>Type: DescriptorRefinesTypeWithArtifact</para>
-              <para>Relation: RefinesTypeWith</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep.InVectorListUsesAxis">
-            <summary>
-              Links a Vector to an Artifact that 'labels' its value's axis. (InFromZeroOrMore FabVector)
-            </summary>
-            <remarks>
-              <para>Links a Vector to an Artifact that 'labels' its value's axis.</para>
-              <para>Type: VectorUsesAxisArtifact</para>
-              <para>Relation: UsesAxis</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabArtifactTypeStep">
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewObjectStep`1">
             <summary />
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactTypeStep.InArtifactListUses">
-            <summary>
-              Links an Artifact to an ArtifactType that describes the type of the associated ArtifactOwnerNode. (InFromZeroOrMore FabArtifact)
-            </summary>
-            <remarks>
-              <para>Links an Artifact to an ArtifactType that describes the type of the associated ArtifactOwnerNode.</para>
-              <para>Type: ArtifactUsesArtifactType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchResultStep">
+            <summary />
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabClassStep">
             <summary />
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabClassStep.HasArtifact">
-            <summary>
-              Links an App to the Class that it owns. (OutToOne FabArtifact)
-            </summary>
-            <remarks>
-              <para>Links an App to the Class that it owns.</para>
-              <para>Type: ClassHasArtifact</para>
-              <para>Relation: Has</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabDescriptorStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabFactorElementNodeStep`1">
             <summary />
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabDescriptorStep.InFactorListUses">
@@ -1432,6 +1348,9 @@
             </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabDescriptorTypeStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabNodeForTypeStep`1">
             <summary />
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabDescriptorTypeStep.InDescriptorListUses">
@@ -1530,6 +1449,9 @@
               <para>Relation: Uses</para>
               <para>Connection: InFromZeroOrMore</para>
             </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabErrorStep">
+            <summary />
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabEventorStep">
             <summary />
@@ -1733,6 +1655,9 @@
               <para>Connection: InFromZeroOrMore</para>
             </remarks>
         </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabHomeStep">
+            <summary />
+        </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabIdentorStep">
             <summary />
         </member>
@@ -1774,17 +1699,6 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabInstanceStep">
             <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabInstanceStep.HasArtifact">
-            <summary>
-              Links an App to the Instance that it owns. (OutToOne FabArtifact)
-            </summary>
-            <remarks>
-              <para>Links an App to the Instance that it owns.</para>
-              <para>Type: InstanceHasArtifact</para>
-              <para>Relation: Has</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabLocatorStep">
             <summary />
@@ -1922,6 +1836,9 @@
         <member name="T:Fabric.Clients.Cs.Api.IFabMemberTypeAssignStep">
             <summary />
         </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabNodeForActionStep`1">
+            <summary />
+        </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabMemberTypeAssignStep.InMemberHas">
             <summary>
               Links a Member to its active MemberTypeAssign. (InFromOne FabMember)
@@ -1966,377 +1883,360 @@
               <para>Connection: OutToOne</para>
             </remarks>
         </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabMetaTimeStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabMetaVersionStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabOauthAccessStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabOauthErrorStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabOauthLoginStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabOauthLogoutStep">
+            <summary />
+        </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabRootStep">
             <summary />
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsAppList">
             <summary>
-              Links the Root node to an App. (OutToZeroOrMore FabApp)
+              Links the Root node to an App. (InFromOne FabApp)
             </summary>
             <remarks>
               <para>Links the Root node to an App.</para>
               <para>Type: RootContainsApp</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsArtifactList">
-            <summary>
-              Links the Root node to an Artifact. (OutToZeroOrMore FabArtifact)
-            </summary>
-            <remarks>
-              <para>Links the Root node to an Artifact.</para>
-              <para>Type: RootContainsArtifact</para>
-              <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsArtifactTypeList">
-            <summary>
-              Links the Root node to an ArtifactType. (OutToZeroOrMore FabArtifactType)
-            </summary>
-            <remarks>
-              <para>Links the Root node to an ArtifactType.</para>
-              <para>Type: RootContainsArtifactType</para>
-              <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsClassList">
             <summary>
-              Links the Root node to a Class. (OutToZeroOrMore FabClass)
+              Links the Root node to a Class. (InFromOne FabClass)
             </summary>
             <remarks>
               <para>Links the Root node to a Class.</para>
               <para>Type: RootContainsClass</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsInstanceList">
             <summary>
-              Links the Root node to an Instance. (OutToZeroOrMore FabInstance)
+              Links the Root node to an Instance. (InFromOne FabInstance)
             </summary>
             <remarks>
               <para>Links the Root node to an Instance.</para>
               <para>Type: RootContainsInstance</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsMemberList">
             <summary>
-              Links the Root node to a Member. (OutToZeroOrMore FabMember)
+              Links the Root node to a Member. (InFromOne FabMember)
             </summary>
             <remarks>
               <para>Links the Root node to a Member.</para>
               <para>Type: RootContainsMember</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsMemberTypeList">
             <summary>
-              Links the Root node to a MemberType. (OutToZeroOrMore FabMemberType)
+              Links the Root node to a MemberType. (InFromOne FabMemberType)
             </summary>
             <remarks>
               <para>Links the Root node to a MemberType.</para>
               <para>Type: RootContainsMemberType</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsMemberTypeAssignList">
             <summary>
-              Links the Root node to a MemberTypeAssign. (OutToZeroOrMore FabMemberTypeAssign)
+              Links the Root node to a MemberTypeAssign. (InFromOne FabMemberTypeAssign)
             </summary>
             <remarks>
               <para>Links the Root node to a MemberTypeAssign.</para>
               <para>Type: RootContainsMemberTypeAssign</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsUrlList">
             <summary>
-              Links the Root node to a Url. (OutToZeroOrMore FabUrl)
+              Links the Root node to a Url. (InFromOne FabUrl)
             </summary>
             <remarks>
               <para>Links the Root node to a Url.</para>
               <para>Type: RootContainsUrl</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsUserList">
             <summary>
-              Links the Root node to a User. (OutToZeroOrMore FabUser)
+              Links the Root node to a User. (InFromOne FabUser)
             </summary>
             <remarks>
               <para>Links the Root node to a User.</para>
               <para>Type: RootContainsUser</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsFactorList">
             <summary>
-              Links the Root node to a Factor. (OutToZeroOrMore FabFactor)
+              Links the Root node to a Factor. (InFromOne FabFactor)
             </summary>
             <remarks>
               <para>Links the Root node to a Factor.</para>
               <para>Type: RootContainsFactor</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsFactorAssertionList">
             <summary>
-              Links the Root node to a FactorAssertion. (OutToZeroOrMore FabFactorAssertion)
+              Links the Root node to a FactorAssertion. (InFromOne FabFactorAssertion)
             </summary>
             <remarks>
               <para>Links the Root node to a FactorAssertion.</para>
               <para>Type: RootContainsFactorAssertion</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsDescriptorList">
             <summary>
-              Links the Root node to a Descriptor. (OutToZeroOrMore FabDescriptor)
+              Links the Root node to a Descriptor. (InFromOne FabDescriptor)
             </summary>
             <remarks>
               <para>Links the Root node to a Descriptor.</para>
               <para>Type: RootContainsDescriptor</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsDescriptorTypeList">
             <summary>
-              Links the Root node to a DescriptorType. (OutToZeroOrMore FabDescriptorType)
+              Links the Root node to a DescriptorType. (InFromOne FabDescriptorType)
             </summary>
             <remarks>
               <para>Links the Root node to a DescriptorType.</para>
               <para>Type: RootContainsDescriptorType</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsDirectorList">
             <summary>
-              Links the Root node to a Director. (OutToZeroOrMore FabDirector)
+              Links the Root node to a Director. (InFromOne FabDirector)
             </summary>
             <remarks>
               <para>Links the Root node to a Director.</para>
               <para>Type: RootContainsDirector</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsDirectorTypeList">
             <summary>
-              Links the Root node to a DirectorType. (OutToZeroOrMore FabDirectorType)
+              Links the Root node to a DirectorType. (InFromOne FabDirectorType)
             </summary>
             <remarks>
               <para>Links the Root node to a DirectorType.</para>
               <para>Type: RootContainsDirectorType</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsDirectorActionList">
             <summary>
-              Links the Root node to a DirectorAction. (OutToZeroOrMore FabDirectorAction)
+              Links the Root node to a DirectorAction. (InFromOne FabDirectorAction)
             </summary>
             <remarks>
               <para>Links the Root node to a DirectorAction.</para>
               <para>Type: RootContainsDirectorAction</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsEventorList">
             <summary>
-              Links the Root node to an Eventor. (OutToZeroOrMore FabEventor)
+              Links the Root node to an Eventor. (InFromOne FabEventor)
             </summary>
             <remarks>
               <para>Links the Root node to an Eventor.</para>
               <para>Type: RootContainsEventor</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsEventorTypeList">
             <summary>
-              Links the Root node to an EventorType. (OutToZeroOrMore FabEventorType)
+              Links the Root node to an EventorType. (InFromOne FabEventorType)
             </summary>
             <remarks>
               <para>Links the Root node to an EventorType.</para>
               <para>Type: RootContainsEventorType</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsEventorPrecisionList">
             <summary>
-              Links the Root node to an EventorPrecision. (OutToZeroOrMore FabEventorPrecision)
+              Links the Root node to an EventorPrecision. (InFromOne FabEventorPrecision)
             </summary>
             <remarks>
               <para>Links the Root node to an EventorPrecision.</para>
               <para>Type: RootContainsEventorPrecision</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsIdentorList">
             <summary>
-              Links the Root node to an Identor. (OutToZeroOrMore FabIdentor)
+              Links the Root node to an Identor. (InFromOne FabIdentor)
             </summary>
             <remarks>
               <para>Links the Root node to an Identor.</para>
               <para>Type: RootContainsIdentor</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsIdentorTypeList">
             <summary>
-              Links the Root node to an IdentorType. (OutToZeroOrMore FabIdentorType)
+              Links the Root node to an IdentorType. (InFromOne FabIdentorType)
             </summary>
             <remarks>
               <para>Links the Root node to an IdentorType.</para>
               <para>Type: RootContainsIdentorType</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsLocatorList">
             <summary>
-              Links the Root node to a Locator. (OutToZeroOrMore FabLocator)
+              Links the Root node to a Locator. (InFromOne FabLocator)
             </summary>
             <remarks>
               <para>Links the Root node to a Locator.</para>
               <para>Type: RootContainsLocator</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsLocatorTypeList">
             <summary>
-              Links the Root node to a LocatorType. (OutToZeroOrMore FabLocatorType)
+              Links the Root node to a LocatorType. (InFromOne FabLocatorType)
             </summary>
             <remarks>
               <para>Links the Root node to a LocatorType.</para>
               <para>Type: RootContainsLocatorType</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorList">
             <summary>
-              Links the Root node to a Vector. (OutToZeroOrMore FabVector)
+              Links the Root node to a Vector. (InFromOne FabVector)
             </summary>
             <remarks>
               <para>Links the Root node to a Vector.</para>
               <para>Type: RootContainsVector</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorTypeList">
             <summary>
-              Links the Root node to a VectorType. (OutToZeroOrMore FabVectorType)
+              Links the Root node to a VectorType. (InFromOne FabVectorType)
             </summary>
             <remarks>
               <para>Links the Root node to a VectorType.</para>
               <para>Type: RootContainsVectorType</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorRangeList">
             <summary>
-              Links the Root node to a VectorRange. (OutToZeroOrMore FabVectorRange)
+              Links the Root node to a VectorRange. (InFromOne FabVectorRange)
             </summary>
             <remarks>
               <para>Links the Root node to a VectorRange.</para>
               <para>Type: RootContainsVectorRange</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorRangeLevelList">
             <summary>
-              Links the Root node to a VectorRangeLevel. (OutToZeroOrMore FabVectorRangeLevel)
+              Links the Root node to a VectorRangeLevel. (InFromOne FabVectorRangeLevel)
             </summary>
             <remarks>
               <para>Links the Root node to a VectorRangeLevel.</para>
               <para>Type: RootContainsVectorRangeLevel</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorUnitList">
             <summary>
-              Links the Root node to a VectorUnit. (OutToZeroOrMore FabVectorUnit)
+              Links the Root node to a VectorUnit. (InFromOne FabVectorUnit)
             </summary>
             <remarks>
               <para>Links the Root node to a VectorUnit.</para>
               <para>Type: RootContainsVectorUnit</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorUnitPrefixList">
             <summary>
-              Links the Root node to a VectorUnitPrefix. (OutToZeroOrMore FabVectorUnitPrefix)
+              Links the Root node to a VectorUnitPrefix. (InFromOne FabVectorUnitPrefix)
             </summary>
             <remarks>
               <para>Links the Root node to a VectorUnitPrefix.</para>
               <para>Type: RootContainsVectorUnitPrefix</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorUnitDerivedList">
             <summary>
-              Links the Root node to a VectorUnitDerived. (OutToZeroOrMore FabVectorUnitDerived)
+              Links the Root node to a VectorUnitDerived. (InFromOne FabVectorUnitDerived)
             </summary>
             <remarks>
               <para>Links the Root node to a VectorUnitDerived.</para>
               <para>Type: RootContainsVectorUnitDerived</para>
               <para>Relation: Contains</para>
-              <para>Connection: OutToZeroOrMore</para>
+              <para>Connection: InFromOne</para>
             </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabServiceStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabServiceOperationStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabStepLinkStep">
+            <summary />
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabUrlStep">
             <summary />
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabUrlStep.HasArtifact">
-            <summary>
-              Links a Url to the Artifact that it owns. (OutToOne FabArtifact)
-            </summary>
-            <remarks>
-              <para>Links a Url to the Artifact that it owns.</para>
-              <para>Type: UrlHasArtifact</para>
-              <para>Relation: Has</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabUserStep">
             <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabUserStep.HasArtifact">
-            <summary>
-              Links a User to the Artifact that it owns. (OutToOne FabArtifact)
-            </summary>
-            <remarks>
-              <para>Links a User to the Artifact that it owns.</para>
-              <para>Type: UserHasArtifact</para>
-              <para>Relation: Has</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabUserStep.DefinesMemberList">
             <summary>
@@ -2621,12 +2521,15 @@
               <para>Every item added to Fabric is associated with (via Member) a User and and an App. Thus, Fabric can determine which App is responsible for any particular item, enforce applicable access rights, analyze the data for a particular App or Member, etc.</para>
             </remarks>
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabArtifactOwnerNode">
+        <member name="T:Fabric.Clients.Cs.Api.FabArtifact">
             <summary>
-              TODO
+              An object which is able to (via Factor connections) accumulate meaning, context, user sentiment, and relationships.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>An object which is able to (via Factor connections) accumulate meaning, context, user sentiment, and relationships.  Artifacts and Factors are the central components of the Fabric architecture.</para>
+              <para>Every Artifact maps exclusively to one other item in the Fabric architecture (such as an App, Class, Instance, or User). Fabric generates an Artifact automatically each time a new Artifact-enabled item is created.  Technically, each of these items 'has' an associated Artifact. However, due to the item's exclusive ownership, it is conceptually correct to say that each of these items 'is' an Artifact.</para>
+              <para>There are no restrictions on what an Artifact can represent.  Fabric encourages the generous use of Factors to identify and describe each new Artifact. Ideally, the Factor connections will distinguish an Artifact from all others.</para>
+              <para>Each Artifact is linked to exactly one ArtifactOwnerNode item, where the type of this item is specified by the ArtifactType.</para>
             </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabNode">
@@ -2655,27 +2558,6 @@
               TODO
             </summary>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabApp.AppId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabApp.Name">
-            <summary>
-              A unique title or identifier.
-            </summary>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabArtifact">
-            <summary>
-              An object which is able to (via Factor connections) accumulate meaning, context, user sentiment, and relationships.
-            </summary>
-            <remarks>
-              <para>An object which is able to (via Factor connections) accumulate meaning, context, user sentiment, and relationships.  Artifacts and Factors are the central components of the Fabric architecture.</para>
-              <para>Every Artifact maps exclusively to one other item in the Fabric architecture (such as an App, Class, Instance, or User). Fabric generates an Artifact automatically each time a new Artifact-enabled item is created.  Technically, each of these items 'has' an associated Artifact. However, due to the item's exclusive ownership, it is conceptually correct to say that each of these items 'is' an Artifact.</para>
-              <para>There are no restrictions on what an Artifact can represent.  Fabric encourages the generous use of Factors to identify and describe each new Artifact. Ideally, the Factor connections will distinguish an Artifact from all others.</para>
-              <para>Each Artifact is linked to exactly one ArtifactOwnerNode item, where the type of this item is specified by the ArtifactType.</para>
-            </remarks>
-        </member>
         <member name="P:Fabric.Clients.Cs.Api.FabArtifact.ArtifactId">
             <summary>
               Uniquely identifies this object amongst all other objects of this type.
@@ -2686,40 +2568,14 @@
               The date/time of creation.
             </summary>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabArtifact.IsPrivate">
-            <summary>
-              Specifies the accessibility level.
-            </summary>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabArtifactType">
-            <summary>
-              Describes the object type associated with a particular Artifact.
-            </summary>
-            <remarks>
-              <para>Describes the object type associated with a particular Artifact. Example types include: App, Class, Instance, etc.</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabNodeForType">
-            <summary>
-              TODO
-            </summary>
-            <remarks>
-              <para>TODO</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabNodeForType.Description">
-            <summary>
-              A summary of this object's intended meaning or purpose.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabNodeForType.Name">
-            <summary>
-              A descriptive name or title.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabArtifactType.ArtifactTypeId">
+        <member name="P:Fabric.Clients.Cs.Api.FabApp.AppId">
             <summary>
               Uniquely identifies this object amongst all other objects of this type.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabApp.Name">
+            <summary>
+              A unique title or identifier.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabBatchNewClass">
@@ -2862,6 +2718,24 @@
             <remarks>
               <para>Provides meaning (via Descriptor) to the relationship between the two Artifacts in a particular Factor. Example types include: Is A, Refers To, Sounds Like, etc.</para>
             </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabNodeForType">
+            <summary>
+              TODO
+            </summary>
+            <remarks>
+              <para>TODO</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabNodeForType.Description">
+            <summary>
+              A summary of this object's intended meaning or purpose.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabNodeForType.Name">
+            <summary>
+              A descriptive name or title.
+            </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabDescriptorType.DescriptorTypeId">
             <summary>
@@ -3523,11 +3397,6 @@
               <para>Represents the root, or starting point, of all Traversal Service queries. The Root provides traversal links to all other available objects.</para>
             </remarks>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabRoot.RootId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
         <member name="T:Fabric.Clients.Cs.Api.FabService">
             <summary>
               A collection of similar ServiceOperations which all share a similar purpose.
@@ -3616,6 +3485,11 @@
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabSpecObject.Extends">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabSpecObject.IsBaseClass">
             <summary>
               
             </summary>
@@ -4205,6 +4079,27 @@
             <summary />
         </member>
         <member name="P:Fabric.Clients.Cs.FabricClient.UseDataProviderPerson">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabArtifactStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewObjectStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabFactorElementNodeStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabNodeStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabNodeForActionStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabNodeForTypeStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabObjectStep">
             <summary />
         </member>
     </members>
