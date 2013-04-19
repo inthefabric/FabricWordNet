@@ -33,7 +33,7 @@ namespace Fabric.Apps.WordNet.Export {
 			}
 			else {
 				config = new FabricClientConfig("WordNetExport", "http://api.inthefabric.com",
-					41726164196130816, "e15569e20ffc45e3af0d1de1c4dc8b14", 41726154925670400,
+					42927616976486400, "a30aed036ec54c64a651b80a29a2f951", 42927604513112064,
 					"http://localhost:49316/OAuth/FabricRedirect",
 					FabSess.FabricSessionContainerProvider);
 			}
