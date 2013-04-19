@@ -65,17 +65,17 @@
         </member>
         <member name="P:Fabric.Clients.Cs.Api.ITraversalService.GetActiveApp">
             <summary>
-              TODO
+              Get the App that is associated with the currently authenticated Member.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.ITraversalService.GetActiveMember">
             <summary>
-              TODO
+              Get the the currently authenticated Member.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.ITraversalService.GetActiveUser">
             <summary>
-              TODO
+              Get the User that is associated with the currently authenticated Member.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.ITraversalService.GetRoot">
@@ -146,12 +146,17 @@
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IModifyService.AddClasses">
             <summary>
-              MISSING:Modify_AddClasses
+              TODO
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IModifyService.AddFactor">
             <summary>
               Create a new Factor.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IModifyService.AddFactors">
+            <summary>
+              TODO
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IModifyService.AddInstance">
@@ -214,17 +219,17 @@
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IMetaService.GetSpecification">
             <summary>
-              Load the latest specifications and documentation for all Fabric API services.
+              Get the latest specifications and documentation for all Fabric API services.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IMetaService.GetTime">
             <summary>
-              TODO
+              Get the current Fabric server time.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IMetaService.GetVersion">
             <summary>
-              TODO
+              Get the current Fabric version.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Logging.IFabricLog">
@@ -346,10 +351,10 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IGetActiveAppOperation">
             <summary>
-              TODO
+              Get the App that is associated with the currently authenticated Member.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>Get the App that is associated with the currently authenticated Member.</para>
             </remarks>
         </member>
         <member name="M:Fabric.Clients.Cs.Api.IGetActiveAppOperation.Get">
@@ -359,10 +364,10 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IGetActiveMemberOperation">
             <summary>
-              TODO
+              Get the the currently authenticated Member.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>Get the the currently authenticated Member.</para>
             </remarks>
         </member>
         <member name="M:Fabric.Clients.Cs.Api.IGetActiveMemberOperation.Get">
@@ -372,10 +377,10 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IGetActiveUserOperation">
             <summary>
-              TODO
+              Get the User that is associated with the currently authenticated Member.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>Get the User that is associated with the currently authenticated Member.</para>
             </remarks>
         </member>
         <member name="M:Fabric.Clients.Cs.Api.IGetActiveUserOperation.Get">
@@ -609,10 +614,10 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IAddClassesOperation">
             <summary>
-              MISSING:Modify_AddClasses
+              TODO
             </summary>
             <remarks>
-              <para>MISSING:Modify_AddClasses</para>
+              <para>TODO</para>
             </remarks>
         </member>
         <member name="M:Fabric.Clients.Cs.Api.IAddClassesOperation.Post(Fabric.Clients.Cs.Api.FabBatchNewClass[])">
@@ -620,7 +625,7 @@
               Perform the operation.
             </summary>
             <param name="Classes">
-              MISSING:Modify_AddClasses_Classes
+              TODO
             </param>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IAddFactorOperation">
@@ -631,7 +636,7 @@
               <para>Create a new Factor. The Factor begins in the 'incomplete' state, with no FactorElements attached.</para>
             </remarks>
         </member>
-        <member name="M:Fabric.Clients.Cs.Api.IAddFactorOperation.Post(System.Int64,System.Int64,System.Int64,System.Boolean,System.String)">
+        <member name="M:Fabric.Clients.Cs.Api.IAddFactorOperation.Post(System.Int64,System.Int64,System.Byte,System.Boolean,System.String)">
             <summary>
               Perform the operation.
             </summary>
@@ -649,6 +654,22 @@
             </param>
             <param name="Note">
               A sentence or short paragraph describing (in a human-readable format) the intended meaning of the new Factor. A descriptive note can help others understand the creator's intended purpose or meaning for the Factor.
+            </param>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IAddFactorsOperation">
+            <summary>
+              TODO
+            </summary>
+            <remarks>
+              <para>TODO</para>
+            </remarks>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.IAddFactorsOperation.Post(Fabric.Clients.Cs.Api.FabBatchNewFactor[])">
+            <summary>
+              Perform the operation.
+            </summary>
+            <param name="Factors">
+              TODO
             </param>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IAddInstanceOperation">
@@ -700,7 +721,7 @@
               <para>Create a new Descriptor and attach it to the specified Factor.</para>
             </remarks>
         </member>
-        <member name="M:Fabric.Clients.Cs.Api.IAttachDescriptorToFactorOperation.Post(System.Int64,System.Int64,System.Nullable{System.Int64},System.Nullable{System.Int64},System.Nullable{System.Int64})">
+        <member name="M:Fabric.Clients.Cs.Api.IAttachDescriptorToFactorOperation.Post(System.Int64,System.Byte,System.Nullable{System.Int64},System.Nullable{System.Int64},System.Nullable{System.Int64})">
             <summary>
               Perform the operation.
             </summary>
@@ -728,7 +749,7 @@
               <para>Create a new Director and attach it to the specified Factor.</para>
             </remarks>
         </member>
-        <member name="M:Fabric.Clients.Cs.Api.IAttachDirectorToFactorOperation.Post(System.Int64,System.Int64,System.Int64,System.Int64)">
+        <member name="M:Fabric.Clients.Cs.Api.IAttachDirectorToFactorOperation.Post(System.Int64,System.Byte,System.Byte,System.Byte)">
             <summary>
               Perform the operation.
             </summary>
@@ -753,7 +774,7 @@
               <para>Create a new Eventor and attach it to the specified Factor.</para>
             </remarks>
         </member>
-        <member name="M:Fabric.Clients.Cs.Api.IAttachEventorToFactorOperation.Post(System.Int64,System.Int64,System.Int64,System.Int64)">
+        <member name="M:Fabric.Clients.Cs.Api.IAttachEventorToFactorOperation.Post(System.Int64,System.Byte,System.Byte,System.Int64)">
             <summary>
               Perform the operation.
             </summary>
@@ -778,7 +799,7 @@
               <para>Create a new Identor and attach it to the specified Factor.</para>
             </remarks>
         </member>
-        <member name="M:Fabric.Clients.Cs.Api.IAttachIdentorToFactorOperation.Post(System.Int64,System.Int64,System.String)">
+        <member name="M:Fabric.Clients.Cs.Api.IAttachIdentorToFactorOperation.Post(System.Int64,System.Byte,System.String)">
             <summary>
               Perform the operation.
             </summary>
@@ -800,7 +821,7 @@
               <para>Create a new Locator and attach it to the specified Factor.</para>
             </remarks>
         </member>
-        <member name="M:Fabric.Clients.Cs.Api.IAttachLocatorToFactorOperation.Post(System.Int64,System.Int64,System.Double,System.Double,System.Double)">
+        <member name="M:Fabric.Clients.Cs.Api.IAttachLocatorToFactorOperation.Post(System.Int64,System.Byte,System.Double,System.Double,System.Double)">
             <summary>
               Perform the operation.
             </summary>
@@ -828,7 +849,7 @@
               <para>Create a new Vector and attach it to the specified Factor.</para>
             </remarks>
         </member>
-        <member name="M:Fabric.Clients.Cs.Api.IAttachVectorToFactorOperation.Post(System.Int64,System.Int64,System.Int64,System.Int64,System.Int64,System.Int64)">
+        <member name="M:Fabric.Clients.Cs.Api.IAttachVectorToFactorOperation.Post(System.Int64,System.Byte,System.Int64,System.Int64,System.Byte,System.Byte)">
             <summary>
               Perform the operation.
             </summary>
@@ -891,10 +912,10 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IGetSpecificationOperation">
             <summary>
-              Load the latest specifications and documentation for all Fabric API services.
+              Get the latest specifications and documentation for all Fabric API services.
             </summary>
             <remarks>
-              <para>Load the latest specifications and documentation for all Fabric API services.</para>
+              <para>Get the latest specifications and documentation for all Fabric API services.</para>
             </remarks>
         </member>
         <member name="M:Fabric.Clients.Cs.Api.IGetSpecificationOperation.Get">
@@ -904,10 +925,10 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IGetTimeOperation">
             <summary>
-              TODO
+              Get the current Fabric server time.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>Get the current Fabric server time.</para>
             </remarks>
         </member>
         <member name="M:Fabric.Clients.Cs.Api.IGetTimeOperation.Get">
@@ -917,10 +938,10 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IGetVersionOperation">
             <summary>
-              TODO
+              Get the current Fabric version.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>Get the current Fabric version.</para>
             </remarks>
         </member>
         <member name="M:Fabric.Clients.Cs.Api.IGetVersionOperation.Get">
@@ -931,90 +952,90 @@
         <member name="T:Fabric.Clients.Cs.Api.FabResponse">
             <summary />
             <summary>
-              The API response wrapper; contains the Data payload and other metadata.
+              The response wrapper for all API requests.
             </summary>
             <remarks>
-              <para>The API response wrapper; contains the Data payload and other metadata.</para>
+              <para>The response wrapper for all API requests. It contains a data payload, error information, and/or other metadata.</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.AppId">
             <summary>
-              TODO
+              If an authenticated Member made this request, this identifies the App associated with that Member.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.BaseUri">
             <summary>
-              TODO
+              The base URI for the Fabric API.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.Count">
             <summary>
-              TODO
+              The number of results in the returned Data list.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.DataString">
             <summary>
-              TODO
+              Contains the result of the request as a list of zero or more Objects.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.DataLen">
             <summary>
-              TODO
+              The number of characters in the JSON representation of the Data list.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.DbMs">
             <summary>
-              TODO
+              The time (in milliseconds) that it took the database server(s) to complete all data requests.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.Error">
             <summary>
-              TODO
+              If an error occurred, this contains information about the problem.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.Functions">
             <summary>
-              TODO
+              The traversal functions available for the current node list.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.HasMore">
             <summary>
-              TODO
+              Indicates whether there are more nodes available beyond the returned node list.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.HttpStatus">
             <summary>
-              TODO
+              The HTTP status returned by this request.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.Links">
             <summary>
-              TODO
+              The traversal links available for the current node list.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.RequestUri">
             <summary>
-              TODO
+              The URI of the current request.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.StartIndex">
             <summary>
-              TODO
+              The starting index of the returned node list.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.Timestamp">
             <summary>
-              TODO
+              The date/time of the current request.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.TotalMs">
             <summary>
-              TODO
+              The time (in milliseconds) that it took the server(s) to complete this request.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse.UserId">
             <summary>
-              TODO
+              If an authenticated Member made this request, this identifies the User associated with that Member.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabResponse`1">
@@ -1024,6 +1045,149 @@
             <summary />
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabResponse`1.Data">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabArtifactStep`1">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabNodeStep`1">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabObjectStep`1">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.ITraversalStep`1">
+            <summary />
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.ITraversalStep`1.GetDataType">
+            <summary />
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.ITraversalStep`1.Get">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFuncAs">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFuncBack">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFuncLimit">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFuncWhereId">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFuncWhereApp">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFuncWhereClass">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFuncWhereInstance">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFuncWhereUrl">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFuncWhereUser">
+            <summary />
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InMemberCreates">
+            <summary>
+              Links a Member to the Artifact that it created. (InFromOne FabMember)
+            </summary>
+            <remarks>
+              <para>Links a Member to the Artifact that it created.</para>
+              <para>Type: MemberCreatesArtifact</para>
+              <para>Relation: Creates</para>
+              <para>Connection: InFromOne</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InFactorListUsesPrimary">
+            <summary>
+              Links a Factor to its primary Artifact, which represents the starting point of the Factor's directional Artifact relationship. (InFromZeroOrMore FabFactor)
+            </summary>
+            <remarks>
+              <para>Links a Factor to its primary Artifact, which represents the starting point of the Factor's directional Artifact relationship.</para>
+              <para>Type: FactorUsesPrimaryArtifact</para>
+              <para>Relation: UsesPrimary</para>
+              <para>Connection: InFromZeroOrMore</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InFactorListUsesRelated">
+            <summary>
+              Links a Factor to its related Artifact, which represents the ending point of the Factor's directional Artifact relationship. (InFromZeroOrMore FabFactor)
+            </summary>
+            <remarks>
+              <para>Links a Factor to its related Artifact, which represents the ending point of the Factor's directional Artifact relationship.</para>
+              <para>Type: FactorUsesRelatedArtifact</para>
+              <para>Relation: UsesRelated</para>
+              <para>Connection: InFromZeroOrMore</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InFactorListDescriptorRefinesPrimaryWith">
+            <summary>
+              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact. (InFromZeroOrMore FabFactor)
+            </summary>
+            <remarks>
+              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact.</para>
+              <para>Type: FactorDescriptorRefinesPrimaryWithArtifact</para>
+              <para>Relation: DescriptorRefinesPrimaryWith</para>
+              <para>Connection: InFromZeroOrMore</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InFactorListDescriptorRefinesRelatedWith">
+            <summary>
+              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact. (InFromZeroOrMore FabFactor)
+            </summary>
+            <remarks>
+              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact.</para>
+              <para>Type: FactorDescriptorRefinesRelatedWithArtifact</para>
+              <para>Relation: DescriptorRefinesRelatedWith</para>
+              <para>Connection: InFromZeroOrMore</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InFactorListDescriptorRefinesTypeWith">
+            <summary>
+              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose. (InFromZeroOrMore FabFactor)
+            </summary>
+            <remarks>
+              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose.</para>
+              <para>Type: FactorDescriptorRefinesTypeWithArtifact</para>
+              <para>Relation: DescriptorRefinesTypeWith</para>
+              <para>Connection: InFromZeroOrMore</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InFactorListVectorUsesAxis">
+            <summary>
+              Links a Vector to an Artifact that 'labels' its value's axis. (InFromZeroOrMore FabFactor)
+            </summary>
+            <remarks>
+              <para>Links a Vector to an Artifact that 'labels' its value's axis.</para>
+              <para>Type: FactorVectorUsesAxisArtifact</para>
+              <para>Relation: VectorUsesAxis</para>
+              <para>Connection: InFromZeroOrMore</para>
+            </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabArtifactStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewObjectStep`1">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewObjectStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabNodeStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabNodeForActionStep`1">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabNodeForActionStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabObjectStep">
             <summary />
         </member>
         <member name="T:Fabric.Clients.Cs.Session.IFabricAppSession">
@@ -1099,15 +1263,6 @@
         <member name="P:Fabric.Clients.Cs.FabricErrorException.OauthError">
             <summary />
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.ITraversalStep`1">
-            <summary />
-        </member>
-        <member name="M:Fabric.Clients.Cs.Api.ITraversalStep`1.GetDataType">
-            <summary />
-        </member>
-        <member name="M:Fabric.Clients.Cs.Api.ITraversalStep`1.Get">
-            <summary />
-        </member>
         <member name="T:Fabric.Clients.Cs.FabricClientConfig">
             <summary />
         </member>
@@ -1165,104 +1320,6 @@
         <member name="T:Fabric.Clients.Cs.Api.IFabAppStep">
             <summary />
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabArtifactStep`1">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabNodeStep`1">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabObjectStep`1">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFuncAs">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFuncBack">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFuncLimit">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFuncWhereId">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InMemberCreates">
-            <summary>
-              Links a Member to the Artifact that it created. (InFromOne FabMember)
-            </summary>
-            <remarks>
-              <para>Links a Member to the Artifact that it created.</para>
-              <para>Type: MemberCreatesArtifact</para>
-              <para>Relation: Creates</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InFactorListUsesPrimary">
-            <summary>
-              Links a Factor to its primary Artifact, which represents the starting point of the Factor's directional Artifact relationship. (InFromZeroOrMore FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its primary Artifact, which represents the starting point of the Factor's directional Artifact relationship.</para>
-              <para>Type: FactorUsesPrimaryArtifact</para>
-              <para>Relation: UsesPrimary</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InFactorListUsesRelated">
-            <summary>
-              Links a Factor to its related Artifact, which represents the ending point of the Factor's directional Artifact relationship. (InFromZeroOrMore FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its related Artifact, which represents the ending point of the Factor's directional Artifact relationship.</para>
-              <para>Type: FactorUsesRelatedArtifact</para>
-              <para>Relation: UsesRelated</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InDescriptorListRefinesPrimaryWith">
-            <summary>
-              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact. (InFromZeroOrMore FabDescriptor)
-            </summary>
-            <remarks>
-              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact.</para>
-              <para>Type: DescriptorRefinesPrimaryWithArtifact</para>
-              <para>Relation: RefinesPrimaryWith</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InDescriptorListRefinesRelatedWith">
-            <summary>
-              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact. (InFromZeroOrMore FabDescriptor)
-            </summary>
-            <remarks>
-              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact.</para>
-              <para>Type: DescriptorRefinesRelatedWithArtifact</para>
-              <para>Relation: RefinesRelatedWith</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InDescriptorListRefinesTypeWith">
-            <summary>
-              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose. (InFromZeroOrMore FabDescriptor)
-            </summary>
-            <remarks>
-              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose.</para>
-              <para>Type: DescriptorRefinesTypeWithArtifact</para>
-              <para>Relation: RefinesTypeWith</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabArtifactStep`1.InVectorListUsesAxis">
-            <summary>
-              Links a Vector to an Artifact that 'labels' its value's axis. (InFromZeroOrMore FabVector)
-            </summary>
-            <remarks>
-              <para>Links a Vector to an Artifact that 'labels' its value's axis.</para>
-              <para>Type: VectorUsesAxisArtifact</para>
-              <para>Relation: UsesAxis</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabAppStep.DefinesMemberList">
             <summary>
               Links an App to a particular Member. (OutToOneOrMore FabMember)
@@ -1277,7 +1334,25 @@
         <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewClassStep">
             <summary />
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewObjectStep`1">
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewFactorStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewFactorDescriptorStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewFactorDirectorStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewFactorEventorStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewFactorIdentorStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewFactorLocatorStep">
+            <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewFactorVectorStep">
             <summary />
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabBatchResultStep">
@@ -1289,233 +1364,14 @@
         <member name="T:Fabric.Clients.Cs.Api.IFabDescriptorStep">
             <summary />
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabFactorElementNodeStep`1">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDescriptorStep.InFactorListUses">
-            <summary>
-              Links a Factor to its Descriptor Element, which defines the relationship between the primary and related Artifact. (InFromOneOrMore FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its Descriptor Element, which defines the relationship between the primary and related Artifact.</para>
-              <para>Type: FactorUsesDescriptor</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromOneOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDescriptorStep.UsesDescriptorType">
-            <summary>
-              Links a Descriptor to a DescriptorType that specifies the type of relationship or connection. (OutToOne FabDescriptorType)
-            </summary>
-            <remarks>
-              <para>Links a Descriptor to a DescriptorType that specifies the type of relationship or connection.</para>
-              <para>Type: DescriptorUsesDescriptorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDescriptorStep.RefinesPrimaryWithArtifact">
-            <summary>
-              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact. (OutToZeroOrOne FabArtifact)
-            </summary>
-            <remarks>
-              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact.</para>
-              <para>Type: DescriptorRefinesPrimaryWithArtifact</para>
-              <para>Relation: RefinesPrimaryWith</para>
-              <para>Connection: OutToZeroOrOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDescriptorStep.RefinesRelatedWithArtifact">
-            <summary>
-              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact. (OutToZeroOrOne FabArtifact)
-            </summary>
-            <remarks>
-              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact.</para>
-              <para>Type: DescriptorRefinesRelatedWithArtifact</para>
-              <para>Relation: RefinesRelatedWith</para>
-              <para>Connection: OutToZeroOrOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDescriptorStep.RefinesTypeWithArtifact">
-            <summary>
-              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose. (OutToZeroOrOne FabArtifact)
-            </summary>
-            <remarks>
-              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose.</para>
-              <para>Type: DescriptorRefinesTypeWithArtifact</para>
-              <para>Relation: RefinesTypeWith</para>
-              <para>Connection: OutToZeroOrOne</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabDescriptorTypeStep">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabNodeForTypeStep`1">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDescriptorTypeStep.InDescriptorListUses">
-            <summary>
-              Links a Descriptor to a DescriptorType that specifies the type of relationship or connection. (InFromZeroOrMore FabDescriptor)
-            </summary>
-            <remarks>
-              <para>Links a Descriptor to a DescriptorType that specifies the type of relationship or connection.</para>
-              <para>Type: DescriptorUsesDescriptorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabDirectorStep">
             <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDirectorStep.InFactorListUses">
-            <summary>
-              Links a Factor to its Director Element, which creates a directional pathway between the primary and related Artifacts. (InFromOneOrMore FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its Director Element, which creates a directional pathway between the primary and related Artifacts.</para>
-              <para>Type: FactorUsesDirector</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromOneOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDirectorStep.UsesDirectorType">
-            <summary>
-              Links a Director to a DirectorType that specifies the type and reason for the pathway. (OutToOne FabDirectorType)
-            </summary>
-            <remarks>
-              <para>Links a Director to a DirectorType that specifies the type and reason for the pathway.</para>
-              <para>Type: DirectorUsesDirectorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDirectorStep.UsesPrimaryDirectorAction">
-            <summary>
-              Links a Director to a DirectorAction that specifies the action to be performed on the Factor's primary Artifact. (OutToOne FabDirectorAction)
-            </summary>
-            <remarks>
-              <para>Links a Director to a DirectorAction that specifies the action to be performed on the Factor's primary Artifact.</para>
-              <para>Type: DirectorUsesPrimaryDirectorAction</para>
-              <para>Relation: UsesPrimary</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDirectorStep.UsesRelatedDirectorAction">
-            <summary>
-              Links a Director to a DirectorAction that specifies the action to be performed on the Factor's related Artifact. (OutToOne FabDirectorAction)
-            </summary>
-            <remarks>
-              <para>Links a Director to a DirectorAction that specifies the action to be performed on the Factor's related Artifact.</para>
-              <para>Type: DirectorUsesRelatedDirectorAction</para>
-              <para>Relation: UsesRelated</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabDirectorActionStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDirectorActionStep.InDirectorListUsesPrimary">
-            <summary>
-              Links a Director to a DirectorAction that specifies the action to be performed on the Factor's primary Artifact. (InFromZeroOrMore FabDirector)
-            </summary>
-            <remarks>
-              <para>Links a Director to a DirectorAction that specifies the action to be performed on the Factor's primary Artifact.</para>
-              <para>Type: DirectorUsesPrimaryDirectorAction</para>
-              <para>Relation: UsesPrimary</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDirectorActionStep.InDirectorListUsesRelated">
-            <summary>
-              Links a Director to a DirectorAction that specifies the action to be performed on the Factor's related Artifact. (InFromZeroOrMore FabDirector)
-            </summary>
-            <remarks>
-              <para>Links a Director to a DirectorAction that specifies the action to be performed on the Factor's related Artifact.</para>
-              <para>Type: DirectorUsesRelatedDirectorAction</para>
-              <para>Relation: UsesRelated</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabDirectorTypeStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabDirectorTypeStep.InDirectorListUses">
-            <summary>
-              Links a Director to a DirectorType that specifies the type and reason for the pathway. (InFromZeroOrMore FabDirector)
-            </summary>
-            <remarks>
-              <para>Links a Director to a DirectorType that specifies the type and reason for the pathway.</para>
-              <para>Type: DirectorUsesDirectorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabErrorStep">
             <summary />
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabEventorStep">
             <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabEventorStep.InFactorListUses">
-            <summary>
-              Links a Factor to its Eventor Element, which applies the concept of time. (InFromOneOrMore FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its Eventor Element, which applies the concept of time.</para>
-              <para>Type: FactorUsesEventor</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromOneOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabEventorStep.UsesEventorType">
-            <summary>
-              Links an Eventor to an EventorType that specifies the significance of this point in time. (OutToOne FabEventorType)
-            </summary>
-            <remarks>
-              <para>Links an Eventor to an EventorType that specifies the significance of this point in time.</para>
-              <para>Type: EventorUsesEventorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabEventorStep.UsesEventorPrecision">
-            <summary>
-              Links an Eventor to an EventorPrecision that specifies the level of accuracy given to this point in time. (OutToOne FabEventorPrecision)
-            </summary>
-            <remarks>
-              <para>Links an Eventor to an EventorPrecision that specifies the level of accuracy given to this point in time.</para>
-              <para>Type: EventorUsesEventorPrecision</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabEventorPrecisionStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabEventorPrecisionStep.InEventorListUses">
-            <summary>
-              Links an Eventor to an EventorPrecision that specifies the level of accuracy given to this point in time. (InFromZeroOrMore FabEventor)
-            </summary>
-            <remarks>
-              <para>Links an Eventor to an EventorPrecision that specifies the level of accuracy given to this point in time.</para>
-              <para>Type: EventorUsesEventorPrecision</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabEventorTypeStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabEventorTypeStep.InEventorListUses">
-            <summary>
-              Links an Eventor to an EventorType that specifies the significance of this point in time. (InFromZeroOrMore FabEventor)
-            </summary>
-            <remarks>
-              <para>Links an Eventor to an EventorType that specifies the significance of this point in time.</para>
-              <para>Type: EventorUsesEventorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabFactorStep">
             <summary />
@@ -1553,106 +1409,48 @@
               <para>Connection: OutToOne</para>
             </remarks>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.UsesFactorAssertion">
+        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.DescriptorRefinesPrimaryWithArtifact">
             <summary>
-              Links a Factor to a FactorAssertion that specifies the type of information and/or level of confidence. (OutToOne FabFactorAssertion)
+              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact. (OutToZeroOrOne FabArtifact)
             </summary>
             <remarks>
-              <para>Links a Factor to a FactorAssertion that specifies the type of information and/or level of confidence.</para>
-              <para>Type: FactorUsesFactorAssertion</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.ReplacesFactor">
-            <summary>
-              Links a new Factor to the Factor that it has replaced. (OutToZeroOrOne FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a new Factor to the Factor that it has replaced.</para>
-              <para>Type: FactorReplacesFactor</para>
-              <para>Relation: Replaces</para>
+              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's primary Artifact.</para>
+              <para>Type: FactorDescriptorRefinesPrimaryWithArtifact</para>
+              <para>Relation: DescriptorRefinesPrimaryWith</para>
               <para>Connection: OutToZeroOrOne</para>
             </remarks>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.UsesDescriptor">
+        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.DescriptorRefinesRelatedWithArtifact">
             <summary>
-              Links a Factor to its Descriptor Element, which defines the relationship between the primary and related Artifact. (OutToOne FabDescriptor)
+              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact. (OutToZeroOrOne FabArtifact)
             </summary>
             <remarks>
-              <para>Links a Factor to its Descriptor Element, which defines the relationship between the primary and related Artifact.</para>
-              <para>Type: FactorUsesDescriptor</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.UsesDirector">
-            <summary>
-              Links a Factor to its Director Element, which creates a directional pathway between the primary and related Artifacts. (OutToZeroOrOne FabDirector)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its Director Element, which creates a directional pathway between the primary and related Artifacts.</para>
-              <para>Type: FactorUsesDirector</para>
-              <para>Relation: Uses</para>
+              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the Factor's related Artifact.</para>
+              <para>Type: FactorDescriptorRefinesRelatedWithArtifact</para>
+              <para>Relation: DescriptorRefinesRelatedWith</para>
               <para>Connection: OutToZeroOrOne</para>
             </remarks>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.UsesEventor">
+        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.DescriptorRefinesTypeWithArtifact">
             <summary>
-              Links a Factor to its Eventor Element, which applies the concept of time. (OutToZeroOrOne FabEventor)
+              Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose. (OutToZeroOrOne FabArtifact)
             </summary>
             <remarks>
-              <para>Links a Factor to its Eventor Element, which applies the concept of time.</para>
-              <para>Type: FactorUsesEventor</para>
-              <para>Relation: Uses</para>
+              <para>Links a Descriptor to an Artifact that specifies or clarifies a particular aspect of the DescriptorType's meaning or purpose.</para>
+              <para>Type: FactorDescriptorRefinesTypeWithArtifact</para>
+              <para>Relation: DescriptorRefinesTypeWith</para>
               <para>Connection: OutToZeroOrOne</para>
             </remarks>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.UsesIdentor">
+        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.VectorUsesAxisArtifact">
             <summary>
-              Links a Factor to its Identor Element, which applies a name or identifier. (OutToZeroOrOne FabIdentor)
+              Links a Vector to an Artifact that 'labels' its value's axis. (OutToZeroOrOne FabArtifact)
             </summary>
             <remarks>
-              <para>Links a Factor to its Identor Element, which applies a name or identifier.</para>
-              <para>Type: FactorUsesIdentor</para>
-              <para>Relation: Uses</para>
+              <para>Links a Vector to an Artifact that 'labels' its value's axis.</para>
+              <para>Type: FactorVectorUsesAxisArtifact</para>
+              <para>Relation: VectorUsesAxis</para>
               <para>Connection: OutToZeroOrOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.UsesLocator">
-            <summary>
-              Links a Factor to its Locator Element, which provides a geographical or relative position. (OutToZeroOrOne FabLocator)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its Locator Element, which provides a geographical or relative position.</para>
-              <para>Type: FactorUsesLocator</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToZeroOrOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabFactorStep.UsesVector">
-            <summary>
-              Links a Factor to its Vector Element, which applies a numeric axis and value. (OutToZeroOrOne FabVector)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its Vector Element, which applies a numeric axis and value.</para>
-              <para>Type: FactorUsesVector</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToZeroOrOne</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabFactorAssertionStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabFactorAssertionStep.InFactorListUses">
-            <summary>
-              Links a Factor to a FactorAssertion that specifies the type of information and/or level of confidence. (InFromZeroOrMore FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a Factor to a FactorAssertion that specifies the type of information and/or level of confidence.</para>
-              <para>Type: FactorUsesFactorAssertion</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
             </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabHomeStep">
@@ -1661,83 +1459,11 @@
         <member name="T:Fabric.Clients.Cs.Api.IFabIdentorStep">
             <summary />
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabIdentorStep.InFactorListUses">
-            <summary>
-              Links a Factor to its Identor Element, which applies a name or identifier. (InFromOneOrMore FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its Identor Element, which applies a name or identifier.</para>
-              <para>Type: FactorUsesIdentor</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromOneOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabIdentorStep.UsesIdentorType">
-            <summary>
-              Links an Identor to an IdentorType that specifies the value's purpose or intent. (OutToOne FabIdentorType)
-            </summary>
-            <remarks>
-              <para>Links an Identor to an IdentorType that specifies the value's purpose or intent.</para>
-              <para>Type: IdentorUsesIdentorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabIdentorTypeStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabIdentorTypeStep.InIdentorListUses">
-            <summary>
-              Links an Identor to an IdentorType that specifies the value's purpose or intent. (InFromZeroOrMore FabIdentor)
-            </summary>
-            <remarks>
-              <para>Links an Identor to an IdentorType that specifies the value's purpose or intent.</para>
-              <para>Type: IdentorUsesIdentorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabInstanceStep">
             <summary />
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabLocatorStep">
             <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabLocatorStep.InFactorListUses">
-            <summary>
-              Links a Factor to its Locator Element, which provides a geographical or relative position. (InFromOneOrMore FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its Locator Element, which provides a geographical or relative position.</para>
-              <para>Type: FactorUsesLocator</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromOneOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabLocatorStep.UsesLocatorType">
-            <summary>
-              Links a Locator to a LocatorType that specifies the spatial context of the coordinate. (OutToOne FabLocatorType)
-            </summary>
-            <remarks>
-              <para>Links a Locator to a LocatorType that specifies the spatial context of the coordinate.</para>
-              <para>Type: LocatorUsesLocatorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabLocatorTypeStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabLocatorTypeStep.InLocatorListUses">
-            <summary>
-              Links a Locator to a LocatorType that specifies the spatial context of the coordinate. (InFromZeroOrMore FabLocator)
-            </summary>
-            <remarks>
-              <para>Links a Locator to a LocatorType that specifies the spatial context of the coordinate.</para>
-              <para>Type: LocatorUsesLocatorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabMemberStep">
             <summary />
@@ -1819,24 +1545,7 @@
               <para>Connection: InFromOne</para>
             </remarks>
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabMemberTypeStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabMemberTypeStep.InMemberTypeAssignListUses">
-            <summary>
-              Links a MemberTypeAssign to a MemberType that specifies the Member's state and/or access privileges. (InFromZeroOrMore FabMemberTypeAssign)
-            </summary>
-            <remarks>
-              <para>Links a MemberTypeAssign to a MemberType that specifies the Member's state and/or access privileges.</para>
-              <para>Type: MemberTypeAssignUsesMemberType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabMemberTypeAssignStep">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabNodeForActionStep`1">
             <summary />
         </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabMemberTypeAssignStep.InMemberHas">
@@ -1870,17 +1579,6 @@
               <para>Type: MemberCreatesMemberTypeAssign</para>
               <para>Relation: Creates</para>
               <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabMemberTypeAssignStep.UsesMemberType">
-            <summary>
-              Links a MemberTypeAssign to a MemberType that specifies the Member's state and/or access privileges. (OutToOne FabMemberType)
-            </summary>
-            <remarks>
-              <para>Links a MemberTypeAssign to a MemberType that specifies the Member's state and/or access privileges.</para>
-              <para>Type: MemberTypeAssignUsesMemberType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
             </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabMetaTimeStep">
@@ -1948,17 +1646,6 @@
               <para>Connection: InFromOne</para>
             </remarks>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsMemberTypeList">
-            <summary>
-              Links the Root node to a MemberType. (InFromOne FabMemberType)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a MemberType.</para>
-              <para>Type: RootContainsMemberType</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
         <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsMemberTypeAssignList">
             <summary>
               Links the Root node to a MemberTypeAssign. (InFromOne FabMemberTypeAssign)
@@ -2003,226 +1690,6 @@
               <para>Connection: InFromOne</para>
             </remarks>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsFactorAssertionList">
-            <summary>
-              Links the Root node to a FactorAssertion. (InFromOne FabFactorAssertion)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a FactorAssertion.</para>
-              <para>Type: RootContainsFactorAssertion</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsDescriptorList">
-            <summary>
-              Links the Root node to a Descriptor. (InFromOne FabDescriptor)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a Descriptor.</para>
-              <para>Type: RootContainsDescriptor</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsDescriptorTypeList">
-            <summary>
-              Links the Root node to a DescriptorType. (InFromOne FabDescriptorType)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a DescriptorType.</para>
-              <para>Type: RootContainsDescriptorType</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsDirectorList">
-            <summary>
-              Links the Root node to a Director. (InFromOne FabDirector)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a Director.</para>
-              <para>Type: RootContainsDirector</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsDirectorTypeList">
-            <summary>
-              Links the Root node to a DirectorType. (InFromOne FabDirectorType)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a DirectorType.</para>
-              <para>Type: RootContainsDirectorType</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsDirectorActionList">
-            <summary>
-              Links the Root node to a DirectorAction. (InFromOne FabDirectorAction)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a DirectorAction.</para>
-              <para>Type: RootContainsDirectorAction</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsEventorList">
-            <summary>
-              Links the Root node to an Eventor. (InFromOne FabEventor)
-            </summary>
-            <remarks>
-              <para>Links the Root node to an Eventor.</para>
-              <para>Type: RootContainsEventor</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsEventorTypeList">
-            <summary>
-              Links the Root node to an EventorType. (InFromOne FabEventorType)
-            </summary>
-            <remarks>
-              <para>Links the Root node to an EventorType.</para>
-              <para>Type: RootContainsEventorType</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsEventorPrecisionList">
-            <summary>
-              Links the Root node to an EventorPrecision. (InFromOne FabEventorPrecision)
-            </summary>
-            <remarks>
-              <para>Links the Root node to an EventorPrecision.</para>
-              <para>Type: RootContainsEventorPrecision</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsIdentorList">
-            <summary>
-              Links the Root node to an Identor. (InFromOne FabIdentor)
-            </summary>
-            <remarks>
-              <para>Links the Root node to an Identor.</para>
-              <para>Type: RootContainsIdentor</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsIdentorTypeList">
-            <summary>
-              Links the Root node to an IdentorType. (InFromOne FabIdentorType)
-            </summary>
-            <remarks>
-              <para>Links the Root node to an IdentorType.</para>
-              <para>Type: RootContainsIdentorType</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsLocatorList">
-            <summary>
-              Links the Root node to a Locator. (InFromOne FabLocator)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a Locator.</para>
-              <para>Type: RootContainsLocator</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsLocatorTypeList">
-            <summary>
-              Links the Root node to a LocatorType. (InFromOne FabLocatorType)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a LocatorType.</para>
-              <para>Type: RootContainsLocatorType</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorList">
-            <summary>
-              Links the Root node to a Vector. (InFromOne FabVector)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a Vector.</para>
-              <para>Type: RootContainsVector</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorTypeList">
-            <summary>
-              Links the Root node to a VectorType. (InFromOne FabVectorType)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a VectorType.</para>
-              <para>Type: RootContainsVectorType</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorRangeList">
-            <summary>
-              Links the Root node to a VectorRange. (InFromOne FabVectorRange)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a VectorRange.</para>
-              <para>Type: RootContainsVectorRange</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorRangeLevelList">
-            <summary>
-              Links the Root node to a VectorRangeLevel. (InFromOne FabVectorRangeLevel)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a VectorRangeLevel.</para>
-              <para>Type: RootContainsVectorRangeLevel</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorUnitList">
-            <summary>
-              Links the Root node to a VectorUnit. (InFromOne FabVectorUnit)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a VectorUnit.</para>
-              <para>Type: RootContainsVectorUnit</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorUnitPrefixList">
-            <summary>
-              Links the Root node to a VectorUnitPrefix. (InFromOne FabVectorUnitPrefix)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a VectorUnitPrefix.</para>
-              <para>Type: RootContainsVectorUnitPrefix</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabRootStep.ContainsVectorUnitDerivedList">
-            <summary>
-              Links the Root node to a VectorUnitDerived. (InFromOne FabVectorUnitDerived)
-            </summary>
-            <remarks>
-              <para>Links the Root node to a VectorUnitDerived.</para>
-              <para>Type: RootContainsVectorUnitDerived</para>
-              <para>Relation: Contains</para>
-              <para>Connection: InFromOne</para>
-            </remarks>
-        </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabServiceStep">
             <summary />
         </member>
@@ -2252,256 +1719,65 @@
         <member name="T:Fabric.Clients.Cs.Api.IFabVectorStep">
             <summary />
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorStep.InFactorListUses">
-            <summary>
-              Links a Factor to its Vector Element, which applies a numeric axis and value. (InFromOneOrMore FabFactor)
-            </summary>
-            <remarks>
-              <para>Links a Factor to its Vector Element, which applies a numeric axis and value.</para>
-              <para>Type: FactorUsesVector</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromOneOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorStep.UsesAxisArtifact">
-            <summary>
-              Links a Vector to an Artifact that 'labels' its value's axis. (OutToOne FabArtifact)
-            </summary>
-            <remarks>
-              <para>Links a Vector to an Artifact that 'labels' its value's axis.</para>
-              <para>Type: VectorUsesAxisArtifact</para>
-              <para>Relation: UsesAxis</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorStep.UsesVectorType">
-            <summary>
-              Links a Vector to a VectorType that specifies its value's boundaries and context. (OutToOne FabVectorType)
-            </summary>
-            <remarks>
-              <para>Links a Vector to a VectorType that specifies its value's boundaries and context.</para>
-              <para>Type: VectorUsesVectorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorStep.UsesVectorUnit">
-            <summary>
-              Links a Vector to a VectorUnit that specifies its value's unit of measurement. (OutToOne FabVectorUnit)
-            </summary>
-            <remarks>
-              <para>Links a Vector to a VectorUnit that specifies its value's unit of measurement.</para>
-              <para>Type: VectorUsesVectorUnit</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorStep.UsesVectorUnitPrefix">
-            <summary>
-              Links a Vector to a VectorUnitPrefix that specifies its value's order of magnitude. (OutToOne FabVectorUnitPrefix)
-            </summary>
-            <remarks>
-              <para>Links a Vector to a VectorUnitPrefix that specifies its value's order of magnitude.</para>
-              <para>Type: VectorUsesVectorUnitPrefix</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabVectorRangeStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorRangeStep.InVectorTypeListUses">
-            <summary>
-              Links a VectorType to a VectorRange that specifies a meaningful points/labels mapped to the numerical range. (InFromZeroOrMore FabVectorType)
-            </summary>
-            <remarks>
-              <para>Links a VectorType to a VectorRange that specifies a meaningful points/labels mapped to the numerical range.</para>
-              <para>Type: VectorTypeUsesVectorRange</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorRangeStep.UsesVectorRangeLevelList">
-            <summary>
-              Links a VectorRange to one of the VectorRangeLevels that help give it meaning. (OutToZeroOrMore FabVectorRangeLevel)
-            </summary>
-            <remarks>
-              <para>Links a VectorRange to one of the VectorRangeLevels that help give it meaning.</para>
-              <para>Type: VectorRangeUsesVectorRangeLevel</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabVectorRangeLevelStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorRangeLevelStep.InVectorRangeListUses">
-            <summary>
-              Links a VectorRange to one of the VectorRangeLevels that help give it meaning. (InFromZeroOrMore FabVectorRange)
-            </summary>
-            <remarks>
-              <para>Links a VectorRange to one of the VectorRangeLevels that help give it meaning.</para>
-              <para>Type: VectorRangeUsesVectorRangeLevel</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabVectorTypeStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorTypeStep.InVectorListUses">
-            <summary>
-              Links a Vector to a VectorType that specifies its value's boundaries and context. (InFromZeroOrMore FabVector)
-            </summary>
-            <remarks>
-              <para>Links a Vector to a VectorType that specifies its value's boundaries and context.</para>
-              <para>Type: VectorUsesVectorType</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorTypeStep.UsesVectorRange">
-            <summary>
-              Links a VectorType to a VectorRange that specifies a meaningful points/labels mapped to the numerical range. (OutToOne FabVectorRange)
-            </summary>
-            <remarks>
-              <para>Links a VectorType to a VectorRange that specifies a meaningful points/labels mapped to the numerical range.</para>
-              <para>Type: VectorTypeUsesVectorRange</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabVectorUnitStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorUnitStep.InVectorListUses">
-            <summary>
-              Links a Vector to a VectorUnit that specifies its value's unit of measurement. (InFromZeroOrMore FabVector)
-            </summary>
-            <remarks>
-              <para>Links a Vector to a VectorUnit that specifies its value's unit of measurement.</para>
-              <para>Type: VectorUsesVectorUnit</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorUnitStep.InVectorUnitDerivedListDefines">
-            <summary>
-              TODO (InFromZeroOrMore FabVectorUnitDerived)
-            </summary>
-            <remarks>
-              <para>TODO</para>
-              <para>Type: VectorUnitDerivedDefinesVectorUnit</para>
-              <para>Relation: Defines</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorUnitStep.InVectorUnitDerivedListRaisesToExp">
-            <summary>
-              TODO (InFromZeroOrMore FabVectorUnitDerived)
-            </summary>
-            <remarks>
-              <para>TODO</para>
-              <para>Type: VectorUnitDerivedRaisesToExpVectorUnit</para>
-              <para>Relation: RaisesToExp</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabVectorUnitDerivedStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorUnitDerivedStep.DefinesVectorUnit">
-            <summary>
-              TODO (OutToOne FabVectorUnit)
-            </summary>
-            <remarks>
-              <para>TODO</para>
-              <para>Type: VectorUnitDerivedDefinesVectorUnit</para>
-              <para>Relation: Defines</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorUnitDerivedStep.RaisesToExpVectorUnit">
-            <summary>
-              TODO (OutToOne FabVectorUnit)
-            </summary>
-            <remarks>
-              <para>TODO</para>
-              <para>Type: VectorUnitDerivedRaisesToExpVectorUnit</para>
-              <para>Relation: RaisesToExp</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorUnitDerivedStep.UsesVectorUnitPrefix">
-            <summary>
-              TODO (OutToOne FabVectorUnitPrefix)
-            </summary>
-            <remarks>
-              <para>TODO</para>
-              <para>Type: VectorUnitDerivedUsesVectorUnitPrefix</para>
-              <para>Relation: Uses</para>
-              <para>Connection: OutToOne</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabVectorUnitPrefixStep">
-            <summary />
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorUnitPrefixStep.InVectorListUses">
-            <summary>
-              Links a Vector to a VectorUnitPrefix that specifies its value's order of magnitude. (InFromZeroOrMore FabVector)
-            </summary>
-            <remarks>
-              <para>Links a Vector to a VectorUnitPrefix that specifies its value's order of magnitude.</para>
-              <para>Type: VectorUsesVectorUnitPrefix</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.IFabVectorUnitPrefixStep.InVectorUnitDerivedListUses">
-            <summary>
-              TODO (InFromZeroOrMore FabVectorUnitDerived)
-            </summary>
-            <remarks>
-              <para>TODO</para>
-              <para>Type: VectorUnitDerivedUsesVectorUnitPrefix</para>
-              <para>Relation: Uses</para>
-              <para>Connection: InFromZeroOrMore</para>
-            </remarks>
-        </member>
         <member name="M:Fabric.Clients.Cs.Api.TraversalFuncs.As(System.String)">
             <summary>
-              TODO
+              Creates a named alias for the current step of the traversal path.
             </summary>
             <param name="Alias">
-              TODO
+              A named alias, which represents a particular place in the traversal path. This value must be unique across all other aliases in the traversal path.
             </param>
         </member>
         <member name="M:Fabric.Clients.Cs.Api.TraversalFuncs.Back(System.String)">
             <summary>
-              TODO
+              Returns the execution of the traversal path to a particular named alias.
             </summary>
             <param name="Alias">
-              TODO
+              The target named alias, which was defined by an As function earlier in the traversal path.
             </param>
         </member>
         <member name="M:Fabric.Clients.Cs.Api.TraversalFuncs.Limit(System.Int64,System.Int32)">
             <summary>
-              TODO
+              Restricts the size and starting index of the node list.
             </summary>
             <param name="Index">
-              TODO
+              The starting index for the returned list of nodes.
             </param>
             <param name="Count">
-              TODO
+              The maximum number of nodes to return.
             </param>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.TraversalFuncs.WhereApp">
+            <summary>
+              Restricts the results to include only App nodes.
+            </summary>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.TraversalFuncs.WhereClass">
+            <summary>
+              Restricts the results to include only Class nodes.
+            </summary>
         </member>
         <member name="M:Fabric.Clients.Cs.Api.TraversalFuncs.WhereId(System.Int64)">
             <summary>
-              TODO
+              Restricts the results to a single Id value.
             </summary>
             <param name="Id">
-              TODO
+              The target node Id.
             </param>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.TraversalFuncs.WhereInstance">
+            <summary>
+              Restricts the results to include only Instance nodes.
+            </summary>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.TraversalFuncs.WhereUrl">
+            <summary>
+              Restricts the results to include only Url nodes.
+            </summary>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.TraversalFuncs.WhereUser">
+            <summary>
+              Restricts the results to include only User nodes.
+            </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Session.FabricSessionContainer">
             <summary />
@@ -2527,17 +1803,15 @@
             </summary>
             <remarks>
               <para>An object which is able to (via Factor connections) accumulate meaning, context, user sentiment, and relationships.  Artifacts and Factors are the central components of the Fabric architecture.</para>
-              <para>Every Artifact maps exclusively to one other item in the Fabric architecture (such as an App, Class, Instance, or User). Fabric generates an Artifact automatically each time a new Artifact-enabled item is created.  Technically, each of these items 'has' an associated Artifact. However, due to the item's exclusive ownership, it is conceptually correct to say that each of these items 'is' an Artifact.</para>
               <para>There are no restrictions on what an Artifact can represent.  Fabric encourages the generous use of Factors to identify and describe each new Artifact. Ideally, the Factor connections will distinguish an Artifact from all others.</para>
-              <para>Each Artifact is linked to exactly one ArtifactOwnerNode item, where the type of this item is specified by the ArtifactType.</para>
             </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabNode">
             <summary>
-              TODO
+              The base class for all nodes present in the Fabric "graph".
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>The base class for all nodes present in the Fabric "graph".  Only Nodes are present and traversable via the Traversal Service.</para>
             </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabObject">
@@ -2555,7 +1829,7 @@
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabNode.Uri">
             <summary>
-              TODO
+              Append this value to the current URI to filter down to this specific Node in current traversal path.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabArtifact.ArtifactId">
@@ -2580,61 +1854,277 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabBatchNewClass">
             <summary>
-              MISSING:BatchNewClass
+              Provides input data for batch Class creation.
             </summary>
             <remarks>
-              <para>MISSING:BatchNewClass</para>
+              <para>Provides input data for batch Class creation. See the Class and AddClass operation documentation for details and parameter restrictions.</para>
             </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabBatchNewObject">
             <summary>
-              MISSING:BatchNewObject
+              TODO
             </summary>
             <remarks>
-              <para>MISSING:BatchNewObject</para>
+              <para>TODO</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabBatchNewObject.BatchId">
             <summary>
-              MISSING:BatchNewObject_BatchId
+              TODO
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabBatchNewClass.Disamb">
             <summary>
-              MISSING:BatchNewClass_Disamb
+              
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabBatchNewClass.Name">
             <summary>
-              MISSING:BatchNewClass_Name
+              
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabBatchNewClass.Note">
             <summary>
-              MISSING:BatchNewClass_Note
+              
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabBatchNewFactor">
+            <summary>
+              Provides input data for batch Factor creation.
+            </summary>
+            <remarks>
+              <para>Provides input data for batch Factor creation. See the Factor and AddFactor operation documentation for details and parameter restrictions.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactor.Descriptor">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactor.Director">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactor.Eventor">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactor.FactorAssertionId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactor.Identor">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactor.IsDefining">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactor.Locator">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactor.Note">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactor.PrimaryArtifactId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactor.RelatedArtifactId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactor.Vector">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabBatchNewFactorDescriptor">
+            <summary>
+              Provides Descriptor input data for batch Factor creation.
+            </summary>
+            <remarks>
+              <para>Provides Descriptor input data for batch Factor creation. See the Descriptor and AttachDescriptor operation documentation for details and parameter restrictions.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorDescriptor.PrimaryArtifactRefineId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorDescriptor.RelatedArtifactRefineId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorDescriptor.TypeId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorDescriptor.TypeRefineId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabBatchNewFactorDirector">
+            <summary>
+              Provides Director input data for batch Factor creation.
+            </summary>
+            <remarks>
+              <para>Provides Director input data for batch Factor creation. See the Director and AttachDirector  operation documentation for details and parameter restrictions.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorDirector.PrimaryActionId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorDirector.RelatedActionId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorDirector.TypeId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabBatchNewFactorEventor">
+            <summary>
+              Provides Eventor input data for batch Factor creation.
+            </summary>
+            <remarks>
+              <para>Provides Eventor input data for batch Factor creation. See the Eventor and AttachEventor operation documentation for details and parameter restrictions.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorEventor.DateTime">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorEventor.PrecisionId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorEventor.TypeId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabBatchNewFactorIdentor">
+            <summary>
+              Provides Identor input data for batch Factor creation.
+            </summary>
+            <remarks>
+              <para>Provides Identor input data for batch Factor creation. See the Identor and AttachIdentor operation documentation for details and parameter restrictions.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorIdentor.TypeId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorIdentor.Value">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabBatchNewFactorLocator">
+            <summary>
+              Provides Locator input data for batch Factor creation.
+            </summary>
+            <remarks>
+              <para>Provides Locator input data for batch Factor creation. See the Locator and AttachLocator operation documentation for details and parameter restrictions.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorLocator.TypeId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorLocator.ValueX">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorLocator.ValueY">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorLocator.ValueZ">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabBatchNewFactorVector">
+            <summary>
+              Provides Vector input data for batch Factor creation.
+            </summary>
+            <remarks>
+              <para>Provides Vector input data for batch Factor creation. See the Vector and AttachVector operation documentation for details and parameter restrictions.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorVector.AxisArtifactId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorVector.TypeId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorVector.UnitId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorVector.UnitPrefixId">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabBatchNewFactorVector.Value">
+            <summary>
+              
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabBatchResult">
             <summary>
-              MISSING:BatchResult
+              TODO
             </summary>
             <remarks>
-              <para>MISSING:BatchResult</para>
+              <para>TODO</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabBatchResult.BatchId">
             <summary>
-              MISSING:BatchResult_BatchId
+              TODO
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabBatchResult.Error">
             <summary>
-              MISSING:BatchResult_Error
+              TODO
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabBatchResult.ResultId">
             <summary>
-              MISSING:BatchResult_ResultId
+              TODO
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabClass">
@@ -2643,11 +2133,7 @@
             </summary>
             <remarks>
               <para>Represents any item (real, imaginary, virtual, conceptual, or otherwise) that an App or User can define and/or use to generate meaning. Classes and Instances are closely related, and are the primary method for generating new Artifacts.</para>
-              <para>Documentation Note: To explain the Class object more intuitively, this documentation simplifies some concepts of the Fabric architecture. Please be aware of the full complexity:</para>
-              <para>- A Class receives Factors via its associated Artifact.</para>
-              <para>- Each Factor references two Artifacts, which creates a relationship between them.</para>
-              <para>- An 'is a' relationship refers to a Factor that uses an 'Is A' Descriptor.</para>
-              <para>A Class represents a particular group, type, set, or category of items. Each Class must uniquely identifiable (via name and disambiguation) amonst all other Classes. An Artifact (of any type) can only have 'is a' relationships with Classes.</para>
+              <para>A Class represents a particular group, type, set, or category of items. Each Class must uniquely identifiable (via name and disambiguation) amonst all other Classes.</para>
               <para>Ellie's Class Example: Ellie is building an App for dog lovers, but there are not yet animal-related Classes for Ellie to use. She first creates broad Classes (like 'Animal', 'Mammal', and 'Canine') and relationships between them (like 'Canine is a Mammal').</para>
               <para>She then creates narrower Classes for each dog grouping (like 'Working Dog') and breed (like 'Great Dane'), adding relevant relationships along the way. A Class named 'Boxer' already exists, but it has a sports-related meaning. She adds a new 'Boxer' Class with a 'Dog Breed' disambiguation value to resolve this conflict.</para>
             </remarks>
@@ -2674,12 +2160,11 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabDescriptor">
             <summary>
-              Describes and refines the relationship between the two Artifacts of a particular Factor. The primary purpose of a Descriptor is to describe the relationship between a Factor's primary Artifact and related Artifact.
+              A Factor Element that describes and refines the relationship between the Factor's two Artifacts.
             </summary>
             <remarks>
-              <para>Describes and refines the relationship between the two Artifacts of a particular Factor.</para>
-              <para>The primary purpose of a Descriptor is to describe the relationship between a Factor's primary Artifact and related Artifact. The DescriptorType provides this description, establishing meaningful connections like a A 'is a' B, or C 'sounds like' D.</para>
-              <para>The Artifact relationship (defined by a Factor) is directional, flowing from the primary Artifact to the related Artifact. The DescriptorType, therefore, must coordinate with the relationship's direction.</para>
+              <para>A Factor Element that describes and refines the relationship between the Factor's two Artifacts. Descriptors are the only required Factor Element.</para>
+              <para>First, the DescriptorType provides semantic meaning to the relationship, such as: a A "is a" B, or C "sounds like" D. Since this relationship is directional (flowing from the Factor's primary Artifact and to the related Artifact), the DescriptorType must coordinate correctly with the relationship's direction.</para>
               <para>Relationship Example: Objective:</para>
               <para>Describe that a circle is a shape. </para>
               <para>Method:</para>
@@ -2687,7 +2172,7 @@
               <para>- The Descriptor uses the 'Is A' DescriptorType.</para>
               <para>Factor Phrase:</para>
               <para>Circle ... Is A ... Shape.</para>
-              <para>Descriptors also offer optional (but powerful) refinement capabilities, which allow a Descriptor to be very specific. Using any available Artifact, a Descriptor may refine the DescriptorType, the Factor's primary Artifact, and/or the Factor's related Artifact.</para>
+              <para>Descriptors also offer optional (but powerful) refinement capabilities, which allow a Descriptor to be very specific. Using any Artifact, a Descriptor may refine the DescriptorType, the Factor's primary Artifact, and/or the Factor's related Artifact. Note: while these Artifact links are discussed here in the context of a Descriptor, the actual traversal links exist with the Factor.</para>
               <para>Refinement Example: Objective:</para>
               <para>Describe that car A and car B have headlights with a similar shape.</para>
               <para>Method:</para>
@@ -2695,115 +2180,59 @@
               <para>- The Descriptor uses the 'Is Similar To' DescriptorType, uses 'Headlight' to refine both Artifacts, and uses 'Shape' to refine the DescriptorType.</para>
               <para>Factor Phrase:</para>
               <para>Car A (more specifically, its) Headlight ... Is Similar To (more specifically, by) Shape ... Car B (more specifically, its) Headlight.</para>
-              <para>Descriptors are the only required Factor Element. If a Factor is completed without a Descriptor, Fabric automatically attaches one. The default Descriptor uses the 'Is Related To' DescriptorType with no refinements.</para>
             </remarks>
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabFactorElementNode">
+        <member name="P:Fabric.Clients.Cs.Api.FabDescriptor.TypeId">
             <summary>
-              TODO
-            </summary>
-            <remarks>
-              <para>TODO</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabDescriptor.DescriptorId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabDescriptorType">
-            <summary>
-              Provides meaning (via Descriptor) to the relationship between the two Artifacts in a particular Factor.
-            </summary>
-            <remarks>
-              <para>Provides meaning (via Descriptor) to the relationship between the two Artifacts in a particular Factor. Example types include: Is A, Refers To, Sounds Like, etc.</para>
-            </remarks>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabNodeForType">
-            <summary>
-              TODO
-            </summary>
-            <remarks>
-              <para>TODO</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabNodeForType.Description">
-            <summary>
-              A summary of this object's intended meaning or purpose.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabNodeForType.Name">
-            <summary>
-              A descriptive name or title.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabDescriptorType.DescriptorTypeId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
+              Specifies the type of relationship or connection.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabDirector">
             <summary>
-              Creates a directional, action-based pathway between the two Artifacts of a particular Factor. The nature of a Director's pathway depends on its DirectorType.
+              A Factor Element that creates a directional, action-based flow between the Factor's two Artifacts. The nature of a Director's pathway depends on its DirectorType.
             </summary>
             <remarks>
-              <para>Creates a directional, action-based pathway between the two Artifacts of a particular Factor.</para>
+              <para>A Factor Element that creates a directional, action-based flow between the Factor's two Artifacts.</para>
               <para>The nature of a Director's pathway depends on its DirectorType. The Director can  represent a factual, well-defined path, a virtual link, a suggested flow, etc.</para>
               <para>A Director specifies a DirectorAction for each of the Factor's Artifacts, which give additional meaning to the Director's pathway. The primary action is meant to be performed on the primary Artifact before the pathway begins. The related action is meant to be performed on the related Artifact after the pathway ends.</para>
               <para>Defined Pathway Example: Objective:</para>
               <para>Direct along the defined pathway of listening to a particular album's third and fourth songs (song C and D) in order.</para>
               <para>Method:</para>
               <para>- The Factor uses 'Song C' as the primary Artifact and 'Song D' as the related Artifact.</para>
-              <para>- The Descriptor, by default, uses the 'IsRelatedTo' DescriptorType.</para>
+              <para>- The Descriptor uses the 'IsRelatedTo' DescriptorType.</para>
               <para>- The Director uses the 'Defined Path' DirectorType and the 'Listen' DirectorAction for each Artifact.</para>
               <para>Factor Phrase:</para>
-              <para>Song C ... Is Related To ... Song D. (Performing the) Listen (action on) ... Song C ... (leads via) Defined Path (toward) ... (performing the) Listen (action on) ... Song D. Suggested Pathway Example: Objective:</para>
+              <para>Song C ... Is Related To ... Song D. (The) Listen (action on) ... Song C ...  (leads to the) Listen (action on) ... Song D ... (via) Defined Path. Suggested Pathway Example: Objective:</para>
               <para>Direct along a suggested pathway of listening to song A and then learning about that song's vocalist, singer B.</para>
               <para>Method:</para>
               <para>- The Factor uses 'Song A' as the primary Artifact and 'Singer B' as the related Artifact.</para>
-              <para>- The Descriptor, by default, uses the 'IsRelatedTo' DescriptorType.</para>
+              <para>- The Descriptor uses the 'IsRelatedTo' DescriptorType.</para>
               <para>- The Director uses the 'Suggested Path' DirectorType, the 'Listen' primary DirectorAction, and the 'Learn' related DirectorAction.</para>
               <para>Factor Phrase:</para>
-              <para>Song A ... Is Related To ... Song B.  (Performing the) Listen (action on) ... Song A ... (leads via) Suggested Path (toward) ... (performing the) Learn (action on) ... Singer B.</para>
+              <para>Song A ... Is Related To ... Song B. (The) Listen (action on) ... Song A ... (leads to the) Learn (action on) ... Singer B ... (via) Suggested Path.</para>
             </remarks>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabDirector.DirectorId">
+        <member name="P:Fabric.Clients.Cs.Api.FabDirector.PrimaryActionId">
             <summary>
-              Uniquely identifies this object amongst all other objects of this type.
+              Specifies the action to be performed on the Factor's primary Artifact.
             </summary>
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabDirectorAction">
+        <member name="P:Fabric.Clients.Cs.Api.FabDirector.RelatedActionId">
             <summary>
-              Describes an action to be taken (via Director) on one of the two Artifacts in a particular Factor.
-            </summary>
-            <remarks>
-              <para>Describes an action to be taken (via Director) on one of the two Artifacts in a particular Factor. Example actions include: Read, Learn, Obtain, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabDirectorAction.DirectorActionId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
+              Specifies the action to be performed on the Factor's related Artifact.
             </summary>
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabDirectorType">
+        <member name="P:Fabric.Clients.Cs.Api.FabDirector.TypeId">
             <summary>
-              Provides meaning (via Director) to the directional connection between the two Artifacts in a particular Factor.
-            </summary>
-            <remarks>
-              <para>Provides meaning (via Director) to the directional connection between the two Artifacts in a particular Factor. Example types include: Hyperlink, Suggested Path, Defined Path, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabDirectorType.DirectorTypeId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
+              Specifies the type and reason for the pathway.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabError">
             <summary>
-              When a fault or error occurs, a FabError is returned in place of the expected response data.
+              When a fault or error occurs, a FabError is included in the response data.
             </summary>
             <remarks>
-              <para>When a fault or error occurs, a FabError is returned in place of the expected response data. The information it provides should help determine what caused the issue for the given request.</para>
+              <para>When a fault or error occurs, a FabError is included in the response data. The information it provides should help determine what caused the issue for the given request.</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabError.Code">
@@ -2823,17 +2252,17 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabEventor">
             <summary>
-              Applies the concept of time to a particular Factor. An Eventor places a Factor at a specific point in time and describes why it is significant to the Factor.
+              A Factor Element that applies the concept of time to a particular Factor. An Eventor places a Factor at a specific point in time and describes why it is significant to the Factor.
             </summary>
             <remarks>
-              <para>Applies the concept of time to a particular Factor.</para>
+              <para>A Factor Element that applies the concept of time to a particular Factor.</para>
               <para>An Eventor places a Factor at a specific point in time and describes why it is significant to the Factor. The EventorType provides this significance, establishing that this particular point in time is when the Factor started, occurred, is expected, etc.</para>
               <para>Each Eventor represents one particular point in time, however, the precision of that point in time can vary. The EventorPrecision allows a point in time to specify a level of accuracy ranging from one second to one year.</para>
               <para>Started Example: Objective:</para>
               <para>Specify that Albert Einstein was born (i.e. started his life) on March 14, 1879.</para>
               <para>Method:</para>
               <para>- The Factor uses 'Albert Einstein' as the primary Artifact and 'Life' as the related Artifact.</para>
-              <para>- The Descriptor uses the 'Has A' DescriptorType.</para>
+              <para>- The Descriptor uses the 'Has A' DescriptorType. </para>
               <para>- The Eventor uses 'March 14, 1879' as its DateTime value, the 'Started' EventorType, and the 'Day' EventorPrecision.</para>
               <para>Factor Phrase:</para>
               <para>Albert Einstein ... Has A ... Life, ... (an event which) Started ... (on the) Day ... March 14, 1879. Expected Example: Objective:</para>
@@ -2852,35 +2281,14 @@
               A particular point in time, with a level of accuracy defined by EventorPrecision.
             </summary>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabEventor.EventorId">
+        <member name="P:Fabric.Clients.Cs.Api.FabEventor.PrecisionId">
             <summary>
-              Uniquely identifies this object amongst all other objects of this type.
+              Specifies the level of accuracy given to this point in time.
             </summary>
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabEventorPrecision">
+        <member name="P:Fabric.Clients.Cs.Api.FabEventor.TypeId">
             <summary>
-              Describes the level of date/time precision (via Eventor) given to a particular Factor.
-            </summary>
-            <remarks>
-              <para>Describes the level of date/time precision (via Eventor) given to a particular Factor. Example precisions include: Year, Day, Second, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabEventorPrecision.EventorPrecisionId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabEventorType">
-            <summary>
-              Provides temporal significance (via Eventor) for a particular Factor.
-            </summary>
-            <remarks>
-              <para>Provides temporal significance (via Eventor) for a particular Factor.  Example types include: Start, Occur, Expected, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabEventorType.EventorTypeId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
+              Specifies the significance of this point in time.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabFactor">
@@ -2889,10 +2297,9 @@
             </summary>
             <remarks>
               <para>Provides a specific piece of information, knowledge, or opinion about a pair of Artifacts. Factors and Artifacts are the central components of the Fabric architecture.</para>
-              <para>A Factor forms a directional relationship from its primary Artifact to its related Artifact. There are various Factor-related components (known as Factor Elements) available. Each has a specific ability to refine, describe, and/or supplement this Artifact relationship in a meaningful way.</para>
-              <para>The six Factor Elements are called Descriptor, Director, Eventor, Identor, Locator, and Vector. The Descriptor is the only required Element; the rest are optional. A Factor typically uses one or two Elements, but (in very complex cases) could potentially use four or more.</para>
-              <para>Just as there are no restrictions on what a particular Artifact can represent, there are no restrictions on the type of meaning or information a Factors can provide. The FactorAssertionKey allows a Factor to specify that it represents (among other things) a fact or an opinion. This level of confidence for a particular Factor allows Users and Apps to more effectively find the type of information they desire.</para>
-              <para>Each Factor has a trio of boolean states. IsComplete states whether the Factor is completed or still under construction. IsDefining states whether the Factor is a vital piece of data, which could be useful in uniquely identifying the primary Artifact. IsPublic states whether the Factor is public (available to all Apps and Users) or not. Non-public Factors are primarily accessible to the App responsible for creating it, but may be accessible by other Apps which have certain access rights.</para>
+              <para>A Factor forms a directional relationship from its primary Artifact to its related Artifact. It contains one or more components, called Factor Elements. Each Element has a specific ability to refine, describe, and/or supplement this Artifact relationship in a meaningful way.</para>
+              <para>There are six Factor Elements: Descriptor, Director, Eventor, Identor, Locator, and Vector. The Descriptor is the only required Element; the rest are optional. A Factor typically uses one or two Elements, but (in very complex cases) could potentially use four or more.</para>
+              <para>Just as there are no restrictions on what a particular Artifact can represent, there are no restrictions on the type of meaning or information a Factors can provide. A FactorAssertion allows a Factor to specify that it represents (among other things) a fact or an opinion. This level of confidence for a particular Factor allows Users and Apps to more effectively find the type of information they desire.</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabFactor.Completed">
@@ -2905,14 +2312,44 @@
               The date/time of creation.
             </summary>
         </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabFactor.Descriptor">
+            <summary>
+              This element defines the relationship between the primary and related Artifact.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabFactor.Director">
+            <summary>
+              This element creates a directional pathway between the primary and related Artifacts.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabFactor.Eventor">
+            <summary>
+              This element applies the concept of time.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabFactor.FactorAssertionId">
+            <summary>
+              Specifies the type of information and/or level of confidence.
+            </summary>
+        </member>
         <member name="P:Fabric.Clients.Cs.Api.FabFactor.FactorId">
             <summary>
               Uniquely identifies this object amongst all other objects of this type.
             </summary>
         </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabFactor.Identor">
+            <summary>
+              This element applies a name or identifier.
+            </summary>
+        </member>
         <member name="P:Fabric.Clients.Cs.Api.FabFactor.IsDefining">
             <summary>
-              Specifies whether this Factor helps to uniquely define the primary Artifact.
+              Specifies whether this Factor helps to directly and uniquely define the primary Artifact.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabFactor.Locator">
+            <summary>
+              This element provides a geographical or relative position.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabFactor.Note">
@@ -2920,40 +2357,32 @@
               A summary of the Factor's intended meaning or purpose.
             </summary>
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabFactorAssertion">
+        <member name="P:Fabric.Clients.Cs.Api.FabFactor.Vector">
             <summary>
-              Describes the type of information (and/or level of confidence) provided by a particular Factor.
-            </summary>
-            <remarks>
-              <para>Describes the type of information (and/or level of confidence) provided by a particular Factor. Example assertions include: Fact, Opinion, Guess, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabFactorAssertion.FactorAssertionId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
+              This element applies a numeric axis and value.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabHome">
             <summary>
-              TODO
+              The complete collection of Fabric API services.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>The complete collection of Fabric API services.</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabHome.Services">
             <summary>
-              TODO
+              The complete list of services.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabIdentor">
             <summary>
-              Applies a name or identifier to a particular Factor. An Identor attaches a text-based value to a Factor.
+              A Factor Element that applies a name or identifier to a particular Factor. An Identor attaches a text-based value to a Factor.
             </summary>
             <remarks>
-              <para>Applies a name or identifier to a particular Factor.</para>
+              <para>A Factor Element that applies a name or identifier to a particular Factor.</para>
               <para>An Identor attaches a text-based value to a Factor. This value can represent a a full name, a nickname, a globally-unique identifier, a reference key to some other system, etc.</para>
-              <para>The IdentorType hints at the purpose or intent of the Identor. A 'Text' IdentorType is typically meant to provide enhanced search capabilities (like finding a person by an alternate name) or some other organizational use.  A 'Key' IdentorType is typically meant to associate a Factor with some external system (like a Product ID from an online store) or to provide an App with a 'reverse lookup' for their own internal IDs.</para>
+              <para>The IdentorType hints at the purpose or intent of the Identor. A "Text" IdentorType is typically meant to provide enhanced search capabilities (like finding a person by an alternate name) or some other organizational use.  A "Key" IdentorType is typically meant to associate a Factor with some external system (like a Product ID from an online store) or to provide an App with a "reverse lookup" for their own internal IDs.</para>
               <para>Alternate Name Example: Objective:</para>
               <para>Identify that Grand Valley State University is also known as (has the alternate name of) 'Grand Valley'.</para>
               <para>Method:</para>
@@ -2965,40 +2394,27 @@
               <para>Identify that Grand Valley State University is also known as (has the abbreviation of) 'GVSU'.</para>
               <para>Method:</para>
               <para>- The Factor uses 'Grand Valley State University' as the primary Artifact and 'Abbreviation' as the related Artifact.</para>
-              <para>- The Descriptor uses the 'Has A' DescriptorType.</para>
+              <para>- The Descriptor uses the 'Has A' DescriptorType. </para>
               <para>- The Identor uses 'GVSU' as its text value, and the 'Text' IdentorType.</para>
               <para>Factor Phrase:</para>
               <para>Grand Valley State University ... Has A(n) ... Abbreviation, ... (identified by the) Text ... 'GVSU'. Identifier Example: Objective:</para>
               <para>Identify that game A is accessible in store B via its ID, which is '123a-45678'.</para>
               <para>Method:</para>
               <para>- The Factor uses 'Game A' as the primary Artifact and 'Store B' as the related Artifact.</para>
-              <para>- The Descriptor uses the 'Is Found In' DescriptorType.</para>
+              <para>- The Descriptor uses the 'Is Found In' DescriptorType. </para>
               <para>- The Identor uses '123a-45678' as its text value, and the 'Key' IdentorType.</para>
               <para>Factor Phrase:</para>
               <para>Game A ... Is Found In ... Store B, ... (identified by the) Key ... '123a-45678'.</para>
             </remarks>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabIdentor.IdentorId">
+        <member name="P:Fabric.Clients.Cs.Api.FabIdentor.TypeId">
             <summary>
-              Uniquely identifies this object amongst all other objects of this type.
+              Specifies the value's purpose or intent.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabIdentor.Value">
             <summary>
               A text-based value that can represent names, numbers, IDs, GUIDs, etc.
-            </summary>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabIdentorType">
-            <summary>
-              Provides a hint about the text (via Identor) that identifies a particular Factor.
-            </summary>
-            <remarks>
-              <para>Provides a hint about the text (via Identor) that identifies a particular Factor. Example types include: Text, Key, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabIdentorType.IdentorTypeId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabInstance">
@@ -3007,11 +2423,7 @@
             </summary>
             <remarks>
               <para>Represents any item (real, imaginary, virtual, conceptual, or otherwise) that an App or User can define and/or use to generate meaning. Classes and Instances are closely related, and are the primary method for generating new Artifacts.</para>
-              <para>Documentation Note: To explain the Instance object more intuitively, this documentation simplifies some concepts of the Fabric architecture. Please be aware of the full complexity:</para>
-              <para>- An Instance receives Factors via its associated Artifact.</para>
-              <para>- Each Factor references two Artifacts, which creates a relationship between them.</para>
-              <para>- An 'is a' relationship refers to a Factor that uses an 'Is A' Descriptor.</para>
-              <para>An Instance represents a singular, unique item. It may have a specific name, however, the name is not required to be unique. Instead, the creator should apply Factors to make the Instance as specific and meaningful as possible. Each Instance must have an 'is a' relationship with at least one Class.</para>
+              <para>An Instance represents a singular, unique item. It may have a specific name, however, the name is not required to be unique. Instead, the creator should apply Factors to make the Instance as specific and meaningful as possible.</para>
               <para>Ellie's Instance Example: Continued from Ellie's Class Example...</para>
               <para>After completing her new Classes, Ellie would like to add her own dog. She creates an Instance named 'Gulliver', and attaches several Factors to make the Instance as unique as possible. Her Factors define that Gulliver is a Lhasa Apso breed, is owned by Ellie, and was born in September 2007. Zach's Instance Example: Zach built an App that allows users to rate restaurants and individual meals. He created Classes for restaurant chains and meal types. He also created Instances for specific restaurants (with relevant relationships for each).</para>
               <para>When Users rate a particular meal, they also specify the restaurant, the day/time the meal was served, and the meal type. Behind the scenes, the App uses this data to construct a new Instance and its relationships. Because Zach's Instances are well-defined, one User could rate the same meal (at the same restaurant) every day, creating a unique and meaningful Instance each time.</para>
@@ -3039,17 +2451,17 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabLocator">
             <summary>
-              Positions a Factor using geographic or relative coordinates. A Locator attaches a three-dimensional coordinate to a Factor.
+              A Factor Element that positions a Factor using geographic or relative coordinates. A Locator attaches a three-dimensional coordinate to a Factor.
             </summary>
             <remarks>
-              <para>Positions a Factor using geographic or relative coordinates.</para>
+              <para>A Factor Element that positions a Factor using geographic or relative coordinates.</para>
               <para>A Locator attaches a three-dimensional coordinate to a Factor. The LocatorType defines the spatial context of the coordinate, supporting both geographic and relative positioning.</para>
               <para>Geographic coordinates represent a position on a sphere, like Earth.  They use X for longitude, Y for latitude, and Z for elevation (in metres above sea level). Use zero for elevation if it is not known or specified.</para>
               <para>Geographic Example: Objective:</para>
               <para>Specify that person A took photo B from a spot near the Eiffel Tower.</para>
               <para>Method:</para>
               <para>- The Factor uses 'Photo B' as the primary Artifact and 'Person A' as the related Artifact.</para>
-              <para>- The Descriptor uses the 'Is Created By' DescriptorType.</para>
+              <para>- The Descriptor uses the 'Is Created By' DescriptorType. </para>
               <para>- The Locator uses the 'Earth Coordinate' LocatorType, a '2.292977' value for X, a '48.858154' value for Y, and (optionally) a '34.24' value for Z.</para>
               <para>Factor Phrase:</para>
               <para>Photo B ... Is Created By ... Person A, ... (at an) Earth Coordinate (location of) ... X (longitude) = '2.292977' ... Y (latitude) = '48.858154' ... Z (elevation) = '34.24' (metres above sea level).</para>
@@ -3061,22 +2473,22 @@
               <para>Specify that book A refers to painting B on page 148 of 200 (about 74% of the book's length).</para>
               <para>Method:</para>
               <para>- The Factor uses 'Book A' as the primary Artifact and 'Painting B' as the related Artifact.</para>
-              <para>- The Descriptor uses the 'Refers To' DescriptorType.</para>
+              <para>- The Descriptor uses the 'Refers To' DescriptorType. </para>
               <para>- The Locator uses the 'Related 1D' LocatorType, a '0.74' value for X, a '0.0' value for Y, and a '0.0' value for Z.</para>
               <para>Factor Phrase:</para>
               <para>Book A ... Refers To ... Painting B, ... (at a) Relative 1D (location of) ... X (position) = 0.74. Relative 2D Example: Objective:</para>
               <para>Specify that photo A includes person B near the top-right (25% from the top, 84% from the left) of the image.</para>
               <para>Method:</para>
               <para>- The Factor uses 'Photo A' as the primary Artifact and 'Person B' as the related Artifact.</para>
-              <para>- The Descriptor uses the 'Refers To' DescriptorType.</para>
+              <para>- The Descriptor uses the 'Refers To' DescriptorType. </para>
               <para>- The Locator uses the 'Relative 2D' LocatorType, a '0.84' value for X, a '0.25' value for Y, and a '0.0' value for Z.</para>
               <para>Factor Phrase:</para>
               <para>Photo A ... Refers To ... Person B, ... (at a) Relative 2D (location of) ... X (width) = '0.84' ... Y (height) = '0.25'.</para>
             </remarks>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabLocator.LocatorId">
+        <member name="P:Fabric.Clients.Cs.Api.FabLocator.TypeId">
             <summary>
-              Uniquely identifies this object amongst all other objects of this type.
+              Specifies the spatial context of the coordinate.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabLocator.ValueX">
@@ -3094,56 +2506,13 @@
               A value representing elevation or a particular three-dimensional axis.
             </summary>
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabLocatorType">
-            <summary>
-              Provides spatial context and boundaries (via Locator) for a particular Factor.
-            </summary>
-            <remarks>
-              <para>Provides spatial context and boundaries (via Locator) for a particular Factor. Example types include: Earth Coordinate, Mars Coordinate, Relative 3D Position, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabLocatorType.LocatorTypeId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabLocatorType.MaxX">
-            <summary>
-              The maximum Locator X-coordinate value.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabLocatorType.MaxY">
-            <summary>
-              The maximum Locator Y-coordinate value.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabLocatorType.MaxZ">
-            <summary>
-              The maximum Locator Z-coordinate value.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabLocatorType.MinX">
-            <summary>
-              The minimum Locator X-coordinate value.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabLocatorType.MinY">
-            <summary>
-              The minimum Locator Y-coordinate value.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabLocatorType.MinZ">
-            <summary>
-              The minimum Locator Z-coordinate value.
-            </summary>
-        </member>
         <member name="T:Fabric.Clients.Cs.Api.FabMember">
             <summary>
               An association between a User and an App.
             </summary>
             <remarks>
-              <para>An association between a User and an App. The App administrator(s) can grant various access privileges to a Member by adjusting its MemberType.</para>
-              <para>Every item added to Fabric is associated with a particular Member. Thus, Fabric can determine which App or User is responsible for any particular item, enforce applicable access rights, analyze the data for a particular App and/or User, etc.</para>
+              <para>An association between a User and an App. The App administrator(s) can grant various access privileges to a Member by creating a MemberTypeAssign that uses a different MemberType.</para>
+              <para>Every item added to Fabric is associated with a particular Member. This enables Fabric to determine which App or User is responsible for any particular item, enforce applicable access rights, analyze the data for a particular App and/or User, etc.</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMember.MemberId">
@@ -3151,43 +2520,30 @@
               Uniquely identifies this object amongst all other objects of this type.
             </summary>
         </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabMemberType">
-            <summary>
-              Describes the level of access and control given to a particular Member.
-            </summary>
-            <remarks>
-              <para>Describes the level of access and control given to a particular Member.  Example types include: Member, Admin, Data Provider, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabMemberType.MemberTypeId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
         <member name="T:Fabric.Clients.Cs.Api.FabMemberTypeAssign">
             <summary>
-              TODO
+              An assignment of a MemberType to a target Member.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>An assignment of a MemberType to a target Member. This action is performed by some Member, which is usually (but not always) different from the target Member. Each Member maintains one active MemberTypeAssign and a list of historical MemberTypeAssigns.</para>
             </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabNodeForAction">
             <summary>
-              TODO
+              The base class for various "actions" that can occur.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>The base class for various "actions" that can occur.</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabNodeForAction.Note">
             <summary>
-              TODO
+              A brief note describing this action.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabNodeForAction.Performed">
             <summary>
-              TODO
+              The date/time this action was performed.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMemberTypeAssign.MemberTypeAssignId">
@@ -3195,105 +2551,110 @@
               Uniquely identifies this object amongst all other objects of this type.
             </summary>
         </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabMemberTypeAssign.MemberTypeId">
+            <summary>
+              Specifies the Member's state and/or access privileges.
+            </summary>
+        </member>
         <member name="T:Fabric.Clients.Cs.Api.FabMetaTime">
             <summary>
-              TODO
+              Contains the current Fabric system time.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>Contains the current Fabric system time. Fabric uses the UTC timezone for all dates, times, and timestamps.</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaTime.Day">
             <summary>
-              TODO
+              The current day of the month.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaTime.Hour">
             <summary>
-              TODO
+              The current hour (using 24-hour time).
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaTime.Millisecond">
             <summary>
-              TODO
+              The current millisecond.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaTime.Minute">
             <summary>
-              TODO
+              The current minute.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaTime.Month">
             <summary>
-              TODO
+              The current month.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaTime.Second">
             <summary>
-              TODO
+              The current second.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaTime.Ticks">
             <summary>
-              TODO
+              The current number of Ticks since January 1, 0001.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaTime.Unix">
             <summary>
-              TODO
+              A Unix timestamp value, derived from the Ticks value.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaTime.Year">
             <summary>
-              TODO
+              The current year.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabMetaVersion">
             <summary>
-              TODO
+              Contains the current Fabric version information.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>Contains the current Fabric version information. Fabric uses semantic versioning.</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaVersion.Day">
             <summary>
-              TODO
+              The day of the month that this build was released.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaVersion.Major">
             <summary>
-              TODO
+              The major revision number for this build.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaVersion.Minor">
             <summary>
-              TODO
+              The minor revision number for this build.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaVersion.Month">
             <summary>
-              TODO
+              The month that this build was released.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaVersion.Patch">
             <summary>
-              TODO
+              The patch revision number for this build.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaVersion.Revision">
             <summary>
-              TODO
+              The revision text is derived from internal build information.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaVersion.Version">
             <summary>
-              TODO
+              This build's full version string, in the format: "Major.Minor.Patch.Revision".
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMetaVersion.Year">
             <summary>
-              TODO
+              The year that this build was released.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabOauthAccess">
@@ -3399,25 +2760,25 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabService">
             <summary>
-              A collection of similar ServiceOperations which all share a similar purpose.
+              A collection of ServiceOperations which all share a similar purpose.
             </summary>
             <remarks>
-              <para>A collection of similar ServiceOperations which all share a similar purpose.</para>
+              <para>A collection of ServiceOperations which all share a similar purpose.</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabService.Name">
             <summary>
-              TODO
+              The service name.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabService.Operations">
             <summary>
-              TODO
+              The complete list of operations for this service.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabService.Uri">
             <summary>
-              TODO
+              Append this path to the current URI to obtain details about this service.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabServiceOperation">
@@ -3430,22 +2791,22 @@
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabServiceOperation.Method">
             <summary>
-              TODO
+              The required HTTP method.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabServiceOperation.Name">
             <summary>
-              TODO
+              A descriptive name for this operation.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabServiceOperation.ReturnType">
             <summary>
-              TODO
+              The type of Object returned by this operation.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabServiceOperation.Uri">
             <summary>
-              TODO
+              Append this value to the current URI (and use the correct HTTP method) to invoke this operation.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabSpec">
@@ -3456,7 +2817,27 @@
               
             </remarks>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabSpec.ApiVersion">
+        <member name="P:Fabric.Clients.Cs.Api.FabSpec.BuildDay">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabSpec.BuildMonth">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabSpec.BuildVersion">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabSpec.BuildYear">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabSpec.Enums">
             <summary>
               
             </summary>
@@ -3470,6 +2851,14 @@
             <summary>
               
             </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabSpecEnum">
+            <summary>
+              
+            </summary>
+            <remarks>
+              
+            </remarks>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabSpecObject">
             <summary>
@@ -3576,6 +2965,11 @@
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabSpecValue.ValidRegex">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabSpecObjectProp.Enum">
             <summary>
               
             </summary>
@@ -3810,41 +3204,41 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabStepLink">
             <summary>
-              TODO
+              Contains all the relevant information about a Node's traversal link.
             </summary>
             <remarks>
-              <para>TODO</para>
+              <para>Contains all the relevant information about a Node's traversal link.</para>
             </remarks>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabStepLink.Class">
             <summary>
-              TODO
+              The Node type returned by the opposite end of this link.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabStepLink.IsOut">
             <summary>
-              TODO
+              Indicates whether this link is outgoing (starting from the current Node) or incoming (starting from another Node).
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabStepLink.Rel">
             <summary>
-              TODO
+              The relation type of this link.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabStepLink.Uri">
             <summary>
-              TODO
+              Append this value to the current URI to add this link to the traversal path.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabUrl">
             <summary>
-              A hyperlink or path (uniform resource locator) to some web page, a file, or some other type of content. While a Url does have an associated Artifact, it should be used with certain constraints.
+              A hyperlink or path (uniform resource locator) to some web page, a file, or some other type of content. While a Url is a type of Artifact, it should be used with certain constraints.
             </summary>
             <remarks>
               <para>A hyperlink or path (uniform resource locator) to some web page, a file, or some other type of content.</para>
-              <para>While a Url does have an associated Artifact, it should be used with certain constraints. Consider an scenario where a Url leads to web page with a news article and a photo. The proper prodedure is to create a new Instance for both the news article and photo. With this method:</para>
-              <para>- The news article and photo (via their Artifacts) can receive Factors independently.</para>
-              <para>- The Url (via its Artifact) should only receive Factors related to the actual web page, its design, etc.</para>
+              <para>While a Url is a type of Artifact, it should be used with certain constraints. Consider an scenario where a Url leads to web page with a news article and a photo. The proper prodedure is to create a new Instance for both the news article and photo. With this method:</para>
+              <para>- The news article and photo Instances can receive Factors independently.</para>
+              <para>- The Url should only receive Factors related to the actual web page, its design, etc.</para>
               <para>- Every Url that displays this particular news article can refer the same news article Instance.</para>
             </remarks>
         </member>
@@ -3885,158 +3279,55 @@
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabVector">
             <summary>
-              Applies a meaningful numeric axis and value to a particular Factor. A Vector attaches a numeric value to a Factor, using an arbitrary Artifact to define its 'axis'.
+              A Factor Element that applies a meaningful numeric axis and value to a particular Factor. A Vector attaches a numeric value to a Factor, using an arbitrary Artifact to define its "axis".
             </summary>
             <remarks>
-              <para>Applies a meaningful numeric axis and value to a particular Factor.</para>
-              <para>A Vector attaches a numeric value to a Factor, using an arbitrary Artifact to define its 'axis'. This axis depends entirely upon the Vector's purpose. For example, a factual Vector might use an Artifact like 'Height' or 'Shutter Speed'. A Vector that provides an opinion might use an Artifact like 'Quality' or 'Excitement'. While the choice of an axis Artififact is not restricted, it can be beneficial to use Artifacts which are other Apps or Users are already using as Vector axes.</para>
+              <para>A Factor Element that applies a meaningful numeric axis and value to a particular Factor.</para>
+              <para>A Vector attaches a numeric value to a Factor, using an arbitrary Artifact to define its "axis". This axis depends entirely upon the Vector's purpose. For example, a factual Vector might use an Artifact like "Height" or "Shutter Speed". A Vector that provides an opinion might use an Artifact like "Quality" or "Excitement". While the choice of an axis Artififact is not restricted, it can be beneficial to use Artifacts which are other Apps or Users are already using as Vector axes. Note: while the axis Artifact link is discussed here in the context of a Vector, the actual traversal link exists with the Factor.</para>
               <para>The VectorType provides boundaries and context for the Vector's value. It can identify the value as a percentage, a level of agreement or disagreement, an opinion-based rating, or simply a plain numeric value. Each VectorType provides additional information, such as a VectorRange, to provide further meaning for the levels within the the allowed value boundaries.</para>
               <para>A Vector's numeric value often reflects a measurement or a has a specific unit. Furthermore, a Vector can use VectorUnitPrefix to specify an order of magnitude for the value. A Vector's value is a long integer, so the prefix is especially useful when fractional values are involved, or when the desired number is larger than a long integer.</para>
               <para>Small Value Example: Objective:</para>
               <para>Specify that image A (which is a photo) has a shutter speed of 1/250 second.</para>
               <para>Method:</para>
               <para>- The Factor uses 'Image A' as the primary Artifact and 'Photo' as the related Artifact.</para>
-              <para>- The Descriptor uses the 'Is A' DescriptorType.</para>
+              <para>- The Descriptor uses the 'Is A' DescriptorType. </para>
               <para>- The Vector uses the 'Shutter Speed' Artifact as the axis, the 'Positive Long' VectorType, '4' as the value, the 'Milli' VectorUnitPrefix, and the 'Second' VectorUnit.</para>
               <para>Factor Phrase:</para>
               <para>Image A ... Is A ... Photo, ... (which, along the) Shutter Speed (axis) ... (with a) Positive Long (numerical range), ... (has a value) '4' ... Milli ... Second(s). Large Value Example: Objective:</para>
               <para>Specify that Earth and the Andromeda Galaxy are 2.5 million light years (2.2705 x 10^22 metres) apart.</para>
               <para>Method:</para>
               <para>- The Factor uses 'Earth' as the primary Artifact and 'Andromeda Galaxy' as the related Artifact.</para>
-              <para>- The Descriptor uses the 'Is Related To' DescriptorType.</para>
+              <para>- The Descriptor uses the 'Is Related To' DescriptorType. </para>
               <para>- The Vector uses the 'Distance' Artifact as the axis, the 'Positive Long' VectorType, '22,705' as the value, the 'Exa' VectorUnitPrefix (represents 10^18), and the 'Metre' VectorUnit.</para>
               <para>Factor Phrase:</para>
               <para>Earth ... Is Related To ... Andromeda Galaxy, ... (which, along the) Distance (axis) ... (with a) Positive Long (numerical range), ... (has a value) '22,705' ... Exa ... Metre(s). Negative Value Example: Objective:</para>
               <para>Specify that article A mentions person B in a very unfair manner, about 80% of the maximum unfairness imaginable.</para>
               <para>Method:</para>
               <para>- The Factor uses 'Article A' as the primary Artifact and 'Person B' as the related Artifact.</para>
-              <para>- The Descriptor uses the 'Refers To' DescriptorType.</para>
+              <para>- The Descriptor uses the 'Refers To' DescriptorType. </para>
               <para>- The Vector uses the 'Fairness' Artifact as the axis, the 'Opposable Favorability' VectorType, '-80' as the value, the default 'Base' VectorUnitPrefix, and the default 'None' VectorUnit. This VectorType has bounds of -100 to +100.</para>
               <para>Factor Phrase:</para>
               <para>Article A ... Refers To ... Person B, ... (which, along the) Fairness (axis) ... (with a) Opposable Favorabillity (numerical range), ... (has a value) '-80'.</para>
             </remarks>
         </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabVector.TypeId">
+            <summary>
+              Specifies its value's boundaries and context.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabVector.UnitId">
+            <summary>
+              Specifies its value's unit of measurement.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabVector.UnitPrefixId">
+            <summary>
+              Specifies its value's order of magnitude.
+            </summary>
+        </member>
         <member name="P:Fabric.Clients.Cs.Api.FabVector.Value">
             <summary>
               An integral value which is to be plotted along the specified axis.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVector.VectorId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabVectorRange">
-            <summary>
-              Provides meaning (using relatively-positioned points/labels) across the numerical range of a particular VectorType.
-            </summary>
-            <remarks>
-              <para>Provides meaning (using relatively-positioned points/labels) across the numerical range of a particular VectorType. Example ranges include: Negative Numeric, Full Agreement, Positive Favorability, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorRange.VectorRangeId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabVectorRangeLevel">
-            <summary>
-              A relatively-positioned point which provides meaning to a numerical range.
-            </summary>
-            <remarks>
-              <para>A relatively-positioned point which provides meaning to a numerical range. Example levels include: Maximum, Somewhat Disagree, Mostly Favorable, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorRangeLevel.Position">
-            <summary>
-              A value (between 0.0 and 1.0) which defines the relative position between a numeric range's minimum and maximum boundaries.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorRangeLevel.VectorRangeLevelId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabVectorType">
-            <summary>
-              Provides meaning and boundaries (via Vector) for a numeric value given to a particular Factor.
-            </summary>
-            <remarks>
-              <para>Provides meaning and boundaries (via Vector) for a numeric value given to a particular Factor. Example types include: Full Percentage, Standard Agreement, Opposable Favorability, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorType.Max">
-            <summary>
-              The maximum Vector value allowed.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorType.Min">
-            <summary>
-              The minimum Vector value allowed.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorType.VectorTypeId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabVectorUnit">
-            <summary>
-              Provides a unit of measurement for the numeric value of a particular Vector.
-            </summary>
-            <remarks>
-              <para>Provides a unit of measurement for the numeric value of a particular Vector. Example units include: Metre, Second, Byte, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorUnit.Symbol">
-            <summary>
-              A unique symbol or abbreviation.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorUnit.VectorUnitId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabVectorUnitDerived">
-            <summary>
-              TODO
-            </summary>
-            <remarks>
-              <para>TODO</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorUnitDerived.Exponent">
-            <summary>
-              TODO
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorUnitDerived.VectorUnitDerivedId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.FabVectorUnitPrefix">
-            <summary>
-              Provides a level of magnitude for the numeric value of a particular Vector.
-            </summary>
-            <remarks>
-              <para>Provides a level of magnitude for the numeric value of a particular Vector. Example unit prefixes include: Kilo, Nano, Gibi, etc.</para>
-            </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorUnitPrefix.Amount">
-            <summary>
-              The difference in magnitude (a multipler) relative to the base unit.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorUnitPrefix.Symbol">
-            <summary>
-              An abbreviation, which is typically placed directly before the VectorUnit symbol.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabVectorUnitPrefix.VectorUnitPrefixId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.FabricClient">
@@ -4079,27 +3370,6 @@
             <summary />
         </member>
         <member name="P:Fabric.Clients.Cs.FabricClient.UseDataProviderPerson">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabArtifactStep">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabBatchNewObjectStep">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabFactorElementNodeStep">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabNodeStep">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabNodeForActionStep">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabNodeForTypeStep">
-            <summary />
-        </member>
-        <member name="T:Fabric.Clients.Cs.Api.IFabObjectStep">
             <summary />
         </member>
     </members>
