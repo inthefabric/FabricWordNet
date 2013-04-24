@@ -11,7 +11,8 @@ namespace Fabric.Apps.WordNet.Export {
 		private const string Prompt = "\nFabricExporter> ";
 
 		public enum Command {
-			Export = 1,
+			ExportArt = 1,
+			ExportFac,
 			Artifact,
 			ConfirmJob,
 			ConfirmAllJobs,
@@ -25,7 +26,8 @@ namespace Fabric.Apps.WordNet.Export {
 		/*--------------------------------------------------------------------------------------------*/
 		public Commander() {
 			CommandText = new Dictionary<string, Command>();
-			CommandText.Add("export", Command.Export);
+			CommandText.Add("export-art", Command.ExportArt);
+			CommandText.Add("export-fac", Command.ExportFac);
 			CommandText.Add("art", Command.Artifact);
 			CommandText.Add("confirmjob", Command.ConfirmJob);
 			CommandText.Add("confirmalljobs", Command.ConfirmAllJobs);
@@ -46,9 +48,14 @@ namespace Fabric.Apps.WordNet.Export {
 				MatchCollection matches = commData.Value.Value;
 
 				switch ( commData.Value.Key ) {
-					case Command.Export:
-						var ex = new ExportCommand(this, matches);
-						ex.Start();
+					case Command.ExportArt:
+						var exa = new ExportArtCommand(this, matches);
+						exa.Start();
+						break;
+
+					case Command.ExportFac:
+						var exf = new ExportFacCommand(this, matches);
+						exf.Start();
 						break;
 
 					case Command.Artifact:

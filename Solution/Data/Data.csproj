@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="DbBuilder.cs" />
     <Compile Include="Domain\Batch.cs" />
+    <Compile Include="Domain\IHasNote.cs" />
     <Compile Include="Domain\Job.cs" />
     <Compile Include="Domain\Export.cs" />
     <Compile Include="Domain\Word.cs" />

@@ -65,9 +65,11 @@
     <Compile Include="Commands\ArtifactCommand.cs" />
     <Compile Include="Commands\ConfirmJobCommand.cs" />
     <Compile Include="Commands\ConfirmAllJobsCommand.cs" />
+    <Compile Include="Commands\ExportBase.cs" />
+    <Compile Include="Commands\ExportArtCommand.cs" />
+    <Compile Include="Commands\ExportFacCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\ICommandIo.cs" />
-    <Compile Include="Commands\ExportCommand.cs" />
     <Compile Include="FabLog.cs" />
     <Compile Include="FabSess.cs" />
     <Compile Include="Main.cs" />

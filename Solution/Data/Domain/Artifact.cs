@@ -3,7 +3,7 @@
 namespace Fabric.Apps.WordNet.Data.Domain {
 	
 	/*================================================================================================*/
-	public class Artifact {
+	public class Artifact : IHasNote {
 
 		public virtual int Id { get; protected set; }
 		public virtual string Name { get; set; }
