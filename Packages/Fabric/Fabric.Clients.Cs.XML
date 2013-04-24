@@ -1317,6 +1317,242 @@
         <member name="M:Fabric.Clients.Cs.Api.Traversal.GetFullTraversalUri">
             <summary />
         </member>
+        <member name="T:Fabric.Clients.Cs.Api.BaseEnum">
+            <summary>
+              The base class for all Fabric enumerations.
+            </summary>
+            <remarks>
+              <para>The base class for all Fabric enumerations.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.BaseEnum.Id">
+            <summary>
+              The numeric identifier for this enumeration item.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.BaseEnum.EnumId">
+            <summary>
+              A unique string (with no spaces) that can be used by Fabric clients when creating an enumeration.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.BaseEnum.Name">
+            <summary>
+              A descriptive name or title.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.BaseEnum.Description">
+            <summary>
+              A summary of this object's intended meaning or purpose.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.MemberType">
+            <summary>
+              Describes the level of access and control given to a particular Member.
+            </summary>
+            <remarks>
+              <para>Describes the level of access and control given to a particular Member.</para>
+            </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.DescriptorType">
+            <summary>
+              Provides meaning (via Descriptor) to the relationship between the two Artifacts in a particular Factor.
+            </summary>
+            <remarks>
+              <para>Provides meaning (via Descriptor) to the relationship between the two Artifacts in a particular Factor.</para>
+            </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.DirectorType">
+            <summary>
+              Provides meaning (via Director) to the directional connection between the two Artifacts in a particular Factor.
+            </summary>
+            <remarks>
+              <para>Provides meaning (via Director) to the directional connection between the two Artifacts in a particular Factor.</para>
+            </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.DirectorAction">
+            <summary>
+              Describes an action to be taken (via Director) on one of the two Artifacts in a particular Factor.
+            </summary>
+            <remarks>
+              <para>Describes an action to be taken (via Director) on one of the two Artifacts in a particular Factor.</para>
+            </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.EventorPrecision">
+            <summary>
+              Describes the level of date/time precision (via Eventor) given to a particular Factor.
+            </summary>
+            <remarks>
+              <para>Describes the level of date/time precision (via Eventor) given to a particular Factor.</para>
+            </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.EventorType">
+            <summary>
+              Provides temporal significance (via Eventor) for a particular Factor.
+            </summary>
+            <remarks>
+              <para>Provides temporal significance (via Eventor) for a particular Factor.</para>
+            </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FactorAssertion">
+            <summary>
+              Describes the type of information (and/or level of confidence) provided by a particular Factor.
+            </summary>
+            <remarks>
+              <para>Describes the type of information (and/or level of confidence) provided by a particular Factor.</para>
+            </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.IdentorType">
+            <summary>
+              Provides a hint about the text (via Identor) that identifies a particular Factor.
+            </summary>
+            <remarks>
+              <para>Provides a hint about the text (via Identor) that identifies a particular Factor.</para>
+            </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.LocatorType">
+            <summary>
+              Provides spatial context and boundaries (via Locator) for a particular Factor.
+            </summary>
+            <remarks>
+              <para>Provides spatial context and boundaries (via Locator) for a particular Factor.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.LocatorType.MinX">
+            <summary>
+              The minimum Locator X-coordinate value.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.LocatorType.MaxX">
+            <summary>
+              The maximum Locator X-coordinate value.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.LocatorType.MinY">
+            <summary>
+              The minimum Locator Y-coordinate value.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.LocatorType.MaxY">
+            <summary>
+              The maximum Locator Y-coordinate value.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.LocatorType.MinZ">
+            <summary>
+              The minimum Locator Z-coordinate value.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.LocatorType.MaxZ">
+            <summary>
+              The maximum Locator Z-coordinate value.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.VectorType">
+            <summary>
+              Provides meaning and boundaries (via Vector) for a numeric value given to a particular Factor.
+            </summary>
+            <remarks>
+              <para>Provides meaning and boundaries (via Vector) for a numeric value given to a particular Factor.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.VectorType.VectorRangeId">
+            <summary>
+              Specifies a meaningful points/labels mapped to the numerical range.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.VectorType.Min">
+            <summary>
+              The minimum Vector value allowed.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.VectorType.Max">
+            <summary>
+              The maximum Vector value allowed.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.VectorRangeLevel">
+            <summary>
+              A relatively-positioned point which provides meaning to a numerical range.
+            </summary>
+            <remarks>
+              <para>A relatively-positioned point which provides meaning to a numerical range.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.VectorRangeLevel.Position">
+            <summary>
+              A value (between 0.0 and 1.0) which defines the relative position between a numeric range's minimum and maximum boundaries.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.VectorRange">
+            <summary>
+              Provides meaning (using relatively-positioned points/labels) across the numerical range of a particular VectorType.
+            </summary>
+            <remarks>
+              <para>Provides meaning (using relatively-positioned points/labels) across the numerical range of a particular VectorType.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.VectorRange.VectorRangeLevelIds">
+            <summary>
+              The set of points/labels that describe a numerical range.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.VectorUnit">
+            <summary>
+              Provides a unit of measurement for the numeric value of a particular Vector.
+            </summary>
+            <remarks>
+              <para>Provides a unit of measurement for the numeric value of a particular Vector.</para>
+            </remarks>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.VectorUnitPrefix">
+            <summary>
+              Provides a level of magnitude for the numeric value of a particular Vector.
+            </summary>
+            <remarks>
+              <para>Provides a level of magnitude for the numeric value of a particular Vector.</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.VectorUnitPrefix.Amount">
+            <summary>
+              The difference in magnitude (a multipler) relative to the base unit.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.VectorUnitDerived">
+            <summary>
+              Provides conversion formulas from the "derived" unit to one or more "raises" units.
+            </summary>
+            <remarks>
+              <para>Provides conversion formulas from the "derived" unit to one or more "raises" units. Each "raises" unit receives a unit prefix and an exponent value.</para>
+              <para>Watt Example: Description</para>
+              <para>The Watt unit conversion is defined with three seperate VectorUnitDerived items:</para>
+              <para>- WattGram</para>
+              <para>- WattMetre</para>
+              <para>- WattSec</para>
+              <para>Equation</para>
+              <para>Those three items represent the Watt conversion equation:</para>
+              <para>1 Watt = 1 (Kg)*(m^2)/(s^3)</para>
+            </remarks>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.VectorUnitDerived.DefinesVectorUnitId">
+            <summary>
+              One or more VectorUnitDerived items are used to represent a conversion into this particular unit.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.VectorUnitDerived.RaisesVectorUnitId">
+            <summary>
+              The unit for this particular item.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.VectorUnitDerived.WithExponent">
+            <summary>
+              The exponent that affects the "raises" unit.
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.VectorUnitDerived.RaisesVectorUnitPrefixId">
+            <summary>
+              The unit prefix that affects the "raises" unit.
+            </summary>
+        </member>
         <member name="T:Fabric.Clients.Cs.Api.IFabAppStep">
             <summary />
         </member>
@@ -2182,6 +2418,11 @@
               <para>Car A (more specifically, its) Headlight ... Is Similar To (more specifically, by) Shape ... Car B (more specifically, its) Headlight.</para>
             </remarks>
         </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabDescriptor.GetTypeData">
+            <summary>
+              Get the static DescriptorType data that is associated with this object's TypeId value.
+            </summary>
+        </member>
         <member name="P:Fabric.Clients.Cs.Api.FabDescriptor.TypeId">
             <summary>
               Specifies the type of relationship or connection.
@@ -2211,6 +2452,21 @@
               <para>Factor Phrase:</para>
               <para>Song A ... Is Related To ... Song B. (The) Listen (action on) ... Song A ... (leads to the) Learn (action on) ... Singer B ... (via) Suggested Path.</para>
             </remarks>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabDirector.GetPrimaryActionData">
+            <summary>
+              Get the static DirectorAction data that is associated with this object's PrimaryActionId value.
+            </summary>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabDirector.GetRelatedActionData">
+            <summary>
+              Get the static DirectorAction data that is associated with this object's RelatedActionId value.
+            </summary>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabDirector.GetTypeData">
+            <summary>
+              Get the static DirectorType data that is associated with this object's TypeId value.
+            </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabDirector.PrimaryActionId">
             <summary>
@@ -2276,6 +2532,16 @@
               <para>Note: every Factor recieves a timestamp upon creation. This timestamp is not related to the Eventor.</para>
             </remarks>
         </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabEventor.GetPrecisionData">
+            <summary>
+              Get the static EventorPrecision data that is associated with this object's PrecisionId value.
+            </summary>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabEventor.GetTypeData">
+            <summary>
+              Get the static EventorType data that is associated with this object's TypeId value.
+            </summary>
+        </member>
         <member name="P:Fabric.Clients.Cs.Api.FabEventor.DateTime">
             <summary>
               A particular point in time, with a level of accuracy defined by EventorPrecision.
@@ -2301,6 +2567,11 @@
               <para>There are six Factor Elements: Descriptor, Director, Eventor, Identor, Locator, and Vector. The Descriptor is the only required Element; the rest are optional. A Factor typically uses one or two Elements, but (in very complex cases) could potentially use four or more.</para>
               <para>Just as there are no restrictions on what a particular Artifact can represent, there are no restrictions on the type of meaning or information a Factors can provide. A FactorAssertion allows a Factor to specify that it represents (among other things) a fact or an opinion. This level of confidence for a particular Factor allows Users and Apps to more effectively find the type of information they desire.</para>
             </remarks>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabFactor.GetFactorAssertionData">
+            <summary>
+              Get the static FactorAssertion data that is associated with this object's FactorAssertionId value.
+            </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabFactor.Completed">
             <summary>
@@ -2407,6 +2678,11 @@
               <para>Game A ... Is Found In ... Store B, ... (identified by the) Key ... '123a-45678'.</para>
             </remarks>
         </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabIdentor.GetTypeData">
+            <summary>
+              Get the static IdentorType data that is associated with this object's TypeId value.
+            </summary>
+        </member>
         <member name="P:Fabric.Clients.Cs.Api.FabIdentor.TypeId">
             <summary>
               Specifies the value's purpose or intent.
@@ -2486,6 +2762,11 @@
               <para>Photo A ... Refers To ... Person B, ... (at a) Relative 2D (location of) ... X (width) = '0.84' ... Y (height) = '0.25'.</para>
             </remarks>
         </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabLocator.GetTypeData">
+            <summary>
+              Get the static LocatorType data that is associated with this object's TypeId value.
+            </summary>
+        </member>
         <member name="P:Fabric.Clients.Cs.Api.FabLocator.TypeId">
             <summary>
               Specifies the spatial context of the coordinate.
@@ -2544,6 +2825,11 @@
         <member name="P:Fabric.Clients.Cs.Api.FabNodeForAction.Performed">
             <summary>
               The date/time this action was performed.
+            </summary>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabMemberTypeAssign.GetMemberTypeData">
+            <summary>
+              Get the static MemberType data that is associated with this object's MemberTypeId value.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabMemberTypeAssign.MemberTypeAssignId">
@@ -2899,6 +3185,11 @@
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabSpecObject.TraversalLinks">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="P:Fabric.Clients.Cs.Api.FabSpecEnum.Data">
             <summary>
               
             </summary>
@@ -3310,6 +3601,21 @@
               <para>Article A ... Refers To ... Person B, ... (which, along the) Fairness (axis) ... (with a) Opposable Favorabillity (numerical range), ... (has a value) '-80'.</para>
             </remarks>
         </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabVector.GetTypeData">
+            <summary>
+              Get the static VectorType data that is associated with this object's TypeId value.
+            </summary>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabVector.GetUnitData">
+            <summary>
+              Get the static VectorUnit data that is associated with this object's UnitId value.
+            </summary>
+        </member>
+        <member name="M:Fabric.Clients.Cs.Api.FabVector.GetUnitPrefixData">
+            <summary>
+              Get the static VectorUnitPrefix data that is associated with this object's UnitPrefixId value.
+            </summary>
+        </member>
         <member name="P:Fabric.Clients.Cs.Api.FabVector.TypeId">
             <summary>
               Specifies its value's boundaries and context.
@@ -3371,6 +3677,1064 @@
         </member>
         <member name="P:Fabric.Clients.Cs.FabricClient.UseDataProviderPerson">
             <summary />
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.MemberTypeMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorTypeMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorPrecisionMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorTypeMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.FactorAssertionMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.IdentorTypeMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.LocatorTypeMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixMap">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedMap">
+            <summary/>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.MemberTypeId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.MemberTypeId.None">
+            <summary>
+              None: The User is not associated with this App.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.MemberTypeId.Request">
+            <summary>
+              Request: The user would like to become a member of this App.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.MemberTypeId.Invite">
+            <summary>
+              Invite: The User has been invited to become a member of this App.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.MemberTypeId.Member">
+            <summary>
+              Member: The User is a member of this App.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.MemberTypeId.Staff">
+            <summary>
+              Staff: The User is a staff member of this App.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.MemberTypeId.Admin">
+            <summary>
+              Admin: The User is an administrator of this App.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.MemberTypeId.Owner">
+            <summary>
+              Owner: The User owns this App.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.MemberTypeId.DataProvider">
+            <summary>
+              Data Provider: The User has a special membership that allows it to interact with Fabric on behalf of the App.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.IsRelatedTo">
+            <summary>
+              Is Related To: The primary Artifact is related to the related Artifact in some way. This is the default (and least meaningful) DescriptorType.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.IsA">
+            <summary>
+              Is A: The primary Artifact is a type of, a subclass of, a subset of, a subordinate of, or in the category defined by the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.IsAnInstanceOf">
+            <summary>
+              Is An Instance Of: The primary Artifact is an instance, case, example, or representation of the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.HasA">
+            <summary>
+              Has A: The primary Artifact has, as a part, piece, feature, attribute, or component, the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.IsLike">
+            <summary>
+              Is Like: The primary Artifact is like or similar to the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.IsNotLike">
+            <summary>
+              Is Not Like: The primary Artifact is not like or not similar to the related Artifact
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.RefersTo">
+            <summary>
+              Refers To: The primary Artifact refers to, mentions, discusses, links to, or references the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.IsCreatedBy">
+            <summary>
+              Is Created By: The primary Artifact is created, built, designed, invented, formed, or performed by the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.IsInterestedIn">
+            <summary>
+              Is Interested In: The primary Artifact is interested in, fond of, attracted to, enjoys, prefers, or desires the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.Receives">
+            <summary>
+              Receives: The primary Artifact receives, gets, obtains, or is awarded the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.Consumes">
+            <summary>
+              Consumes: The primary Artifact consumes, eats, is powered by, uses up, depletes, or destroys the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.Produces">
+            <summary>
+              Produces: The primary Artifact produces, has a byproduct of, creates, or generates the related Artifact. This is similar to 'Is Created By', but in the opposite direction and meant to be less specific.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.ParticipatesIn">
+            <summary>
+              Participates In: The primary Artifact participates in, competes in, attends, is a member of, or is involved in the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.IsFoundIn">
+            <summary>
+              Is Found In: The primary Artifact is found in, located at, lives in, or is contained by the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.BelongsTo">
+            <summary>
+              Belongs To: The primary Artifact belongs to, is controlled by, or is owned by the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.Requires">
+            <summary>
+              Requires: The primary Artifact requires, implies, needs, or demands the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.LooksLike">
+            <summary>
+              Looks Like: The primary Artifact looks like (has the appearance of) the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.SmellsLike">
+            <summary>
+              Smells Like: The primary Artifact smells like (has the odor, aroma, or fragrance of) the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.TastesLike">
+            <summary>
+              Tastes Like: The primary Artifact tastes like (has the flavor of) the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.SoundsLike">
+            <summary>
+              Sounds Like: The primary Artifact sounds like (has the aural characteristics of) the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.FeelsLike">
+            <summary>
+              Feels Like: The primary Artifact feels like (has the tactile characteristics of) the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DescriptorTypeId.EmotesLike">
+            <summary>
+              Emotes Like: The primary Artifact emotes like (causes the emotion of) the related Artifact.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.DirectorTypeId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorTypeId.Hyperlink">
+            <summary>
+              Hyperlink: There is a hyperlink from the primary Artifact to the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorTypeId.DefinedPath">
+            <summary>
+              Defined Path: There is an expected, pre-defined path from the primary Artifact to the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorTypeId.SuggestPath">
+            <summary>
+              Suggested Path: There is a suggested, recommented path from the primary Artifact to the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorTypeId.AvoidPath">
+            <summary>
+              Avoid Path: There is an unsuitable, non-recommented path from the primary Artifact to the related Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorTypeId.Causality">
+            <summary>
+              Causality: The primary Artifact causes an effect/action to occur upon the related Artifact.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Read">
+            <summary>
+              Read: Read the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Listen">
+            <summary>
+              Listen: Listen to the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.View">
+            <summary>
+              View: View (or watch, observe) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Consume">
+            <summary>
+              Consume: Consume (or use, eat, drink, taste, smell) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Perform">
+            <summary>
+              Perform: Perform (or act, do, carry out, speak, sing, say, work, write) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Produce">
+            <summary>
+              Produce: Produce (or create, build, make, invent) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Destroy">
+            <summary>
+              Destroy: Destroy (or remove, delete, kill, erase) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Modify">
+            <summary>
+              Modify: Modify (or change) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Obtain">
+            <summary>
+              Obtain: Obtain (or get, purchase, acquire, steal) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Locate">
+            <summary>
+              Locate: Locate (or find) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Travel">
+            <summary>
+              Travel: Travel (or visit, walk, run, fly, ride, drive) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Become">
+            <summary>
+              Become: Become the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Explain">
+            <summary>
+              Explain: Explain (or describe) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Give">
+            <summary>
+              Give: Give the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Learn">
+            <summary>
+              Learn: Learn (or study, understand) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Start">
+            <summary>
+              Start: Start (or begin) the specified Artifact.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.DirectorActionId.Stop">
+            <summary>
+              Stop: Stop (or end) the specified Artifact.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.EventorPrecisionId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorPrecisionId.Year">
+            <summary>
+              Year: This Eventor date is accurate to the year.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorPrecisionId.Month">
+            <summary>
+              Month: This Eventor date is accurate to the month.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorPrecisionId.Day">
+            <summary>
+              Day: This Eventor date is accurate to the day.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorPrecisionId.Hour">
+            <summary>
+              Hour: This Eventor date is accurate to the hour.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorPrecisionId.Minute">
+            <summary>
+              Minute: This Eventor date is accurate to the minute.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorPrecisionId.Second">
+            <summary>
+              Second: This Eventor date is accurate to the second.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.EventorTypeId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorTypeId.Start">
+            <summary>
+              Start: This Factor starts, begins, or commences on the specified date.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorTypeId.End">
+            <summary>
+              End: This Factor ends, stops, or terminates on the specified date.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorTypeId.Pause">
+            <summary>
+              Pause: This Factor pauses, suspendeds, or waits on the specified date.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorTypeId.Unpause">
+            <summary>
+              Unpause: This Factor unpauses or resumes on the specified date.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorTypeId.Continue">
+            <summary>
+              Continue: This Factor continues in its current state on the specified date.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorTypeId.Occur">
+            <summary>
+              Occur: This Factor occurrs or happens on the specified date.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.EventorTypeId.Expected">
+            <summary>
+              Expected: This Factor is/was expected, anticipated, or due on the specified date.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.FactorAssertionId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.FactorAssertionId.Undefined">
+            <summary>
+              Undefined: The Factor's assertion type is not known or not defined.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.FactorAssertionId.Fact">
+            <summary>
+              Fact: The Factor represents a factual statement.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.FactorAssertionId.Opinion">
+            <summary>
+              Opinion: The Factor represents an opinion.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.FactorAssertionId.Guess">
+            <summary>
+              Guess: The Factor represents a guess.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.IdentorTypeId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.IdentorTypeId.Text">
+            <summary>
+              Text: A value (a string, typically a name).
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.IdentorTypeId.Key">
+            <summary>
+              Key: A value (numeric or otherwise) representing a unique key or ID.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.LocatorTypeId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.LocatorTypeId.EarthCoord">
+            <summary>
+              Earth Coordinate: A coordinate position on Earth.Coordinates use X=Longitude, Y=Latitude, and Z=Elevation (in metres).
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.LocatorTypeId.MoonCoord">
+            <summary>
+              Moon Coordinate: A coordinate position on Earth's Moon.Coordinates use X=Longitude, Y=Latitude, and Z=Elevation (in metres).
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.LocatorTypeId.MarsCoord">
+            <summary>
+              Mars Coordinate: A coordinate position on Mars.Coordinates use X=Longitude, Y=Latitude, and Z=Elevation (in metres).
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.LocatorTypeId.RelPos1D">
+            <summary>
+              Relative Position 1D: A one-dimensional position, using X=Time. A position is relative to the Artifact's dimensions. For example, X=0.25 represents a position (starting from the origin) that is 25% of the distance to the maximum X dimension.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.LocatorTypeId.RelPos2D">
+            <summary>
+              Relative Position 2D: A two-dimensional position, using X=Width and Y=Height. A position is relative to the Artifact's dimensions. For example, X=0.25 represents a position (starting from the origin) that is 25% of the distance to the maximum X dimension.
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.LocatorTypeId.RelPos3D">
+            <summary>
+              Relative Position 3D: A three-dimensional position, using X, Y, and Z axes. A position is relative to the Artifact's dimensions. For example, X=0.25 represents a position (starting from the origin) that is 25% of the distance to the maximum X dimension.
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeId.FullLong">
+            <summary>
+              Full Bounds
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeId.PosLong">
+            <summary>
+              Positive Bounds
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeId.NegLong">
+            <summary>
+              Negative Bounds
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeId.FullPerc">
+            <summary>
+              Full Percentage
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeId.StdPerc">
+            <summary>
+              Standard Percentage
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeId.OppPerc">
+            <summary>
+              Opposable Percentage
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeId.StdAgree">
+            <summary>
+              Standard Agreement
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeId.OppAgree">
+            <summary>
+              Opposable Agreement
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeId.StdFavor">
+            <summary>
+              Standard Favorability
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorTypeId.OppFavor">
+            <summary>
+              Opposable Favorability
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.Zero0">
+            <summary>
+              Zero
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.Zero05">
+            <summary>
+              Zero
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.Zero1">
+            <summary>
+              Zero
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.Min0">
+            <summary>
+              Minimum
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.Max1">
+            <summary>
+              Maximum
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.CompDisagree">
+            <summary>
+              Completely Disagree
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.MostDisagree">
+            <summary>
+              Mostly Disagree
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.SomeDisagree">
+            <summary>
+              Somewhat Disagree
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.NoOpinion05">
+            <summary>
+              No Opinion
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.SomeAgree">
+            <summary>
+              Somewhat Agree
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.MostAgree">
+            <summary>
+              Mostly Agree
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.CompAgree">
+            <summary>
+              Completely Agree
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.NoOpinion0">
+            <summary>
+              No Opinion
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.SomeAgreePos">
+            <summary>
+              Somewhat Agree
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.MostAgreePos">
+            <summary>
+              Mostly Agree
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.CompAgreePos">
+            <summary>
+              Completely Agree
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.CompUnfavor">
+            <summary>
+              Completely Unfavorable
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.MostUnfavor">
+            <summary>
+              Mostly Unfavorable
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.SomeUnfavor">
+            <summary>
+              Somewhat Unfavorable
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.SomeFavor">
+            <summary>
+              Somewhat Favorable
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.MostFavor">
+            <summary>
+              Mostly Favorable
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.CompFavor">
+            <summary>
+              Completely Favorable
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.SomeFavorPos">
+            <summary>
+              Somewhat Favorable
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.MostFavorPos">
+            <summary>
+              Mostly Favorable
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeLevelId.CompFavorPos">
+            <summary>
+              Completely Favorable
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeId.FullNum">
+            <summary>
+              Full Numeric
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeId.PosNum">
+            <summary>
+              Positive Numeric
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeId.NegNum">
+            <summary>
+              Negative Numeric
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeId.FullAgree">
+            <summary>
+              Full Agreement
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeId.PosAgree">
+            <summary>
+              Positive Agreement
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeId.FullFavor">
+            <summary>
+              Full Favorability
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorRangeId.PosFavor">
+            <summary>
+              Positive Favorability
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.None">
+            <summary>
+              None
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Unit">
+            <summary>
+              Unit
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Metre">
+            <summary>
+              Metre: m
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Gram">
+            <summary>
+              Gram: g
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Second">
+            <summary>
+              Second: s
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Ampere">
+            <summary>
+              Ampere: A
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Celsius">
+            <summary>
+              Celsius: C
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Candela">
+            <summary>
+              Candela: cd
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Mole">
+            <summary>
+              Mole: mol
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Bit">
+            <summary>
+              Bit: b
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Byte">
+            <summary>
+              long: B
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Hertz">
+            <summary>
+              Hertz: Hz
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Radian">
+            <summary>
+              Radian: rad
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Newton">
+            <summary>
+              Newton: N
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Pascal">
+            <summary>
+              Pascal: Pa
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Joule">
+            <summary>
+              Joule: J
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Watt">
+            <summary>
+              Watt: W
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Volt">
+            <summary>
+              Volt: V
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Ohm">
+            <summary>
+              Ohm: Ω
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Area">
+            <summary>
+              Area: m^2
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Volume">
+            <summary>
+              Volume: m^3
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Speed">
+            <summary>
+              Speed: m/s
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Acceleration">
+            <summary>
+              Acceleration: m^3/s
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Point">
+            <summary>
+              Point: pt
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Item">
+            <summary>
+              Item: item
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Person">
+            <summary>
+              Person: person
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Percent">
+            <summary>
+              Percent: %
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitId.Index">
+            <summary>
+              Index: index
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Base">
+            <summary>
+              Base
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Kilo">
+            <summary>
+              Kilo: k
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Mega">
+            <summary>
+              Mega: M
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Giga">
+            <summary>
+              Giga: G
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Tera">
+            <summary>
+              Tera: T
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Peta">
+            <summary>
+              Peta: P
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Exa">
+            <summary>
+              Exa: E
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Milli">
+            <summary>
+              Milli: m
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Micro">
+            <summary>
+              Micro: μ
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Nano">
+            <summary>
+              Nano: n
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Pico">
+            <summary>
+              Pico: p
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Femto">
+            <summary>
+              Femto: f
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Atto">
+            <summary>
+              Atto: a
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Kibi">
+            <summary>
+              Kibi: Ki
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Mebi">
+            <summary>
+              Mebi: Mi
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Gibi">
+            <summary>
+              Gibi: Gi
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Tebi">
+            <summary>
+              Tebi: Ti
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Pebi">
+            <summary>
+              Pebi: Pi
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitPrefixId.Exbi">
+            <summary>
+              Exbi: Ei
+            </summary>
+        </member>
+        <member name="T:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId">
+            <summary/>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.HertzSec">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.NewtonGram">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.NewtonMetre">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.NewtonSec">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.PascalGram">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.PascalMetre">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.PascalSec">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.JouleGram">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.JouleMetre">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.JouleSec">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.WattGram">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.WattMetre">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.WattSec">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.VoltGram">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.VoltMetre">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.VoltSec">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.VoltAmp">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.OhmGram">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.OhmMetre">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.OhmSec">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.OhmAmp">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.AreaMetre">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.VolumeMetre">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.SpeedMetre">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.SpeedSec">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.AccelMetre">
+            <summary>
+              
+            </summary>
+        </member>
+        <member name="F:Fabric.Clients.Cs.Api.FabEnumsData.VectorUnitDerivedId.AccelSec">
+            <summary>
+              
+            </summary>
         </member>
     </members>
 </doc>
