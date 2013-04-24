@@ -15,14 +15,10 @@ namespace Fabric.Apps.WordNet.Export {
 			Artifact,
 			ConfirmJob,
 			ConfirmAllJobs,
-			//StopExport
 			Exit
 		}
 
 		private static Dictionary<string, Command> CommandText;
-
-		private bool vIsRunning;
-		private bool vIsStopping;
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,18 +29,14 @@ namespace Fabric.Apps.WordNet.Export {
 			CommandText.Add("art", Command.Artifact);
 			CommandText.Add("confirmjob", Command.ConfirmJob);
 			CommandText.Add("confirmalljobs", Command.ConfirmAllJobs);
-			//CommandText.Add("stopExport", Command.StopExport);
 			CommandText.Add("exit", Command.Exit);
-
-			vIsRunning = true;
-			vIsStopping = false;
 		}
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public void Start() {
-			while ( vIsRunning ) {
+			while ( true ) {
 				KeyValuePair<Command, MatchCollection>? commData = ReadCommand();
 
 				if ( commData == null ) {
@@ -73,21 +65,12 @@ namespace Fabric.Apps.WordNet.Export {
 						var caj = new ConfirmAllJobsCommand(this, matches);
 						caj.Start();
 						break;
-
-					/*case Command.StopExport:
-						var stop = new StopExportCommand(this, matches);
-						stop.Start();
-						break;*/
 				}
 
 				if ( commData.Value.Key == Command.Exit ) {
 					break;
 				}
 			}
-		}
-
-		/*--------------------------------------------------------------------------------------------*/
-		public void RequestStop() {
 		}
 
 

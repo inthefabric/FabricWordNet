@@ -15,7 +15,6 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 		/*--------------------------------------------------------------------------------------------*/
 		public abstract void Start();
-		public abstract void RequestStop();
 
 	}
 	

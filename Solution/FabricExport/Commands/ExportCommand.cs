@@ -14,7 +14,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 	/*================================================================================================*/
 	public class ExportCommand : Command {
 
-		private const bool DEBUG = false;
+		private bool vDebug;
 
 		private readonly int vBatchSize;
 		private readonly int vBatchCount;
@@ -34,6 +34,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 			vBatchSize = 10;
 			vBatchCount = 10;
 			vThreadCount = 5;
+			vDebug = false;
 
 			if ( pMatches.Count != 4 ) {
 				CommIo.Print("Invalid parameter count. Expected 3 parameters.");
@@ -85,10 +86,6 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				CreateJob(sess);
 				RunThreads();
 			}
-		}
-
-		/*--------------------------------------------------------------------------------------------*/
-		public override void RequestStop() {
 		}
 
 
@@ -212,7 +209,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				string barStr = new string('#', (int)bar);
 
 				ThreadPrint(pIndex, 
-					(DEBUG ? " * .............................................................. " : "")+
+					(vDebug ? " * .............................................................. " : "")+
 					"Finished batch "+vThreadDoneCount+" of "+vBatchCount+" \t"+
 					GetSecs(t)+" thr \t"+
 					GetSecs(vThreadStartTime)+" tot \t"+
@@ -234,12 +231,12 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				throw new Exception("Could not authenticate.");
 			}
 
-			if ( DEBUG ) ThreadPrint(pIndex, "Starting batch...");
+			if ( vDebug ) ThreadPrint(pIndex, "Starting batch...");
 			var classes = new FabBatchNewClass[pBatch.Count];
 
 			for ( int i = 0 ; i < pBatch.Count ; ++i ) {
 				Artifact a = pBatch[i];
-				if ( DEBUG ) ThreadPrint(pIndex, " - Export Artifact ["+a.Id+": "+a.Name+"]");
+				if ( vDebug ) ThreadPrint(pIndex, " - Export Artifact ["+a.Id+": "+a.Name+"]");
 
 				var b = new FabBatchNewClass();
 				b.BatchId = a.Id;
@@ -264,7 +261,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				throw new Exception(" - FabResponse.Data is null.");
 			}
 
-			if ( DEBUG ) {
+			if ( vDebug ) {
 				foreach ( FabBatchResult br in fr.Data ) {
 					ThreadPrint(pIndex, " * Export success: Artifact "+
 						br.BatchId+" == FabClass "+br.ResultId);
@@ -298,9 +295,8 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 								" ("+br.Error.Code+"): "+br.Error.Message+
 								" ["+br.BatchId+" / "+br.ResultId+"]");
 
-							const bool REPAIR = false;
-
-							if ( REPAIR && br.Error.Name == "UniqueConstraintViolation" ) {
+							//Enables "repair" mode
+							/*if ( br.Error.Name == "UniqueConstraintViolation" ) {
 								const string idStr = "ClassId=";
 								string msg = br.Error.Message;
 								int idIndex = msg.IndexOf(idStr);
@@ -318,7 +314,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 									e2.Factor = null;
 									sess.Save(e2);
 								}
-							}
+							}*/
 
 							continue;
 						}

@@ -73,10 +73,6 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 			}
 		}
 
-		/*--------------------------------------------------------------------------------------------*/
-		public override void RequestStop() {
-		}
-
 	}
 	
 }
