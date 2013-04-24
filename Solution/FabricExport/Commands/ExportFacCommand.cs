@@ -48,17 +48,17 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				var b = new FabBatchNewFactor();
 				b.BatchId = f.Id;
 
-				b.PrimaryArtifactId = f.PrimaryClass.Id; //TODO: get the actual FABRIC Artifact ID
-				b.RelatedArtifactId = f.RelatedClass.Id; //TODO: get the actual FABRIC Artifact ID
+				b.PrimaryArtifactId = GetFabArtId(f.PrimaryClass);
+				b.RelatedArtifactId = GetFabArtId(f.RelatedClass);
 				b.FactorAssertionId = f.AssertionId;
 				b.IsDefining = f.IsDefining;
 				b.Note = f.Note;
 
 				b.Descriptor = new FabBatchNewFactorDescriptor {
 					TypeId = f.DescriptorTypeId,
-					TypeRefineId = f.DescriptorTypeRefine.Id, //TODO: get the actual FABRIC Artifact ID
-					PrimaryArtifactRefineId = f.PrimaryClassRefine.Id, //TODO: get the actual FABRIC Artifact ID
-					RelatedArtifactRefineId = f.RelatedClassRefine.Id //TODO: get the actual FABRIC Artifact ID
+					TypeRefineId = GetFabArtId(f.DescriptorTypeRefine),
+					PrimaryArtifactRefineId = GetFabArtId(f.PrimaryClassRefine),
+					RelatedArtifactRefineId = GetFabArtId(f.RelatedClassRefine)
 				};
 
 				b.Identor = new FabBatchNewFactorIdentor {
@@ -82,6 +82,13 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		protected override void SetItemTypeId(ISession pSess, Data.Domain.Export pExport, int pBatchId){
 			pExport.Factor = pSess.Load<Factor>(pBatchId);
 			pExport.Artifact = null;
+		}
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		/*--------------------------------------------------------------------------------------------*/
+		private static long GetFabArtId(Artifact pWordNetArtifact) {
+			return pWordNetArtifact.ExportList[0].FabricId;
 		}
 
 	}
