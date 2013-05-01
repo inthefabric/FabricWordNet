@@ -161,6 +161,9 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 			var opt = new ParallelOptions();
 			opt.MaxDegreeOfParallelism = vThreadCount;
 
+			CommIo.Print("Starting export: count="+vBatchCount+", size="+vBatchSize+
+				", threads="+vThreadCount+"...");
+
 			Parallel.ForEach(vBatchList, opt, ThreadAction);
 			CloseJob();
 			CommIo.Print("Job "+vJob.Id+" complete! Failure count: "+vFailureCount);
@@ -192,8 +195,13 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 			try {
 				long t = DateTime.UtcNow.Ticks;
+				FabResponse<FabBatchResult> fr = ThreadAddItemsToFabric(pBatch, pIndex);
+				string fabSecs = GetSecs(t);
 
-				ThreadAddItemsToFabric(pBatch, pIndex);
+				long t2 = DateTime.UtcNow.Ticks;
+				ThreadAddBatchExport(fr, pIndex);
+				string dbSecs = GetSecs(t2);
+
 				++vThreadDoneCount;
 
 				double perc = vThreadDoneCount/(double)vBatchCount;
@@ -206,6 +214,8 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				ThreadPrint(pIndex,
 					(vDebug ? " * ............................................................. " : "")+
 					"Finished batch "+vThreadDoneCount+" of "+vBatchCount+" \t"+
+					fabSecs+" fab \t"+
+					dbSecs+" db \t"+
 					GetSecs(t)+" thr \t"+
 					GetSecs(vThreadStartTime)+" tot \t"+
 					(perc*100).ToString("##0.000")+"% \t"+
@@ -231,6 +241,11 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 			TBatchNew[] newBatchItems = GetNewBatchList(pBatch, pIndex);
 			FabResponse<FabBatchResult> fr = AddToFabric(f, newBatchItems);
+
+			if ( fr == null ) {
+				vFailureCount += vBatchSize;
+				throw new Exception(" - FabResponse is null.");
+			}
 
 			if ( fr.Error != null ) {
 				FabError e = fr.Error;

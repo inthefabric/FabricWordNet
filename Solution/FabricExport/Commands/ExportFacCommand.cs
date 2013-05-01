@@ -56,15 +56,26 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 				b.Descriptor = new FabBatchNewFactorDescriptor {
 					TypeId = f.DescriptorTypeId,
-					TypeRefineId = GetFabArtId(f.DescriptorTypeRefine),
-					PrimaryArtifactRefineId = GetFabArtId(f.PrimaryClassRefine),
-					RelatedArtifactRefineId = GetFabArtId(f.RelatedClassRefine)
+					TypeRefineId = (f.DescriptorTypeRefine == null ? (long?)null : 
+						GetFabArtId(f.DescriptorTypeRefine)),
+					PrimaryArtifactRefineId = (f.PrimaryClassRefine == null ? (long?)null : 
+						GetFabArtId(f.PrimaryClassRefine)),
+					RelatedArtifactRefineId = (f.RelatedClassRefine == null ? (long?)null : 
+						GetFabArtId(f.RelatedClassRefine))
 				};
 
-				b.Identor = new FabBatchNewFactorIdentor {
-					TypeId = f.IdentorTypeId,
-					Value = f.IdentorValue
-				};
+				if ( f.IdentorTypeId != 0 ) {
+					b.Identor = new FabBatchNewFactorIdentor {
+						TypeId = f.IdentorTypeId,
+						Value = f.IdentorValue
+					};
+				}
+
+				/*ThreadPrint(pIndex, "F: "+f.Id+
+					" / "+b.PrimaryArtifactId+
+					" / "+b.RelatedArtifactId+
+					" / "+b.Descriptor.PrimaryArtifactRefineId+
+					" / "+b.Descriptor.RelatedArtifactRefineId);*/
 
 				factors[i] = b;
 			}

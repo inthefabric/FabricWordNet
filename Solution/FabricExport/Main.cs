@@ -22,7 +22,7 @@ namespace Fabric.Apps.WordNet.Export {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private static void InitFabricClient() {
-			const bool LOCAL = false;
+			const bool LOCAL = true;
 			FabricClientConfig config;
 
 			if ( LOCAL ) {
