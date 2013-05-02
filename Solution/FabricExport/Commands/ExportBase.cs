@@ -28,6 +28,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		private long vThreadDoneCount;
 		private long vThreadSkipCount;
 		private long vFailureCount;
+		private IList<FabResponse<FabBatchResult>> vThreadResults;
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,6 +158,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 			vThreadDoneCount = 0;
 			vThreadSkipCount = 0;
 			vFailureCount = 0;
+			vThreadResults = new List<FabResponse<FabBatchResult>>();
 
 			var opt = new ParallelOptions();
 			opt.MaxDegreeOfParallelism = vThreadCount;
@@ -171,6 +173,16 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 		/*--------------------------------------------------------------------------------------------*/
 		private void CloseJob() {
+			CommIo.Print("Saving Batch/Export results...");
+			long t = DateTime.UtcNow.Ticks;
+			StoreExportResults();
+			CommIo.Print("Results saved in "+GetSecs(t));
+
+			////
+
+			CommIo.Print("Saving Job results...");
+			t = DateTime.UtcNow.Ticks;
+
 			using ( ISession sess = vSessProv.OpenSession() ) {
 				using ( ITransaction tx = sess.BeginTransaction() ) {
 					vJob = sess.Get<Job>(vJob.Id);
@@ -180,6 +192,8 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 					tx.Commit();
 				}
 			}
+
+			CommIo.Print("Results saved in "+GetSecs(t));
 		}
 
 
@@ -198,9 +212,9 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				FabResponse<FabBatchResult> fr = ThreadAddItemsToFabric(pBatch, pIndex);
 				string fabSecs = GetSecs(t);
 
-				long t2 = DateTime.UtcNow.Ticks;
-				ThreadAddBatchExport(fr, pIndex);
-				string dbSecs = GetSecs(t2);
+				lock ( vThreadResults ) {
+					vThreadResults.Add(fr);
+				}
 
 				++vThreadDoneCount;
 
@@ -215,7 +229,6 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 					(vDebug ? " * ............................................................. " : "")+
 					"Finished batch "+vThreadDoneCount+" of "+vBatchCount+" \t"+
 					fabSecs+" fab \t"+
-					dbSecs+" db \t"+
 					GetSecs(t)+" thr \t"+
 					GetSecs(vThreadStartTime)+" tot \t"+
 					(perc*100).ToString("##0.000")+"% \t"+
@@ -269,58 +282,61 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
-		private void ThreadAddBatchExport(FabResponse<FabBatchResult> pFabResp, long pIndex) {
+		private void StoreExportResults() {
 			using ( ISession sess = vSessProv.OpenSession() ) {
 				using ( ITransaction tx = sess.BeginTransaction() ) {
-					var b = new Batch();
-					b.Job = sess.Load<Job>(vJob.Id);
-					b.Size = vBatchSize;
-					b.Count = vBatchCount;
-					b.Threads = vThreadCount;
-					b.Timestamp = pFabResp.Timestamp;
-					b.DataLen = pFabResp.DataLen;
-					b.DbMs = pFabResp.DbMs;
-					b.TotalMs = pFabResp.TotalMs;
-					sess.Save(b);
+					foreach ( FabResponse<FabBatchResult> fr in vThreadResults ) {
 
-					foreach ( FabBatchResult br in pFabResp.Data ) {
-						if ( br.Error != null ) {
-							vFailureCount++;
+						var b = new Batch();
+						b.Job = sess.Load<Job>(vJob.Id);
+						b.Size = vBatchSize;
+						b.Count = vBatchCount;
+						b.Threads = vThreadCount;
+						b.Timestamp = fr.Timestamp;
+						b.DataLen = fr.DataLen;
+						b.DbMs = fr.DbMs;
+						b.TotalMs = fr.TotalMs;
+						sess.Save(b);
 
-							ThreadPrint(pIndex, " # ERROR: "+br.Error.Name+
-								" ("+br.Error.Code+"): "+br.Error.Message+
-								" ["+br.BatchId+" / "+br.ResultId+"]");
+						foreach ( FabBatchResult br in fr.Data ) {
+							if ( br.Error != null ) {
+								vFailureCount++;
 
-							//Enables "repair" mode
+								CommIo.Print(" # ERROR: "+br.Error.Name+
+									" ("+br.Error.Code+"): "+br.Error.Message+
+									" ["+br.BatchId+" / "+br.ResultId+"]");
 
-							/*if ( br.Error.Name == "UniqueConstraintViolation" ) {
-								const string idStr = "ClassId=";
-								string msg = br.Error.Message;
-								int idIndex = msg.IndexOf(idStr);
+								//Enables "repair" mode
 
-								if ( idIndex != -1 ) {
-									idIndex += idStr.Length;
-									int dotIndex = msg.IndexOf(".", idIndex);
-									string classId = msg.Substring(idIndex, dotIndex-idIndex);
-									ThreadPrint(pIndex, "Repair: "+br.BatchId+", "+b.Id+", "+classId);
+								/*if ( br.Error.Name == "UniqueConstraintViolation" ) {
+									const string idStr = "ClassId=";
+									string msg = br.Error.Message;
+									int idIndex = msg.IndexOf(idStr);
 
-									var e2 = new Data.Domain.Export();
-									e2.Batch = b;
-									e2.FabricId = long.Parse(classId);
-									SetItemTypeId(sess, e2, (int)br.BatchId);
-									sess.Save(e2);
-								}
-							}*/
+									if ( idIndex != -1 ) {
+										idIndex += idStr.Length;
+										int dotIndex = msg.IndexOf(".", idIndex);
+										string classId = msg.Substring(idIndex, dotIndex-idIndex);
+										ThreadPrint(pIndex, "Repair: "+br.BatchId+", "+b.Id+", "+classId);
 
-							continue;
+										var e2 = new Data.Domain.Export();
+										e2.Batch = b;
+										e2.FabricId = long.Parse(classId);
+										SetItemTypeId(sess, e2, (int)br.BatchId);
+										sess.Save(e2);
+									}
+								}*/
+
+								continue;
+							}
+
+							var e = new Data.Domain.Export();
+							e.Batch = b;
+							e.FabricId = br.ResultId;
+							SetItemTypeId(sess, e, (int)br.BatchId);
+							sess.Save(e);
 						}
-
-						var e = new Data.Domain.Export();
-						e.Batch = b;
-						e.FabricId = br.ResultId;
-						SetItemTypeId(sess, e, (int)br.BatchId);
-						sess.Save(e);
-					}
+					} //end "results" loop
 
 					tx.Commit();
 				}
