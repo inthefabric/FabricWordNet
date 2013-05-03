@@ -57,6 +57,18 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		protected override FabResponse<FabBatchResult> AddToFabric(FabricClient pFabClient,
 																		FabBatchNewClass[] pBatchNew) {
 			return pFabClient.Services.Modify.AddClasses.Post(pBatchNew);
+
+			/*var fr = new FabResponse<FabBatchResult>();
+			fr.Data = new List<FabBatchResult>();
+
+			foreach ( FabBatchNewClass nc in pBatchNew ) {
+				var br = new FabBatchResult();
+				br.BatchId = nc.BatchId;
+				br.ResultId = 1;
+				fr.Data.Add(br);
+			}
+
+			return fr;*/
 		}
 
 		/*--------------------------------------------------------------------------------------------*/

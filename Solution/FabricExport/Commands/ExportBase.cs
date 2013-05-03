@@ -160,13 +160,22 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 			vFailureCount = 0;
 			vThreadResults = new List<FabResponse<FabBatchResult>>();
 
-			var opt = new ParallelOptions();
-			opt.MaxDegreeOfParallelism = vThreadCount;
+			////
 
 			CommIo.Print("Starting export: count="+vBatchCount+", size="+vBatchSize+
 				", threads="+vThreadCount+"...");
 
+			var opt = new ParallelOptions();
+			opt.MaxDegreeOfParallelism = vThreadCount;
 			Parallel.ForEach(vBatchList, opt, ThreadAction);
+
+			double time = (DateTime.UtcNow.Ticks-vThreadStartTime)/10000000.0;
+			double perSec = ((vThreadDoneCount-vThreadSkipCount)*vBatchSize)/time;
+			CommIo.Print("Export complete: "+GetSecs(vThreadStartTime)+" fab, "+
+				perSec.ToString("#0.000")+" exp/sec");
+
+			////
+
 			CloseJob();
 			CommIo.Print("Job "+vJob.Id+" complete! Failure count: "+vFailureCount);
 		}

@@ -4,6 +4,7 @@ using Fabric.Apps.WordNet.Data.Domain;
 using Fabric.Clients.Cs;
 using Fabric.Clients.Cs.Api;
 using NHibernate;
+using NHibernate.Criterion;
 using NHibernate.SqlCommand;
 
 namespace Fabric.Apps.WordNet.Export.Commands {
@@ -11,24 +12,52 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 	/*================================================================================================*/
 	public class ExportFacCommand : ExportBase<Factor, FabBatchNewFactor> {
 
+		private static IDictionary<int, long> ArtMap;
+
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
-		public ExportFacCommand(ICommandIo pCommIo, MatchCollection pMatches) : base(pCommIo,pMatches) {
-			////
-		}
+		public ExportFacCommand(ICommandIo pCommIo, MatchCollection pMatches) : base(pCommIo,pMatches){}
 
 		/*--------------------------------------------------------------------------------------------*/
 		protected override IList<Factor> GetWordNetItemList(ISession pSess, int pItemCount) {
 			Factor facAlias = null;
+			CommIo.Print("Loading Factors segment...");
 
-			return pSess.QueryOver(() => facAlias)
+			IList<Factor> facs = pSess.QueryOver(() => facAlias)
 				.JoinQueryOver<Data.Domain.Export>(x => x.ExportList, JoinType.LeftOuterJoin)
-				.Where(x => x.Factor == null)
-				.Fetch(x => x.ExportList).Eager
 				.OrderBy(() => facAlias.Id).Asc
 				.Take(pItemCount)
 				.List();
+
+			CommIo.Print("Loading all Artifact Exports...");
+
+			if ( ArtMap == null ) {
+				Artifact artAlias = null;
+
+				IList<object[]> list = pSess.QueryOver(() => artAlias)
+					.SelectList(sl => sl
+						.Select(x => x.Id)
+						.SelectSubQuery(
+							QueryOver.Of<Data.Domain.Export>()
+								.Where(x => x.Artifact.Id == artAlias.Id)
+								.Select(x => x.FabricId)
+						)
+					)
+					.List<object[]>();
+
+				CommIo.Print("Mapping WordNet ArtifactIds to Fabric ArtifactIds...");
+				ArtMap = new Dictionary<int, long>();
+
+				foreach ( object[] a in list ) {
+					ArtMap.Add((int)a[0], (long)a[1]);
+				}
+			}
+			else {
+				CommIo.Print(" * "+ArtMap.Keys.Count+" Cached!");
+			}
+
+			return facs;
 		}
 
 
@@ -87,6 +116,18 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		protected override FabResponse<FabBatchResult> AddToFabric(FabricClient pFabClient,
 																	FabBatchNewFactor[] pBatchNew) {
 			return pFabClient.Services.Modify.AddFactors.Post(pBatchNew);
+
+			/*var fr = new FabResponse<FabBatchResult>();
+			fr.Data = new List<FabBatchResult>();
+
+			foreach ( FabBatchNewFactor nf in pBatchNew ) {
+				var br = new FabBatchResult();
+				br.BatchId = nf.BatchId;
+				br.ResultId = 1;
+				fr.Data.Add(br);
+			}
+
+			return fr;*/
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -98,8 +139,8 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
-		private static long GetFabArtId(Artifact pWordNetArtifact) {
-			return pWordNetArtifact.ExportList[0].FabricId;
+		private long GetFabArtId(Artifact pWordNetArtifact) {
+			return ArtMap[pWordNetArtifact.Id];
 		}
 
 	}
