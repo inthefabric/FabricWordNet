@@ -280,6 +280,37 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				throw new Exception(" - FabResponse.Data is null.");
 			}
 
+			foreach ( FabBatchResult br in fr.Data ) {
+				if ( br.Error == null ) {
+					continue;
+				}
+
+				vFailureCount++;
+
+				CommIo.Print(" # ERROR: "+br.Error.Name+" ("+br.Error.Code+"): "+br.Error.Message+
+					" ["+br.BatchId+" / "+br.ResultId+"]");
+
+				//Enables "repair" mode
+				/*if ( br.Error.Name == "UniqueConstraintViolation" ) {
+					const string idStr = "ClassId=";
+					string msg = br.Error.Message;
+					int idIndex = msg.IndexOf(idStr);
+
+					if ( idIndex != -1 ) {
+						idIndex += idStr.Length;
+						int dotIndex = msg.IndexOf(".", idIndex);
+						string classId = msg.Substring(idIndex, dotIndex-idIndex);
+						ThreadPrint(pIndex, "Repair: "+br.BatchId+", "+b.Id+", "+classId);
+
+						var e2 = new Data.Domain.Export();
+						e2.Batch = b;
+						e2.FabricId = long.Parse(classId);
+						SetItemTypeId(sess, e2, (int)br.BatchId);
+						sess.Save(e2);
+					}
+				}*/
+			}
+
 			if ( vDebug ) {
 				foreach ( FabBatchResult br in fr.Data ) {
 					ThreadPrint(pIndex, " * Export success: "+vTypeName+" "+
@@ -309,33 +340,6 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 						foreach ( FabBatchResult br in fr.Data ) {
 							if ( br.Error != null ) {
-								vFailureCount++;
-
-								CommIo.Print(" # ERROR: "+br.Error.Name+
-									" ("+br.Error.Code+"): "+br.Error.Message+
-									" ["+br.BatchId+" / "+br.ResultId+"]");
-
-								//Enables "repair" mode
-
-								/*if ( br.Error.Name == "UniqueConstraintViolation" ) {
-									const string idStr = "ClassId=";
-									string msg = br.Error.Message;
-									int idIndex = msg.IndexOf(idStr);
-
-									if ( idIndex != -1 ) {
-										idIndex += idStr.Length;
-										int dotIndex = msg.IndexOf(".", idIndex);
-										string classId = msg.Substring(idIndex, dotIndex-idIndex);
-										ThreadPrint(pIndex, "Repair: "+br.BatchId+", "+b.Id+", "+classId);
-
-										var e2 = new Data.Domain.Export();
-										e2.Batch = b;
-										e2.FabricId = long.Parse(classId);
-										SetItemTypeId(sess, e2, (int)br.BatchId);
-										sess.Save(e2);
-									}
-								}*/
-
 								continue;
 							}
 
@@ -345,6 +349,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 							SetItemTypeId(sess, e, (int)br.BatchId);
 							sess.Save(e);
 						}
+
 					} //end "results" loop
 
 					tx.Commit();
