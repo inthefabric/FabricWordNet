@@ -2078,11 +2078,6 @@
               The date/time of creation.
             </summary>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabApp.AppId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
         <member name="P:Fabric.Clients.Cs.Api.FabApp.Name">
             <summary>
               A unique title or identifier.
@@ -2373,11 +2368,6 @@
               <para>Ellie's Class Example: Ellie is building an App for dog lovers, but there are not yet animal-related Classes for Ellie to use. She first creates broad Classes (like 'Animal', 'Mammal', and 'Canine') and relationships between them (like 'Canine is a Mammal').</para>
               <para>She then creates narrower Classes for each dog grouping (like 'Working Dog') and breed (like 'Great Dane'), adding relevant relationships along the way. A Class named 'Boxer' already exists, but it has a sports-related meaning. She adds a new 'Boxer' Class with a 'Dog Breed' disambiguation value to resolve this conflict.</para>
             </remarks>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabClass.ClassId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabClass.Disamb">
             <summary>
@@ -2708,11 +2698,6 @@
         <member name="P:Fabric.Clients.Cs.Api.FabInstance.Disamb">
             <summary>
               A secondary label or identifier, used to resolve unique-name conflicts.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabInstance.InstanceId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
             </summary>
         </member>
         <member name="P:Fabric.Clients.Cs.Api.FabInstance.Name">
@@ -3543,11 +3528,6 @@
               A descriptive name or title.
             </summary>
         </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabUrl.UrlId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
-            </summary>
-        </member>
         <member name="T:Fabric.Clients.Cs.Api.FabUser">
             <summary>
               A registered Fabric account that has indirect access (via Apps) to the Fabric API.
@@ -3561,11 +3541,6 @@
         <member name="P:Fabric.Clients.Cs.Api.FabUser.Name">
             <summary>
               A unique username.
-            </summary>
-        </member>
-        <member name="P:Fabric.Clients.Cs.Api.FabUser.UserId">
-            <summary>
-              Uniquely identifies this object amongst all other objects of this type.
             </summary>
         </member>
         <member name="T:Fabric.Clients.Cs.Api.FabVector">
