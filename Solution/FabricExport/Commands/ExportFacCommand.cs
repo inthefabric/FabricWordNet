@@ -71,14 +71,14 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 				if ( vDebug ) {
 					ThreadPrint(pIndex, " - Export Factor ["+f.Id+": "+
-						f.PrimaryClass.Id+" -- "+f.DescriptorTypeId+" --> "+f.RelatedClass.Id+"]");
+						f.PrimaryArtifact.Id+" -- "+f.DescriptorTypeId+" --> "+f.RelatedArtifact.Id+"]");
 				}
 
 				var b = new FabBatchNewFactor();
 				b.BatchId = f.Id;
 
-				b.PrimaryArtifactId = GetFabArtId(f.PrimaryClass);
-				b.RelatedArtifactId = GetFabArtId(f.RelatedClass);
+				b.PrimaryArtifactId = GetFabArtId(f.PrimaryArtifact);
+				b.RelatedArtifactId = GetFabArtId(f.RelatedArtifact);
 				b.FactorAssertionId = f.AssertionId;
 				b.IsDefining = f.IsDefining;
 				b.Note = f.Note;

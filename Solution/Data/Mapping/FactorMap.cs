@@ -14,8 +14,8 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 				.Column(typeof(Factor).Name+"Id")
 				.GeneratedBy.Native();
 
-			References(x => x.PrimaryClass);
-			References(x => x.RelatedClass);
+			References(x => x.PrimaryArtifact);
+			References(x => x.RelatedArtifact);
 			Map(x => x.AssertionId);
             Map(x => x.IsDefining);
             Map(x => x.Note);

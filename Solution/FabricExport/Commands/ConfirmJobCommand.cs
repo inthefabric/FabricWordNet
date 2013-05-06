@@ -113,7 +113,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 						continue;
 					}
 
-					CommIo.Print(" - Found class: "+c.ClassId);
+					CommIo.Print(" - Found class: "+c.ArtifactId);
 				}
 
 				CommIo.Print("");

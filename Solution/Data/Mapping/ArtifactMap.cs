@@ -21,8 +21,8 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 			References(x => x.Synset).Nullable();
 			References(x => x.Word).Nullable();
 
-			HasMany(x => x.FactorPrimaryList).KeyColumn("PrimaryClassId");
-			HasMany(x => x.FactorRelatedList).KeyColumn("RelatedClassId");
+			HasMany(x => x.FactorPrimaryList).KeyColumn("PrimaryArtifactId");
+			HasMany(x => x.FactorRelatedList).KeyColumn("RelatedArtifactId");
 			HasMany(x => x.FactorDescTypeList).KeyColumn("DescriptorTypeRefineId");
 			HasMany(x => x.FactorDescPrimaryList).KeyColumn("PrimaryClassRefineId");
 			HasMany(x => x.FactorDescRelatedList).KeyColumn("RelatedClassRefineId");

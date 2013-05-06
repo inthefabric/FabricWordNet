@@ -107,8 +107,8 @@ namespace Fabric.Apps.WordNet.Factors {
 					Artifact targArt = vArtSet.SynsetIdMap[targSsId];
 
 					var f = new Factor();
-					f.PrimaryClass = a;
-					f.RelatedClass = targArt;
+					f.PrimaryArtifact = a;
+					f.RelatedArtifact = targArt;
 					f.IsDefining = true;
 					f.DescriptorTypeId = (byte)DescriptorTypeId.IsA;
 					f.AssertionId = (byte)FactorAssertionId.Fact;
@@ -143,8 +143,8 @@ namespace Fabric.Apps.WordNet.Factors {
 
 					var f = new Factor();
 					f.Semantic = sem;
-					f.PrimaryClass = art;
-					f.RelatedClass = targArt;
+					f.PrimaryArtifact = art;
+					f.RelatedArtifact = targArt;
 					f.IsDefining = true;
 					f.DescriptorTypeId = (byte)pDescTypeId;
 					f.AssertionId = (byte)FactorAssertionId.Fact;
@@ -190,8 +190,8 @@ namespace Fabric.Apps.WordNet.Factors {
 
 					var f = new Factor();
 					f.Semantic = sem;
-					f.PrimaryClass = art;
-					f.RelatedClass = targArt;
+					f.PrimaryArtifact = art;
+					f.RelatedArtifact = targArt;
 					f.IsDefining = true;
 					f.DescriptorTypeId = (byte)DescriptorTypeId.RefersTo;
 					f.AssertionId = (byte)FactorAssertionId.Fact;

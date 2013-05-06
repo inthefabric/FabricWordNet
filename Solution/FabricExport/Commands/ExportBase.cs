@@ -295,7 +295,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 				//Enables "repair" mode
 				/*if ( br.Error.Name == "UniqueConstraintViolation" ) {
-					const string idStr = "ClassId=";
+					const string idStr = "ArtifactId=";
 					string msg = br.Error.Message;
 					int idIndex = msg.IndexOf(idStr);
 

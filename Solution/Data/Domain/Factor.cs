@@ -6,8 +6,8 @@ namespace Fabric.Apps.WordNet.Data.Domain {
 	public class Factor : IHasNote {
 
 		public virtual int Id { get; protected set; }
-		public virtual Artifact PrimaryClass { get; set; }
-		public virtual Artifact RelatedClass { get; set; }
+		public virtual Artifact PrimaryArtifact { get; set; }
+		public virtual Artifact RelatedArtifact { get; set; }
 		public virtual byte AssertionId { get; set; }
 		public virtual bool IsDefining { get; set; }
 		public virtual string Note { get; set; }

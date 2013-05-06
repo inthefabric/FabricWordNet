@@ -97,8 +97,8 @@ namespace Fabric.Apps.WordNet.Factors {
 
 					var f = new Factor();
 					f.Lexical = lex;
-					f.PrimaryClass = art;
-					f.RelatedClass = targArt;
+					f.PrimaryArtifact = art;
+					f.RelatedArtifact = targArt;
 					f.IsDefining = true;
 					f.DescriptorTypeId = (byte)pDescTypeId;
 					f.AssertionId = (byte)FactorAssertionId.Fact;

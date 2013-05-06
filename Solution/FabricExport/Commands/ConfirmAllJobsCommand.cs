@@ -130,7 +130,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				return;
 			}
 
-			CommIo.Print(msg+"ClassId="+c.ClassId+".");
+			CommIo.Print(msg+"ArtifactId="+c.ArtifactId+".");
 		}
 
 	}
