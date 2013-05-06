@@ -27,7 +27,7 @@ namespace Fabric.Apps.WordNet.Export {
 
 			if ( LOCAL ) {
 				config = new FabricClientConfig("WordNetExport", "http://localhost:9000",
-					2, "0123456789abcdefghijkLMNOPqrstuv", 4,
+					6, "0123456789abcdefghijkLMNOPqrstuv", 5,
 					"http://localhost:49316/OAuth/FabricRedirect",
 					FabSess.FabricSessionContainerProvider);
 			}
