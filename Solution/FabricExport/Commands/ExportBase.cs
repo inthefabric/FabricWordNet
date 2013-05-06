@@ -128,6 +128,9 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 		private void CreateJob(ISession pSess) {
 			using ( ITransaction tx = pSess.BeginTransaction() ) {
 				vJob = new Job();
+				vJob.Size = vBatchSize;
+				vJob.Count = vBatchCount;
+				vJob.Threads = vThreadCount;
 				vJob.TimeStart = DateTime.UtcNow.Ticks;
 				pSess.Save(vJob);
 
@@ -329,9 +332,6 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 						var b = new Batch();
 						b.Job = sess.Load<Job>(vJob.Id);
-						b.Size = vBatchSize;
-						b.Count = vBatchCount;
-						b.Threads = vThreadCount;
 						b.Timestamp = fr.Timestamp;
 						b.DataLen = fr.DataLen;
 						b.DbMs = fr.DbMs;

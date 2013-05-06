@@ -66,9 +66,9 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 					CommIo.Print("Batch.Id:           "+e.Batch.Id);
 					CommIo.Print("Batch.DbMs:         "+e.Batch.DbMs);
 					CommIo.Print("Batch.TotalMs:      "+e.Batch.TotalMs);
-					CommIo.Print("Batch.Size:         "+e.Batch.Size);
-					CommIo.Print("Batch.Count:        "+e.Batch.Count);
-					CommIo.Print("Batch.Threads:      "+e.Batch.Threads);
+					//CommIo.Print("Batch.Size:         "+e.Batch.Size);
+					//CommIo.Print("Batch.Count:        "+e.Batch.Count);
+					//CommIo.Print("Batch.Threads:      "+e.Batch.Threads);
 				}
 			}
 		}

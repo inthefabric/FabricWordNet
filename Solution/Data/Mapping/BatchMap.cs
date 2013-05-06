@@ -15,9 +15,6 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 				.GeneratedBy.Native();
 
 			References(x => x.Job);
-			Map(x => x.Size);
-			Map(x => x.Count);
-			Map(x => x.Threads);
 			Map(x => x.Timestamp);
 			Map(x => x.DataLen);
 			Map(x => x.DbMs);

@@ -14,6 +14,9 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 				.Column(typeof(Job).Name+"Id")
 				.GeneratedBy.Native();
 
+			Map(x => x.Size);
+			Map(x => x.Count);
+			Map(x => x.Threads);
 			Map(x => x.TimeStart);
 			Map(x => x.TimeEnd);
 
