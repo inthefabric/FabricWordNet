@@ -165,8 +165,8 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 			////
 
-			CommIo.Print("Starting export: count="+vBatchCount+", size="+vBatchSize+
-				", threads="+vThreadCount+"...");
+			CommIo.Print("Starting export: size="+vBatchSize+", count="+vBatchCount+", "+
+				"threads="+vThreadCount+"...");
 
 			var opt = new ParallelOptions();
 			opt.MaxDegreeOfParallelism = vThreadCount;
