@@ -26,6 +26,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 
 			IList<Factor> facs = pSess.QueryOver(() => facAlias)
 				.JoinQueryOver<Data.Domain.Export>(x => x.ExportList, JoinType.LeftOuterJoin)
+				.Where(x => x.Factor == null)
 				.OrderBy(() => facAlias.Id).Asc
 				.Take(pItemCount)
 				.List();

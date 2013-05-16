@@ -115,6 +115,8 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				}
 			}
 
+			GC.Collect();
+
 			/*foreach ( IList<T> batch in vBatchList ) {
 				CommIo.Print(" - Batch");
 
@@ -240,6 +242,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				ThreadPrint(pIndex,
 					(vDebug ? " * ............................................................. " : "")+
 					"Finished batch "+vThreadDoneCount+" of "+vBatchCount+" \t"+
+					fr.DbMs+"/"+fr.TotalMs+"\t"+
 					fabSecs+" fab \t"+
 					GetSecs(t)+" thr \t"+
 					GetSecs(vThreadStartTime)+" tot \t"+
