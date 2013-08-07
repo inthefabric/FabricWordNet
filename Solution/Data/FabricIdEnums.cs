@@ -28,7 +28,7 @@
 		IsFoundIn,
 		BelongsTo,
 		Requires,
-		AssociatesWith,
+		InteractsWith,
 
 		LooksLike,
 		SmellsLike,

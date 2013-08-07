@@ -106,7 +106,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 			}
 
 			FabResponse<FabClass> fr = 
-				f.Services.Traversal.GetRootStep.ContainsClassList.WhereId(e.FabricId).Get();
+				f.Services.Traversal.GetRootStep.ClassId(e.FabricId).Get();
 
 			msg += " \t("+(++vCheckCount)+" \tof "+vTotalCount+"): \t";
 

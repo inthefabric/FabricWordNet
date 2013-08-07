@@ -97,7 +97,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 					}
 
 					FabResponse<FabClass> fr = 
-						f.Services.Traversal.GetRootStep.ContainsClassList.WhereId(e.FabricId).Get();
+						f.Services.Traversal.GetRootStep.ClassId(e.FabricId).Get();
 
 					if ( fr == null ) {
 						failList.Add(b);
