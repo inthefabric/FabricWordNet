@@ -82,7 +82,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				b.RelatedArtifactId = GetFabArtId(f.RelatedArtifact);
 				b.FactorAssertionId = f.AssertionId;
 				b.IsDefining = f.IsDefining;
-				b.Note = f.Note;
+				b.Note = null; //f.Note;
 
 				b.Descriptor = new FabBatchNewFactorDescriptor {
 					TypeId = f.DescriptorTypeId,
