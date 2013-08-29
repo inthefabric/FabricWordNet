@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Artifacts\InsertAllArtifacts.cs" />
     <Compile Include="Factors\BuildFactors.cs" />
+    <Compile Include="Factors\CustomFactors.cs" />
     <Compile Include="Factors\LexicalFactors.cs" />
     <Compile Include="Factors\SemanticFactors.cs" />
     <Compile Include="Structures\ArtifactSet.cs" />

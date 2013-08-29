@@ -29,8 +29,6 @@ namespace Fabric.Apps.WordNet.Factors {
 		public const int SubsetWordId = 189508; //[105197, 189508]
 		public const int CauseWordId = 86866; //[null, 86866]
 
-		private static IDictionary<int, Artifact> ArtifactByWordIdMap = new Dictionary<int, Artifact>();
-
 		private readonly ArtifactSet vArtSet;
 		private readonly SessionProvider vSessProv;
 		private DateTime vStartTime;
@@ -55,11 +53,11 @@ namespace Fabric.Apps.WordNet.Factors {
 				InsertWordToSynsetFactors(sess);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.Hypernym,
-					DescriptorTypeId.IsA);
+					DescriptorTypeId.IsA, null, true);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.InstanceHypernym,
-					DescriptorTypeId.IsAnInstanceOf);
+					DescriptorTypeId.IsAnInstanceOf, null, true);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.VerbGroup,
-					DescriptorTypeId.IsAnInstanceOf, SubsetWordId);
+					DescriptorTypeId.IsAnInstanceOf, SubsetWordId, true);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.SimilarTo,
 					DescriptorTypeId.IsLike, SimilarWordId);
@@ -127,7 +125,7 @@ namespace Fabric.Apps.WordNet.Factors {
 		
 		/*--------------------------------------------------------------------------------------------*/
 		private void InsertFactors(ISession pSess, WordNetEngine.SynSetRelation pRel,
-								DescriptorTypeId pDescTypeId, int? pDescTypeRefineWordId=null) {
+					DescriptorTypeId pDescTypeId, int? pDescTypeRefineWordId=null, bool pIsDef=false) {
 			Console.WriteLine("Loading "+pRel+" Semantics...");
 
 			IList<Semantic> semList = pSess.QueryOver<Semantic>()
@@ -147,13 +145,13 @@ namespace Fabric.Apps.WordNet.Factors {
 					f.Semantic = sem;
 					f.PrimaryArtifact = art;
 					f.RelatedArtifact = targArt;
-					f.IsDefining = true;
+					f.IsDefining = pIsDef;
 					f.DescriptorTypeId = (byte)pDescTypeId;
 					f.AssertionId = (byte)FactorAssertionId.Fact;
 					f.Note = "["+art.Name+"]  "+pDescTypeId+"  ["+targArt.Name+"] {"+pRel+"}";
 
 					if ( pDescTypeRefineWordId != null ) {
-						f.DescriptorTypeRefine = GetArtifactByWordId(pSess, (int)pDescTypeRefineWordId);
+						f.DescriptorTypeRefine = vArtSet.WordIdMap[(int)pDescTypeRefineWordId];
 					}
 
 					pSess.Save(f);
@@ -168,7 +166,7 @@ namespace Fabric.Apps.WordNet.Factors {
 
 		/*--------------------------------------------------------------------------------------------*/
 		private void InsertAttributeFactors(ISession pSess) {
-			var att = WordNetEngine.SynSetRelation.Attribute;
+			const WordNetEngine.SynSetRelation att = WordNetEngine.SynSetRelation.Attribute;
 			Console.WriteLine("Loading "+att+" Semantics...");
 
 			IList<Semantic> semList = pSess.QueryOver<Semantic>()
@@ -194,10 +192,11 @@ namespace Fabric.Apps.WordNet.Factors {
 					f.Semantic = sem;
 					f.PrimaryArtifact = art;
 					f.RelatedArtifact = targArt;
-					f.IsDefining = true;
+					f.IsDefining = false;
 					f.DescriptorTypeId = (byte)DescriptorTypeId.RefersTo;
 					f.AssertionId = (byte)FactorAssertionId.Fact;
-					f.Note = "["+art.Name+"]  "+DescriptorTypeId.RefersTo+"  ["+targArt.Name+"] {"+att+"}";
+					f.Note = "["+art.Name+"]  "+DescriptorTypeId.RefersTo+
+						"  ["+targArt.Name+"] {"+att+"}";
 					pSess.Save(f);
 				}
 
@@ -206,23 +205,6 @@ namespace Fabric.Apps.WordNet.Factors {
 				Console.WriteLine("Finished Factors"+TimerString());
 				Console.WriteLine("");
 			}
-		}
-
-
-		////////////////////////////////////////////////////////////////////////////////////////////////
-		/*--------------------------------------------------------------------------------------------*/
-		public static Artifact GetArtifactByWordId(ISession pSess, int pWordId) {
-			if ( ArtifactByWordIdMap.ContainsKey(pWordId) ) {
-				return ArtifactByWordIdMap[pWordId];
-			}
-
-			Artifact a = pSess.QueryOver<Artifact>()
-				.Where(x => x.Word.Id == pWordId)
-				.SingleOrDefault();
-			
-			ArtifactByWordIdMap.Add(pWordId, a);
-			Console.WriteLine("GetArtifactByWordId: "+pWordId+" / "+a.Id+" / "+a.Name);
-			return a;
 		}
 		
 	}

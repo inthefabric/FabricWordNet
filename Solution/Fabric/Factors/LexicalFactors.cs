@@ -44,7 +44,7 @@ namespace Fabric.Apps.WordNet.Factors {
 				Console.WriteLine("");
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.VerbGroup,
-					DescriptorTypeId.IsAnInstanceOf, SemanticFactors.SubsetWordId);
+					DescriptorTypeId.IsAnInstanceOf, SemanticFactors.SubsetWordId, true);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.AlsoSee,
 					DescriptorTypeId.IsLike, SemanticFactors.RelatedWordId);
@@ -79,7 +79,7 @@ namespace Fabric.Apps.WordNet.Factors {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private void InsertFactors(ISession pSess, WordNetEngine.SynSetRelation pRel,
-								DescriptorTypeId pDescTypeId, int? pDescTypeRefineWordId=null) {
+					DescriptorTypeId pDescTypeId, int? pDescTypeRefineWordId=null, bool pIsDef=false) {
 			Console.WriteLine("Loading "+pRel+" Lexicals...");
 
 			IList<Lexical> lexList = pSess.QueryOver<Lexical>()
@@ -99,14 +99,13 @@ namespace Fabric.Apps.WordNet.Factors {
 					f.Lexical = lex;
 					f.PrimaryArtifact = art;
 					f.RelatedArtifact = targArt;
-					f.IsDefining = true;
+					f.IsDefining = pIsDef;
 					f.DescriptorTypeId = (byte)pDescTypeId;
 					f.AssertionId = (byte)FactorAssertionId.Fact;
 					f.Note = "["+art.Name+"]  "+pDescTypeId+"  ["+targArt.Name+"] {LEX."+pRel+"}";
 
 					if ( pDescTypeRefineWordId != null ) {
-						f.DescriptorTypeRefine = SemanticFactors.GetArtifactByWordId(
-							pSess, (int)pDescTypeRefineWordId);
+						f.DescriptorTypeRefine = vArtSet.WordIdMap[(int)pDescTypeRefineWordId];
 					}
 
 					pSess.Save(f);
