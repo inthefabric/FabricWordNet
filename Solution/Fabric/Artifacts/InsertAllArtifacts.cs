@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Fabric.Apps.WordNet.Data.Domain;
 using Fabric.Apps.WordNet.Structures;
 using NHibernate;
-using NHibernate.Mapping;
 
 namespace Fabric.Apps.WordNet.Artifacts {
 

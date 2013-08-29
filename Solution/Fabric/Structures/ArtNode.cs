@@ -111,8 +111,7 @@ namespace Fabric.Apps.WordNet.Structures {
 
 		/*--------------------------------------------------------------------------------------------*/
 		private void SetDisamb(string pDisamb) {
-			string pos = " ["+Stats.PartsOfSpeech[Node.SynSet.PartOfSpeechId]+"]";
-			Art.Disamb = TruncateString(pDisamb, 128-pos.Length)+pos;
+			Art.Disamb = TruncateString(pDisamb, 128);
 		}
 
 
