@@ -18,7 +18,7 @@ namespace Fabric.Apps.WordNet.Factors {
 		*/
 
 		public const int AntonymWordId = 32354; //[null, 32354]
-		public const int DerivedWordId = 15701; //[7292, 15701]
+		public const int DerivationWordId = 105936; //[55008, 105936]
 		public const int PertainWordId = 96597; //[null, 96597]
 		public const int ParticipleWordId = 33141; //[null, 33141]
 
@@ -60,7 +60,7 @@ namespace Fabric.Apps.WordNet.Factors {
 					DescriptorTypeId.IsNotLike, AntonymWordId);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.DerivationallyRelated,
-					DescriptorTypeId.IsRelatedTo, DerivedWordId);
+					DescriptorTypeId.IsRelatedTo, DerivationWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.ParticipleOfVerb,
 					DescriptorTypeId.IsRelatedTo, ParticipleWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.Pertainym,
@@ -90,10 +90,21 @@ namespace Fabric.Apps.WordNet.Factors {
 
 			using ( ITransaction tx = pSess.BeginTransaction() ) {
 				Console.WriteLine("Building Factors...");
+				var oppMap = new HashSet<string>();
+				int oppSkips = 0;
 
 				foreach ( Lexical lex in lexList ) {
-					Artifact art = vArtSet.SynsetIdMap[lex.Synset.Id];
-					Artifact targArt = vArtSet.SynsetIdMap[lex.TargetSynset.Id];
+					Artifact art = (vArtSet.WordIdMap.ContainsKey(lex.Word.Id) ? 
+						vArtSet.WordIdMap[lex.Word.Id] : vArtSet.SynsetIdMap[lex.Synset.Id]);
+					Artifact targArt = (vArtSet.WordIdMap.ContainsKey(lex.TargetWord.Id) ? 
+						vArtSet.WordIdMap[lex.TargetWord.Id] :vArtSet.SynsetIdMap[lex.TargetSynset.Id]);
+
+					if ( oppMap.Contains(targArt.Id+"|"+art.Id) ) {
+						oppSkips++;
+						continue; //avoid creating a B->A "duplicate" of an existing A->B Factor
+					}
+
+					oppMap.Add(art.Id+"|"+targArt.Id);
 
 					var f = new Factor();
 					f.Lexical = lex;
@@ -111,6 +122,7 @@ namespace Fabric.Apps.WordNet.Factors {
 					pSess.Save(f);
 				}
 
+				Console.WriteLine("Skipped "+oppSkips+" reversed Factors..."+TimerString());
 				Console.WriteLine("Comitting Factors..."+TimerString());
 				tx.Commit();
 				Console.WriteLine("Finished Factors"+TimerString());
