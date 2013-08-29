@@ -18,16 +18,18 @@ namespace Fabric.Apps.WordNet.Factors {
 		WHERE RelationId=25
 		*/
 
-		public const int MemberArtifactId = 3867; //[83506, 157404]
-		public const int PartArtifactId = 393; //[null, 12986]
-		public const int SubstanceArtifactId = 19; //[105211, 189527]
-		public const int SimilarArtifactId = 168764; //[null, 2701]
-		public const int RelatedArtifactId = 201570; //[null, 36489]
-		public const int TopicArtifactId = 4061; //[null, 41120]
-		public const int UsageArtifactId = 3996; //[null, 195778]
-		public const int RegionArtifactId = 654; //[96397, 176977]
-		public const int SubsetArtifactId = 521; //[105197, 189508]
-		public const int CauseArtifactId = 224389; //[null, 86866]
+		public const int MemberWordId = 157404; //[83506, 157404] //[SynsetId, WordId]
+		public const int PartWordId = 12986; //[null, 12986]
+		public const int SubstanceWordId = 189527; //[105211, 189527]
+		public const int SimilarWordId = 2701; //[null, 2701]
+		public const int RelatedWordId = 36489; //[null, 36489]
+		public const int TopicWordId = 41120; //[null, 41120]
+		public const int UsageWordId = 195778; //[null, 195778]
+		public const int RegionWordId = 176977; //[96397, 176977]
+		public const int SubsetWordId = 189508; //[105197, 189508]
+		public const int CauseWordId = 86866; //[null, 86866]
+
+		private static IDictionary<int, Artifact> ArtifactByWordIdMap = new Dictionary<int, Artifact>();
 
 		private readonly ArtifactSet vArtSet;
 		private readonly SessionProvider vSessProv;
@@ -57,31 +59,31 @@ namespace Fabric.Apps.WordNet.Factors {
 				InsertFactors(sess, WordNetEngine.SynSetRelation.InstanceHypernym,
 					DescriptorTypeId.IsAnInstanceOf);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.VerbGroup,
-					DescriptorTypeId.IsAnInstanceOf, SubsetArtifactId);
+					DescriptorTypeId.IsAnInstanceOf, SubsetWordId);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.SimilarTo,
-					DescriptorTypeId.IsLike, SimilarArtifactId);
+					DescriptorTypeId.IsLike, SimilarWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.AlsoSee,
-					DescriptorTypeId.IsLike, RelatedArtifactId);
+					DescriptorTypeId.IsLike, RelatedWordId);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.MemberMeronym,
-					DescriptorTypeId.HasA, MemberArtifactId);
+					DescriptorTypeId.HasA, MemberWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.PartMeronym,
-					DescriptorTypeId.HasA, PartArtifactId);
+					DescriptorTypeId.HasA, PartWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.SubstanceMeronym,
-					DescriptorTypeId.HasA, SubstanceArtifactId);
+					DescriptorTypeId.HasA, SubstanceWordId);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.TopicDomain,
-					DescriptorTypeId.RefersTo, TopicArtifactId);
+					DescriptorTypeId.RefersTo, TopicWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.UsageDomain,
-					DescriptorTypeId.IsAnInstanceOf, UsageArtifactId);
+					DescriptorTypeId.IsAnInstanceOf, UsageWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.RegionDomain,
-					DescriptorTypeId.IsFoundIn, RegionArtifactId);
+					DescriptorTypeId.IsFoundIn, RegionWordId);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.Entailment,
 					DescriptorTypeId.Requires);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.Cause,
-					DescriptorTypeId.Produces, CauseArtifactId);
+					DescriptorTypeId.Produces, CauseWordId);
 
 				InsertAttributeFactors(sess);
 			}
@@ -125,7 +127,7 @@ namespace Fabric.Apps.WordNet.Factors {
 		
 		/*--------------------------------------------------------------------------------------------*/
 		private void InsertFactors(ISession pSess, WordNetEngine.SynSetRelation pRel,
-								DescriptorTypeId pDescTypeId, int? pDescTypeRefineArtifactId=null) {
+								DescriptorTypeId pDescTypeId, int? pDescTypeRefineWordId=null) {
 			Console.WriteLine("Loading "+pRel+" Semantics...");
 
 			IList<Semantic> semList = pSess.QueryOver<Semantic>()
@@ -150,8 +152,8 @@ namespace Fabric.Apps.WordNet.Factors {
 					f.AssertionId = (byte)FactorAssertionId.Fact;
 					f.Note = "["+art.Name+"]  "+pDescTypeId+"  ["+targArt.Name+"] {"+pRel+"}";
 
-					if ( pDescTypeRefineArtifactId != null ) {
-						f.DescriptorTypeRefine = pSess.Load<Artifact>((int)pDescTypeRefineArtifactId);
+					if ( pDescTypeRefineWordId != null ) {
+						f.DescriptorTypeRefine = GetArtifactByWordId(pSess, (int)pDescTypeRefineWordId);
 					}
 
 					pSess.Save(f);
@@ -204,6 +206,23 @@ namespace Fabric.Apps.WordNet.Factors {
 				Console.WriteLine("Finished Factors"+TimerString());
 				Console.WriteLine("");
 			}
+		}
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		/*--------------------------------------------------------------------------------------------*/
+		public static Artifact GetArtifactByWordId(ISession pSess, int pWordId) {
+			if ( ArtifactByWordIdMap.ContainsKey(pWordId) ) {
+				return ArtifactByWordIdMap[pWordId];
+			}
+
+			Artifact a = pSess.QueryOver<Artifact>()
+				.Where(x => x.Word.Id == pWordId)
+				.SingleOrDefault();
+			
+			ArtifactByWordIdMap.Add(pWordId, a);
+			Console.WriteLine("GetArtifactByWordId: "+pWordId+" / "+a.Id+" / "+a.Name);
+			return a;
 		}
 		
 	}

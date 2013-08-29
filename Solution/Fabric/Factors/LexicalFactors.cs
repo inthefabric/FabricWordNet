@@ -17,10 +17,10 @@ namespace Fabric.Apps.WordNet.Factors {
 		WHERE RelationId=27
 		*/
 
-		public const int AntonymArtifactId = 35857; //[null, 32354]
-		public const int DerivedArtifactId = 181665; //[7292, 15701]
-		public const int PertainArtifactId = 226353; //[null, 96597]
-		public const int ParticipleArtifactId = 123130; //[null, 33141]
+		public const int AntonymWordId = 32354; //[null, 32354]
+		public const int DerivedWordId = 15701; //[7292, 15701]
+		public const int PertainWordId = 96597; //[null, 96597]
+		public const int ParticipleWordId = 33141; //[null, 33141]
 
 		private readonly ArtifactSet vArtSet;
 		private readonly SessionProvider vSessProv;
@@ -44,29 +44,29 @@ namespace Fabric.Apps.WordNet.Factors {
 				Console.WriteLine("");
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.VerbGroup,
-					DescriptorTypeId.IsAnInstanceOf, SemanticFactors.SubsetArtifactId);
+					DescriptorTypeId.IsAnInstanceOf, SemanticFactors.SubsetWordId);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.AlsoSee,
-					DescriptorTypeId.IsLike, SemanticFactors.RelatedArtifactId);
+					DescriptorTypeId.IsLike, SemanticFactors.RelatedWordId);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.TopicDomain,
-					DescriptorTypeId.RefersTo, SemanticFactors.TopicArtifactId);
+					DescriptorTypeId.RefersTo, SemanticFactors.TopicWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.UsageDomain,
-					DescriptorTypeId.IsAnInstanceOf, SemanticFactors.UsageArtifactId);
+					DescriptorTypeId.IsAnInstanceOf, SemanticFactors.UsageWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.RegionDomain,
-					DescriptorTypeId.IsFoundIn, SemanticFactors.RegionArtifactId);
+					DescriptorTypeId.IsFoundIn, SemanticFactors.RegionWordId);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.Antonym,
-					DescriptorTypeId.IsNotLike, AntonymArtifactId);
+					DescriptorTypeId.IsNotLike, AntonymWordId);
 
 				InsertFactors(sess, WordNetEngine.SynSetRelation.DerivationallyRelated,
-					DescriptorTypeId.IsRelatedTo, DerivedArtifactId);
+					DescriptorTypeId.IsRelatedTo, DerivedWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.ParticipleOfVerb,
-					DescriptorTypeId.IsRelatedTo, ParticipleArtifactId);
+					DescriptorTypeId.IsRelatedTo, ParticipleWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.Pertainym,
-					DescriptorTypeId.RefersTo, PertainArtifactId);
+					DescriptorTypeId.RefersTo, PertainWordId);
 				InsertFactors(sess, WordNetEngine.SynSetRelation.DerivedFromAdjective,
-					DescriptorTypeId.RefersTo, PertainArtifactId);
+					DescriptorTypeId.RefersTo, PertainWordId);
 			}
 		}
 
@@ -79,7 +79,7 @@ namespace Fabric.Apps.WordNet.Factors {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private void InsertFactors(ISession pSess, WordNetEngine.SynSetRelation pRel,
-								DescriptorTypeId pDescTypeId, int? pDescTypeRefineArtifactId=null) {
+								DescriptorTypeId pDescTypeId, int? pDescTypeRefineWordId=null) {
 			Console.WriteLine("Loading "+pRel+" Lexicals...");
 
 			IList<Lexical> lexList = pSess.QueryOver<Lexical>()
@@ -104,8 +104,9 @@ namespace Fabric.Apps.WordNet.Factors {
 					f.AssertionId = (byte)FactorAssertionId.Fact;
 					f.Note = "["+art.Name+"]  "+pDescTypeId+"  ["+targArt.Name+"] {LEX."+pRel+"}";
 
-					if ( pDescTypeRefineArtifactId != null ) {
-						f.DescriptorTypeRefine = pSess.Load<Artifact>((int)pDescTypeRefineArtifactId);
+					if ( pDescTypeRefineWordId != null ) {
+						f.DescriptorTypeRefine = SemanticFactors.GetArtifactByWordId(
+							pSess, (int)pDescTypeRefineWordId);
 					}
 
 					pSess.Save(f);
