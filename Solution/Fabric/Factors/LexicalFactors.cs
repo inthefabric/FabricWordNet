@@ -32,6 +32,11 @@ namespace Fabric.Apps.WordNet.Factors {
 		public LexicalFactors(ArtifactSet pArtSet) {
 			vArtSet = pArtSet;
 			vSessProv = new SessionProvider();
+
+			SemanticFactors.AssertWord(vArtSet, AntonymWordId, "antonym");
+			SemanticFactors.AssertWord(vArtSet, DerivationWordId, "derivation");
+			SemanticFactors.AssertWord(vArtSet, PertainWordId, "pertain");
+			SemanticFactors.AssertWord(vArtSet, ParticipleWordId, "participle");
 		}
 
 		/*--------------------------------------------------------------------------------------------*/

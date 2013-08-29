@@ -39,6 +39,17 @@ namespace Fabric.Apps.WordNet.Factors {
 		public SemanticFactors(ArtifactSet pArtSet) {
 			vArtSet = pArtSet;
 			vSessProv = new SessionProvider();
+
+			AssertWord(vArtSet, MemberWordId, "member");
+			AssertWord(vArtSet, PartWordId, "part");
+			AssertWord(vArtSet, SubstanceWordId, "substance");
+			AssertWord(vArtSet, SimilarWordId, "similar");
+			AssertWord(vArtSet, RelatedWordId, "related");
+			AssertWord(vArtSet, TopicWordId, "topic");
+			AssertWord(vArtSet, UsageWordId, "usage");
+			AssertWord(vArtSet, RegionWordId, "region");
+			AssertWord(vArtSet, SubsetWordId, "subset");
+			AssertWord(vArtSet, CauseWordId, "cause");
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -204,6 +215,18 @@ namespace Fabric.Apps.WordNet.Factors {
 				tx.Commit();
 				Console.WriteLine("Finished Factors"+TimerString());
 				Console.WriteLine("");
+			}
+		}
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		/*--------------------------------------------------------------------------------------------*/
+		public static void AssertWord(ArtifactSet pArtSet, int pWordId, string pExpectArtifactName) {
+			Artifact a = pArtSet.WordIdMap[pWordId];
+			Console.WriteLine("AssertWord "+pWordId+": "+a.Name);
+
+			if ( a.Name != pExpectArtifactName ) {
+				throw new Exception("Incorrect word '"+a.Name+"', expected '"+pExpectArtifactName+"'.");
 			}
 		}
 		

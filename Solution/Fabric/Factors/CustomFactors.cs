@@ -28,6 +28,15 @@ namespace Fabric.Apps.WordNet.Factors {
 		public CustomFactors(ArtifactSet pArtSet) {
 			vArtSet = pArtSet;
 			vSessProv = new SessionProvider();
+
+			SemanticFactors.AssertWord(vArtSet, PartOfSpeechWordId, "part of speech");
+			SemanticFactors.AssertWord(vArtSet, NounWordId, "noun");
+			SemanticFactors.AssertWord(vArtSet, VerbWordId, "verb");
+			SemanticFactors.AssertWord(vArtSet, AdjectiveWordId, "adjective");
+			SemanticFactors.AssertWord(vArtSet, AdverbWordId, "adverb");
+
+			SemanticFactors.AssertWord(vArtSet, SynsetWordId, "synset");
+			SemanticFactors.AssertWord(vArtSet, WordNet31WordId, "WordNet3.1");
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
