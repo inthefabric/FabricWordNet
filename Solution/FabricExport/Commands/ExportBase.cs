@@ -236,7 +236,7 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 				double time = (DateTime.UtcNow.Ticks-vThreadStartTime)/10000000.0;
 				double perSec = ((vThreadDoneCount-vThreadSkipCount)*vBatchSize)/time;
 
-				long bar = (DateTime.UtcNow.Ticks-t)/1000000; //tenths of a second
+				long bar = (DateTime.UtcNow.Ticks-t)/10000000; //seconds
 				string barStr = new string('#', (int)bar);
 
 				ThreadPrint(pIndex,
@@ -244,7 +244,6 @@ namespace Fabric.Apps.WordNet.Export.Commands {
 					"Finished batch "+vThreadDoneCount+" of "+vBatchCount+" \t"+
 					fr.DbMs+"/"+fr.TotalMs+"\t"+
 					fabSecs+" fab \t"+
-					GetSecs(t)+" thr \t"+
 					GetSecs(vThreadStartTime)+" tot \t"+
 					(perc*100).ToString("##0.000")+"% \t"+
 					perSec.ToString("#0.000")+" exp/sec | "+barStr);
