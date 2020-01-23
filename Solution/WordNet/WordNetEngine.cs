@@ -42,8 +42,8 @@ namespace Fabric.Apps.WordNet
             DerivationallyRelated,
             DerivedFromAdjective,
             Entailment,
-            Hypernym,
-            Hyponym,
+            Hypernym, //=8
+            Hyponym, //=9
             InstanceHypernym,
             InstanceHyponym,
             MemberHolonym,

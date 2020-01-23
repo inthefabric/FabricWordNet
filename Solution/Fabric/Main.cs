@@ -1,7 +1,9 @@
+using System;
 using System.IO;
 using Fabric.Apps.WordNet.Artifacts;
 using Fabric.Apps.WordNet.Data;
 using Fabric.Apps.WordNet.Factors;
+using Fabric.Apps.WordNet.Notes;
 using Fabric.Apps.WordNet.Wordnet;
 using NHibernate;
 
@@ -16,9 +18,13 @@ namespace Fabric.Apps.WordNet {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public static void Main(string[] pArgs) {
+			Console.WriteLine("NOTES");
 			DbBuilder.InitOnce();
 			//DbBuilder.UpdateSchema();
-			const int step = 2;
+			const int step = -1;
+
+			NoteUtil.BuildNotes();
+			return;
 
 			switch ( step ) {
 				case 0:
