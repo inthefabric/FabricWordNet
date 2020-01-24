@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Fabric.Apps.WordNet.Data;
@@ -9,6 +10,7 @@ using Fabric.Apps.WordNet.Data.Domain;
 using Fabric.Apps.WordNet.Wordnet;
 using NHibernate;
 using NHibernate.Transform;
+using static Fabric.Apps.WordNet.WordNetEngine;
 
 namespace Fabric.Apps.WordNet.Notes {
 
@@ -16,6 +18,7 @@ namespace Fabric.Apps.WordNet.Notes {
 	public static class NoteUtil {
 
 		private const string SynsetSortKey = "wn_syn";
+		private static readonly string[] SynsetPosAbbrevs = { "", "n", "v", "adj", "adv" };
 
 		private static Dictionary<WordNetEngine.POS, string> PartOfSpeechTextMap;
 		private static IList<Synset> AllSynsetsIncludingWords;
@@ -58,6 +61,25 @@ namespace Fabric.Apps.WordNet.Notes {
 				.TransformUsing(Transformers.DistinctRootEntity)
 				//.Take(2000)
 				.List();
+
+			List<Synset> allSynsets = AllSynsetsIncludingWords.ToList();
+			HashSet<int> ssidMap = new HashSet<int>();
+
+			foreach ( Synset synset in allSynsets ) {
+				string[] split = synset.SsId.Split(':');
+
+				synset.SsId = "_"+SynsetPosAbbrevs[synset.PartOfSpeechId]+split[1];
+				synset.SortValue = int.Parse(split[1])+(synset.PartOfSpeechId-1)*100000000;
+
+				if ( ssidMap.Contains(synset.SortValue) ) {
+					Console.WriteLine("DUP: "+synset.SsId+" / "+synset.SortValue);
+				}
+
+				ssidMap.Add(synset.SortValue);
+			}
+
+			allSynsets.Sort((a,b) => a.SortValue-b.SortValue);
+			AllSynsetsIncludingWords = allSynsets;
 
 			Console.WriteLine("GetAllSynsetsIncludingWords complete: "+
 				$"{AllSynsetsIncludingWords.Count} results, {timer.Elapsed.Seconds} sec");
@@ -125,7 +147,14 @@ namespace Fabric.Apps.WordNet.Notes {
 
 			int noteId = 1000000;
 
-			fsw.Write(ToNoteJson(noteId++, $"${SynsetSortKey}-[WordNet 3.1 Synset ID]"));
+			fsw.Write( "\n"+ToNoteJson(noteId++, $"${SynsetSortKey}_"+
+				$"{SynsetPosAbbrevs[(int)POS.Noun]}-[WordNet 3.1: Noun Synsets]"));
+			fsw.Write(",\n"+ToNoteJson(noteId++, $"${SynsetSortKey}_"+
+				$"{SynsetPosAbbrevs[(int)POS.Verb]}-[WordNet 3.1: Verb Synsets]"));
+			fsw.Write(",\n"+ToNoteJson(noteId++, $"${SynsetSortKey}_"+
+				$"{SynsetPosAbbrevs[(int)POS.Adjective]}-[WordNet 3.1: Adjective Synsets]"));
+			fsw.Write(",\n"+ToNoteJson(noteId++, $"${SynsetSortKey}_"+
+				$"{SynsetPosAbbrevs[(int)POS.Adverb]}-[WordNet 3.1: Adverb Synsets]"));
 
 			for ( int batchI = 0 ; synI < synCount ; batchI++ ) {
 				//using ( ITransaction tx = pSess.BeginTransaction() ) {
@@ -242,7 +271,7 @@ namespace Fabric.Apps.WordNet.Notes {
 
 			text.Append(" $");
 			text.Append(SynsetSortKey);
-			text.Append(pSynset.SsId.Split(':')[1]);
+			text.Append(pSynset.SsId);
 
 			return Note.New(NoteType.SynsetMeansGloss, text.ToString());
 		}

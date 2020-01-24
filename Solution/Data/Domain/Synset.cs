@@ -17,6 +17,8 @@ namespace Fabric.Apps.WordNet.Data.Domain {
 		public virtual IList<Lexical> LexicalTargetList { get; set; }
 		public virtual IList<Artifact> ArtifactList { get; set; } //0 or 1
 
+		public virtual int SortValue { get; set; }
+
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
