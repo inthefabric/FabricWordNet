@@ -23,7 +23,7 @@ namespace Fabric.Apps.WordNet {
 			//DbBuilder.UpdateSchema();
 			const int step = -1;
 
-			NoteUtil.BuildNotes();
+			NoteUtil.GenerateNotes();
 			return;
 
 			switch ( step ) {

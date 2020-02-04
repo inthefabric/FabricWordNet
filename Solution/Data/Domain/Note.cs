@@ -3,7 +3,9 @@
 	/*================================================================================================*/
 	public enum NoteType {
 		SynsetMeansGloss = 1,
-		WordMeansSynset
+		WordMeansSynset,
+		Semantic,
+		Lexical
 	}
 
 
