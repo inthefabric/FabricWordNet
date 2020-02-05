@@ -34,7 +34,7 @@ namespace Fabric.Apps.WordNet.Notes {
 			}
 		}
 
-		private const string SynsetSortKey = "wn";
+		private const string SynsetSortKey = "wns";
 		//private const string WordSortKey = "wnw";
 		//private const string SemanticSortKey = "wnm";
 		//private const string LexicalSortKey = "wnl";
@@ -385,6 +385,8 @@ namespace Fabric.Apps.WordNet.Notes {
 			var text = new StringBuilder();
 			text.Append(" #");
 			text.Append(SynsetHash[pSynset.Id]);
+			text.Append("-wns");
+			text.Append(SynsetPosAbbrevs[pSynset.PartOfSpeechId]);
 			return text.ToString();
 		}
 
@@ -688,8 +690,6 @@ namespace Fabric.Apps.WordNet.Notes {
 			text.Append(toWordTag);
 			text.Append(" %of");
 			text.Append(toSynTag);
-
-			//TODO: check for duplicate entries
 
 			/*if ( info.IsBiDir ) {
 				text.Append(" ");
