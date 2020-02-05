@@ -27,21 +27,23 @@ namespace Fabric.Apps.WordNet.Notes {
 														string pAbbrev,	SynSetRelation? pRelOpp=null) {
 				Rel = pRel;
 				IsBiDir = pIsBiDir;
-				Action = ">"+pAction+(IsBiDir ? "<" : "");
+				Action = ">"+pAction; //+(IsBiDir ? "<" : "");
 				Abbrev = pAbbrev;
 				Label = "Semantic "+pRel;
 				RelOpp = pRelOpp;
 			}
 		}
 
-		private const string SynsetSortKey = "wns";
-		private const string WordSortKey = "wnw";
-		private const string SemanticSortKey = "wnm";
-		private const string LexicalSortKey = "wnl";
-		private static readonly string[] SynsetPosAbbrevs = { "", "n", "v", "j", "b" };
+		private const string SynsetSortKey = "wn";
+		//private const string WordSortKey = "wnw";
+		//private const string SemanticSortKey = "wnm";
+		//private const string LexicalSortKey = "wnl";
+		private static readonly string[] SynsetPosAbbrevs = { "", "n", "v", "a", "b" };
 		//private static readonly string[] SynsetPosNames = { "", "Noun", "Verb", "Adjective", "Adverb"};
 
 		private static SsRelInfo[] SsRelList = {
+			//new SsRelInfo(SynSetRelation.None, false, "is-NONE-of", "n"),
+
 			new SsRelInfo(SynSetRelation.Hypernym,
 				false, "is-type-of", "h", SynSetRelation.Hyponym),
 			new SsRelInfo(SynSetRelation.InstanceHypernym,
@@ -61,34 +63,33 @@ namespace Fabric.Apps.WordNet.Notes {
 
 			new SsRelInfo(SynSetRelation.VerbGroup, false, "is-subset-of", "v"),
 			new SsRelInfo(SynSetRelation.Entailment, false, "requires", "e"),
-			new SsRelInfo(SynSetRelation.Cause, false, "causes", "c"), //TODO: directionality?
+			new SsRelInfo(SynSetRelation.Cause, false, "causes", "c"),
+			new SsRelInfo(SynSetRelation.Pertainym, false, "pertains-to", "pe"),
+			new SsRelInfo(SynSetRelation.DerivedFromAdjective, false, "derives-from", "df"),
+			new SsRelInfo(SynSetRelation.ParticipleOfVerb, false, "is-participle-of", "pa"),
 
 			new SsRelInfo(SynSetRelation.SimilarTo, true, "is-similar-to", "s"),
-			new SsRelInfo(SynSetRelation.AlsoSee, true, "is-related-to", "as"),
-			new SsRelInfo(SynSetRelation.Attribute, true, "is-attribute-of", "a") //NEW
-
-			//not present in database
-			//SynSetRelation.None
-			//SynSetRelation.Antonym
-			//SynSetRelation.DerivationallyRelated
-			//SynSetRelation.DerivedFromAdjective
-			//SynSetRelation.ParticipleOfVerb
-			//SynSetRelation.Pertainym
+			new SsRelInfo(SynSetRelation.AlsoSee, true, "relates-also-to", "as"),
+			new SsRelInfo(SynSetRelation.Attribute, true, "is-attribute-of", "a"),
+			new SsRelInfo(SynSetRelation.Antonym, true, "is-opposite-of", "o"),
+			new SsRelInfo(SynSetRelation.DerivationallyRelated, true, "relates-to", "dr")
 		};
 
 		private static Dictionary<SynSetRelation, SsRelInfo> SsRelMap =
 			SsRelList.ToList().ToDictionary(x => x.Rel);
 
 		private static Dictionary<POS, string> PartOfSpeechTextMap;
-		private static IList<Synset> SynsetList;
+		private static List<Synset> SynsetList;
 		private static Dictionary<int, Synset> SynsetMap;
 		private static HashSet<string> SynsetHashCheck;
 		private static Dictionary<int, string> SynsetHash;
-		private static IList<Word> WordList;
+		private static List<Word> WordList;
+		private static Dictionary<int, Word> WordMap;
 		private static Dictionary<int, List<Word>> SynsetWordsMap;
 		private static Dictionary<string, List<Synset>> WordtagSynsetsMap;
 		private static HashSet<string> TagMap;
 		private static IList<Semantic> SemanticList;
+		private static IList<Lexical> LexicalList;
 		private static int NextNoteId = 1000000;
 
 
@@ -106,6 +107,7 @@ namespace Fabric.Apps.WordNet.Notes {
 				GetWords(sess);
 				CalcSynsetHashes();
 				GetSemantics(sess);
+				GetLexicals(sess);
 			}
 
 			BuildTagMap();
@@ -131,7 +133,7 @@ namespace Fabric.Apps.WordNet.Notes {
 			var timer = Stopwatch.StartNew();
 			var ssidMap = new HashSet<int>();
 
-			SynsetList = pSess.QueryOver<Synset>().List();
+			SynsetList = pSess.QueryOver<Synset>().List().ToList();
 			SynsetMap = new Dictionary<int, Synset>();
 			SynsetHashCheck = new HashSet<string>();
 			SynsetHash = new Dictionary<int, string>();
@@ -150,18 +152,20 @@ namespace Fabric.Apps.WordNet.Notes {
 				SynsetMap.Add(synset.Id, synset);
 			}
 
+			SynsetList.Sort((a,b) => a.SortValue-b.SortValue);
+
 			Console.WriteLine("GetSynsets complete: "+
 				$"{SynsetList.Count} results, {timer.Elapsed.TotalSeconds} sec");
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
 		private static void GetWords(ISession pSess) {
-			Console.WriteLine("GetWords... (wait ~20 sec)");
+			Console.WriteLine("GetWords... (wait ~26 sec)");
 			var timer = Stopwatch.StartNew();
 			const int keyLen = 5;
 
-			WordList = pSess.QueryOver<Word>().List();
-
+			WordList = pSess.QueryOver<Word>().List().ToList();
+			WordMap = new Dictionary<int, Word>();
 			SynsetWordsMap = new Dictionary<int, List<Word>>();
 			WordtagSynsetsMap = new Dictionary<string, List<Synset>>();
 
@@ -176,6 +180,7 @@ namespace Fabric.Apps.WordNet.Notes {
 					WordtagSynsetsMap.Add(wordTag, new List<Synset>());
 				}
 
+				WordMap.Add(word.Id, word);
 				SynsetWordsMap[word.Synset.Id].Add(word);
 				WordtagSynsetsMap[wordTag].Add(SynsetMap[word.Synset.Id]);
 			}
@@ -239,10 +244,19 @@ namespace Fabric.Apps.WordNet.Notes {
 
 		/*--------------------------------------------------------------------------------------------*/
 		private static void GetSemantics(ISession pSess) {
-			Console.WriteLine("GetSemantics... (wait ~24 sec)");
+			Console.WriteLine("GetSemantics... (wait ~26 sec)");
 			Stopwatch timer = Stopwatch.StartNew();
 			SemanticList = pSess.QueryOver<Semantic>().List();
 			Console.WriteLine($"GetSemantics complete: {SemanticList.Count} results, "+
+				$"{timer.Elapsed.TotalSeconds} sec");
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		private static void GetLexicals(ISession pSess) {
+			Console.WriteLine("GetLexicals... (wait ~XX sec)");
+			Stopwatch timer = Stopwatch.StartNew();
+			LexicalList = pSess.QueryOver<Lexical>().List();
+			Console.WriteLine($"GetLexicals complete: {LexicalList.Count} results, "+
 				$"{timer.Elapsed.TotalSeconds} sec");
 		}
 
@@ -260,7 +274,7 @@ namespace Fabric.Apps.WordNet.Notes {
 
 		/*--------------------------------------------------------------------------------------------*/
 		private static void BuildTagMap() {
-			Console.WriteLine("BuildTagMap... (wait ~2 sec)");
+			Console.WriteLine("BuildTagMap... (wait ~3 sec)");
 			var timer = Stopwatch.StartNew();
 
 			TagMap = new HashSet<string>();
@@ -329,8 +343,9 @@ namespace Fabric.Apps.WordNet.Notes {
 					});
 
 					WriteSynsetNotes(writeNoteFunc);
-					WriteWordNotes(writeNoteFunc);
+					//WriteWordNotes(writeNoteFunc);
 					WriteSemanticNotes(writeNoteFunc);
+					WriteLexicalNotes(writeNoteFunc);
 
 					fsw.Write("\n]}");
 					fsw.Flush();
@@ -355,7 +370,7 @@ namespace Fabric.Apps.WordNet.Notes {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private static void WriteSynsetNotes(Action<Note> pWriteNoteFunc) {
-			Console.WriteLine("WriteSynsetNotes... (wait ~30 sec)");
+			Console.WriteLine("WriteSynsetNotes... (wait ~26 sec)");
 			Stopwatch timer = Stopwatch.StartNew();
 
 			foreach ( Synset syn in SynsetList ) {
@@ -366,7 +381,7 @@ namespace Fabric.Apps.WordNet.Notes {
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
-		private static string ToSynsetString(this Synset pSynset) {
+		private static string ToSynsetTag(this Synset pSynset) {
 			var text = new StringBuilder();
 			text.Append(" #");
 			text.Append(SynsetHash[pSynset.Id]);
@@ -374,7 +389,44 @@ namespace Fabric.Apps.WordNet.Notes {
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
-		private static string ToSynsetWordsString(this Synset pSynset) {
+		private static string ToSynsetWordGroup(this Synset pSynset) {
+			var text = new StringBuilder();
+			List<Word> words = SynsetWordsMap[pSynset.Id];
+			int wordCount = words.Count;
+
+			text.Append(" ");
+
+			if ( wordCount > 1 ) {
+				text.Append("{ ");
+			}
+
+			for ( int i = 0 ; i < wordCount ; i++ ) {
+				string name = words[i].Name;
+				string tag = WordNameToTag(name, true);
+
+				if ( i > 0 ) {
+					text.Append("|");
+				}
+
+				/*if ( tag == null ) {
+					text.Append(" ");
+					text.Append(name);
+				}
+				else {*/
+					text.Append("#");
+					text.Append(tag);
+				//}
+			}
+
+			if ( wordCount > 1 ) {
+				text.Append(" }");
+			}
+
+			return text.ToString();
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		private static string ToSynsetWordLabel(this Synset pSynset) {
 			List<Word> words = SynsetWordsMap[pSynset.Id];
 			int wordCount = words.Count;
 			var text = new StringBuilder();
@@ -429,42 +481,51 @@ namespace Fabric.Apps.WordNet.Notes {
 
 			int glossSplitIndex = pSynset.Gloss.IndexOf("; \"");
 			string glossMain = pSynset.Gloss;
-			//string glossExamples = null;
+			string glossExamples = null;
+			string posShort = "";
 
 			if ( glossSplitIndex != -1 ) {
-				//glossExamples = glossMain.Substring(glossSplitIndex+2);
+				glossExamples = glossMain.Substring(glossSplitIndex+2);
 				glossMain = glossMain.Substring(0, glossSplitIndex);
 			}
 
-			text.Append(ToSynsetString(pSynset).Substring(1));
-			text.Append("[(");
-			text.Append(PartOfSpeechTextMap[(POS)pSynset.PartOfSpeechId]);
-			text.Append(")");
-			text.Append(ToSynsetWordsString(pSynset));
-			text.Append(":");
-			text.Append(ModifyGlossForNote(glossMain, false));
-			text.Append("]");
+			switch ( (POS)pSynset.PartOfSpeechId ) {
+				case POS.Noun: posShort = "(noun)"; break;
+				case POS.Verb: posShort = "(verb)"; break;
+				case POS.Adjective: posShort = "(adj)"; break;
+				case POS.Adverb: posShort = "(adv)"; break;
+			}
 
-			text.Append(" %as #");
-			text.Append(PartOfSpeechTextMap[(POS)pSynset.PartOfSpeechId]);
+			text.Append(ToSynsetWordGroup(pSynset).Substring(1));
+			//text.Append(" ");
+			//text.Append(posShort);
+
+			text.Append(" >means");
+
+			text.Append(ToSynsetTag(pSynset));
+			text.Append("[");
+			text.Append(posShort);
+			text.Append(ToSynsetWordLabel(pSynset));
+			text.Append(": \"");
+			text.Append(ModifyGlossForNote(glossMain, false).Substring(1));
+			text.Append("\"]");
 
 			text.Append(" //");
 			text.Append(" $");
 			text.Append(SynsetSortKey);
 			text.Append(pSynset.SsId);
 
-			/*if ( glossExamples != null ) {
-				text.Append(" ^example {");
+			if ( glossExamples != null ) {
+				text.Append(" ^example: ");
 				text.Append(ModifyGlossForNote(glossExamples, false));
-				text.Append(" }");
-			}*/
+			}
 
 			return Note.New(NoteType.SynsetMeansGloss, text.ToString());
 		}
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
-		/*--------------------------------------------------------------------------------------------*/
+		/*--------------------------------------------------------------------------------------------* /
 		private static void WriteWordNotes(Action<Note> pWriteNoteFunc) {
 			Console.WriteLine("WriteWordNotes... (wait ~12 sec)");
 			Stopwatch timer = Stopwatch.StartNew();
@@ -490,7 +551,7 @@ namespace Fabric.Apps.WordNet.Notes {
 			Console.WriteLine($"WriteWordNotes complete: {timer.Elapsed.TotalSeconds} sec");
 		}
 
-		/*--------------------------------------------------------------------------------------------*/
+		/*--------------------------------------------------------------------------------------------* /
 		private static Note ToNote(this Word pWord, string pWordTag, Synset pSynset) {
 			var text = new StringBuilder();
 
@@ -500,13 +561,13 @@ namespace Fabric.Apps.WordNet.Notes {
 			//text.Append(PartOfSpeechTextMap[(POS)pSynset.PartOfSpeechId]);
 
 			text.Append(" >means");
-			text.Append(ToSynsetString(pSynset));
+			text.Append(ToSynsetTag(pSynset));
 
 			/*text.Append(" //");
 			text.Append(" $");
 			text.Append(WordSortKey);
 			text.Append(SynsetPosAbbrevs[pSynset.PartOfSpeechId]);
-			text.Append(pWord.Id);*/
+			text.Append(pWord.Id);* /
 
 			return Note.New(NoteType.Semantic, text.ToString());
 		}
@@ -515,7 +576,7 @@ namespace Fabric.Apps.WordNet.Notes {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private static void WriteSemanticNotes(Action<Note> pWriteNoteFunc) {
-			Console.WriteLine("WriteSemanticNotes... (wait ~10 sec)");
+			Console.WriteLine("WriteSemanticNotes... (wait ~3 sec)");
 			Stopwatch timer = Stopwatch.StartNew();
 
 			foreach ( Semantic sem in SemanticList ) {
@@ -538,19 +599,26 @@ namespace Fabric.Apps.WordNet.Notes {
 			}
 
 			SsRelInfo info = SsRelMap[rel];
-
-			var text = new StringBuilder();
 			Synset fromSyn = SynsetMap[pSemantic.Synset.Id];
 			Synset toSyn = SynsetMap[pSemantic.TargetSynset.Id];
+			string fromSynTag = ToSynsetTag(fromSyn);
+			var text = new StringBuilder();
 
-			text.Append(ToSynsetString(fromSyn).Substring(1));
+			text.Append(fromSynTag.Substring(1));
 			//text.Append(" %as #");
 			//text.Append(PartOfSpeechTextMap[(POS)fromSyn.PartOfSpeechId]);
 
 			text.Append(" ");
 			text.Append(info.Action);
 
-			text.Append(ToSynsetString(toSyn));
+			text.Append(ToSynsetTag(toSyn));
+
+			/*if ( info.IsBiDir ) {
+				text.Append(" ");
+				text.Append(info.Action);
+				text.Append(fromSynTag);
+			}*/
+
 			//text.Append(" %as #");
 			//text.Append(PartOfSpeechTextMap[(POS)toSyn.PartOfSpeechId]);
 
@@ -567,6 +635,74 @@ namespace Fabric.Apps.WordNet.Notes {
 			text.Append(" to $");
 			text.Append(SynsetSortKey);
 			text.Append(toSyn.SsId);*/
+
+			return Note.New(NoteType.Semantic, text.ToString());
+		}
+
+
+		////////////////////////////////////////////////////////////////////////////////////////////////
+		/*--------------------------------------------------------------------------------------------*/
+		private static void WriteLexicalNotes(Action<Note> pWriteNoteFunc) {
+			Console.WriteLine("WriteLexicalNotes... (wait ~XX sec)");
+			Stopwatch timer = Stopwatch.StartNew();
+
+			foreach ( Lexical lex in LexicalList ) {
+				Note note = ToNote(lex);
+
+				if ( note != null ) {
+					pWriteNoteFunc(note);
+				}
+			}
+
+			Console.WriteLine($"WriteLexicalNotes complete: {timer.Elapsed.TotalSeconds} sec");
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		private static Note ToNote(this Lexical pLexical) {
+			SynSetRelation rel = (SynSetRelation)pLexical.RelationId;
+
+			if ( !SsRelMap.ContainsKey(rel) ) {
+				return null;
+			}
+
+			SsRelInfo info = SsRelMap[rel];
+			Word fromWord = WordMap[pLexical.Word.Id];
+			Word toWord = WordMap[pLexical.TargetWord.Id];
+			string fromWordTag = WordNameToTag(fromWord.Name, true);
+			string toWordTag = WordNameToTag(toWord.Name, true);
+			Synset fromSyn = SynsetMap[pLexical.Synset.Id];
+			Synset toSyn = SynsetMap[pLexical.TargetSynset.Id];
+			string fromSynTag = ToSynsetTag(fromSyn);
+			string toSynTag = ToSynsetTag(toSyn);
+			var text = new StringBuilder();
+
+			text.Append("#");
+			text.Append(fromWordTag);
+			text.Append(" %of");
+			text.Append(fromSynTag);
+
+			text.Append(" ");
+			text.Append(info.Action);
+
+			text.Append(" #");
+			text.Append(toWordTag);
+			text.Append(" %of");
+			text.Append(toSynTag);
+
+			//TODO: check for duplicate entries
+
+			/*if ( info.IsBiDir ) {
+				text.Append(" ");
+				text.Append(info.Action);
+
+				text.Append(" #");
+				text.Append(fromWordTag);
+				text.Append(" %of");
+				text.Append(fromSynTag);
+			}*/
+
+			//text.Append(" // $wnlex");
+			//text.Append(pLexical.Id);
 
 			return Note.New(NoteType.Semantic, text.ToString());
 		}
