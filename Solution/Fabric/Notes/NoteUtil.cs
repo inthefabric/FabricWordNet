@@ -253,7 +253,7 @@ namespace Fabric.Apps.WordNet.Notes {
 
 		/*--------------------------------------------------------------------------------------------*/
 		private static void GetLexicals(ISession pSess) {
-			Console.WriteLine("GetLexicals... (wait ~XX sec)");
+			Console.WriteLine("GetLexicals... (wait ~11 sec)");
 			Stopwatch timer = Stopwatch.StartNew();
 			LexicalList = pSess.QueryOver<Lexical>().List();
 			Console.WriteLine($"GetLexicals complete: {LexicalList.Count} results, "+
@@ -300,54 +300,87 @@ namespace Fabric.Apps.WordNet.Notes {
 		/*--------------------------------------------------------------------------------------------*/
 		private static void WriteAllNotes() {
 			Console.WriteLine($"\nWriteAllNotes...\n");
-			const string path = "/Users/zachkinstner/Downloads/sot/wn2.json";
+			const string folder = "/Users/zachkinstner/Work/Notable/Notable2/Data/";
+			const string pathSynsets = folder+"wordnet-synsets.txt";
+			const string pathSemantics = folder+"wordnet-semantics.txt";
+			const string pathLexicals = folder+"wordnet-lexicals.txt";
+			const string headerName = "//// name: ";
+			const string headerVersion = "//// version: ";
+			const string headerSource = "//// source: ";
 			const string wn3 = "WordNet 3.1:";
+			const string version = "1";
+			const string source = "https://wordnet.princeton.edu/download/current-version";
+			const string lineSep = "\n\n";
 			Stopwatch timer = Stopwatch.StartNew();
 
-			using ( FileStream fs = File.Open(path, FileMode.Create) ) {
+			Action<StreamWriter> outAndFlush = ((fsw) => {
+				if ( ++NextNoteId%10000 == 0 ) {
+					Console.WriteLine($" ...at note: {NextNoteId}");
+					fsw.Flush();
+				}
+			});
+
+			using ( FileStream fs = File.Open(pathSynsets, FileMode.Create) ) {
 				using ( StreamWriter fsw = new StreamWriter(fs) ) {
-					fsw.Write("{\"notes\":[");
+					fsw.Write(  $"{headerName}{wn3} Synsets");
+					fsw.Write($"\n{headerSource}{source}");
+					fsw.Write($"\n{headerVersion}{version}");
 					fsw.Flush();
 
 					for ( int i = 1 ; i <= 4 ; i++ ) {
 						string posName = PartOfSpeechTextMap[(POS)i];
 						posName = posName.ToUpper()[0]+posName.Substring(1);
 
-						fsw.Write(
-							(i == 1 ? "" : ",")+"\n"+
-							ToNoteJson(NextNoteId++,
-							$"${SynsetSortKey}"+
-							$"{SynsetPosAbbrevs[i]}-[{wn3} {posName} Synset]")
-						);
+						fsw.Write(lineSep);
+						fsw.Write($"${SynsetSortKey}{SynsetPosAbbrevs[i]}-[{wn3} {posName} Synset]");
 
-						/*fsw.Write(
-							",\n"+
-							ToNoteJson(NextNoteId++,
-							$"${WordSortKey}"+
-							$"{SynsetPosAbbrevs[i]}-[{wn3} {posName} Word]")
-						);*/
+						//fsw.Write(lineSep);
+						//fsw.Write($"{WordSortKey}{SynsetPosAbbrevs[i]}-[{wn3} {posName} Word]"));
 					}
 
+					WriteSynsetNotes((n) => {
+						fsw.Write(lineSep);
+						fsw.Write(n.Text);
+						outAndFlush(fsw);
+					});
+				}
+			}
+
+			using ( FileStream fs = File.Open(pathSemantics, FileMode.Create) ) {
+				using ( StreamWriter fsw = new StreamWriter(fs) ) {
+					fsw.Write(  $"{headerName}{wn3} Semantics");
+					fsw.Write($"\n{headerSource}{source}");
+					fsw.Write($"\n{headerVersion}{version}");
+					fsw.Flush();
+
 					/*foreach ( SsRelInfo ssr in SsRelList ) {
-						fsw.Write(",\n"+ToNoteJson(NextNoteId++, $"${SemanticSortKey}"+
-							$"{ssr.Abbrev}-[{wn3} {ssr.Label}]"));
+						fsw.Write(
+							$"{lineSep}${SemanticSortKey}{ssr.Abbrev}-[{wn3} {ssr.Label}]"));
 					}*/
 
-					Action<Note> writeNoteFunc = ((n) => {
-						fsw.Write(",\n"+ToNoteJson(NextNoteId++, n.Text));
-
-						if ( NextNoteId%10000 == 0 ) {
-							Console.WriteLine($" ...at note: {NextNoteId}");
-							fsw.Flush();
-						}
+					WriteSemanticNotes((n) => {
+						fsw.Write(lineSep);
+						fsw.Write(n.Text);
+						outAndFlush(fsw);
 					});
 
-					WriteSynsetNotes(writeNoteFunc);
-					//WriteWordNotes(writeNoteFunc);
-					WriteSemanticNotes(writeNoteFunc);
-					WriteLexicalNotes(writeNoteFunc);
+					fsw.Flush();
+				}
+			}
 
-					fsw.Write("\n]}");
+			using ( FileStream fs = File.Open(pathLexicals, FileMode.Create) ) {
+				using ( StreamWriter fsw = new StreamWriter(fs) ) {
+					fsw.Write(  $"{headerName}{wn3} Lexicals");
+					fsw.Write($"\n{headerSource}{source}");
+					fsw.Write($"\n{headerVersion}{version}");
+					fsw.Flush();
+
+					WriteLexicalNotes((n) => {
+						fsw.Write(lineSep);
+						fsw.Write(n.Text);
+						outAndFlush(fsw);
+					});
+
 					fsw.Flush();
 				}
 			}
@@ -645,7 +678,7 @@ namespace Fabric.Apps.WordNet.Notes {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		private static void WriteLexicalNotes(Action<Note> pWriteNoteFunc) {
-			Console.WriteLine("WriteLexicalNotes... (wait ~XX sec)");
+			Console.WriteLine("WriteLexicalNotes... (wait ~3 sec)");
 			Stopwatch timer = Stopwatch.StartNew();
 
 			foreach ( Lexical lex in LexicalList ) {
