@@ -13,6 +13,9 @@ namespace Fabric.Apps.WordNet.Notes {
 	/*================================================================================================*/
 	public static class NotePrep {
 
+		//see: https://wordnet.princeton.edu/documentation/wngloss7wn
+		//see: https://globalwordnet.github.io/gwadoc/
+
 		public static List<Synset> SynsetList { get; private set; }
 		public static List<Word> WordList { get; private set; }
 		public static IList<Semantic> SemanticList { get; private set; }
@@ -26,7 +29,7 @@ namespace Fabric.Apps.WordNet.Notes {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public static void Process() {
-			Console.WriteLine("Study...\n");
+			Console.WriteLine("\nNotePrep.Process...\n");
 			Stopwatch timer = Stopwatch.StartNew();
 			DbBuilder.UpdateSchema();
 
@@ -56,10 +59,10 @@ namespace Fabric.Apps.WordNet.Notes {
 			Console.WriteLine("GenerateSynsetUniqueNames...");
 			GenerateSynsetUniqueNames();
 
-			Console.WriteLine("WriteSynsetNamesToFile...");
-			WriteSynsetNamesToFile();
+			//Console.WriteLine("WriteSynsetNamesToFile...");
+			//WriteSynsetNamesToFile();
 
-			Console.WriteLine($"\nStudy complete: {timer.Elapsed.TotalSeconds} sec");
+			Console.WriteLine($"\nNotePrep.Process complete: {timer.Elapsed.TotalSeconds} sec");
 		}
 
 		/*--------------------------------------------------------------------------------------------*/
@@ -160,13 +163,13 @@ namespace Fabric.Apps.WordNet.Notes {
 			if ( synPartMap.Count == 1 ) {
 				foreach ( List<Synset> singleKeySynsets in synPartMap.Values ) {
 					foreach ( Synset synset in singleKeySynsets ) {
-						string before = synset.UniqueParts[partI]+"  //  "+
-							string.Join(".", synset.UniqueParts);
+						//string before = synset.UniqueParts[partI]+"  //  "+
+						//	string.Join(".", synset.UniqueParts);
 
 						synset.UniqueParts.RemoveAt(partI);
 
-						Console.WriteLine("SIMPLIFY:  "+pDepth+"  //  "+
-							before+"  =>  "+string.Join(".", synset.UniqueParts));
+						//Console.WriteLine("SIMPLIFY:  "+pDepth+"  //  "+
+						//	before+"  =>  "+string.Join(".", synset.UniqueParts));
 					}
 				}
 
@@ -201,9 +204,14 @@ namespace Fabric.Apps.WordNet.Notes {
 						synset.UniqueName = synset.UniqueName.Substring(0, dashI);
 					}
 
-					Console.WriteLine("SHORTEN: "+origName+"  =>  "+synset.UniqueName);
+					//Console.WriteLine("SHORTEN: "+origName+"  =>  "+synset.UniqueName);
 				}
 			}
+
+			SynsetList.Sort((a,b) => {
+				int posDiff = a.PartOfSpeechId-b.PartOfSpeechId;
+				return (posDiff == 0 ? a.UniqueName.CompareTo(b.UniqueName) : posDiff);
+			});
 		}
 
 

@@ -18,13 +18,12 @@ namespace Fabric.Apps.WordNet {
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public static void Main(string[] pArgs) {
-			Console.WriteLine("NOTES");
 			DbBuilder.InitOnce();
 			//DbBuilder.UpdateSchema();
 			const int step = -1;
 
 			NotePrep.Process();
-			//NoteUtil.GenerateNotes();
+			NoteWrite.WriteAll();
 			Console.ReadKey();
 			return;
 

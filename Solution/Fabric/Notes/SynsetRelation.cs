@@ -10,10 +10,9 @@ namespace Fabric.Apps.WordNet.Notes {
 	/*================================================================================================*/
 	public class SynsetRelation {
 
-		private static readonly string[] SynsetPosNames = { "", "noun", "verb", "adj", "adv" };
+		public static readonly string[] SynsetPosNames = { "", "noun", "verb", "adj", "adv" };
 
 		public Synset Synset { get; private set; }
-		public string PartOfSpeechText { get; private set; }
 
 		public List<Word> Members { get; private set; }
 		public List<Word> Hypernyms { get; private set; }
@@ -33,6 +32,7 @@ namespace Fabric.Apps.WordNet.Notes {
 
 		public List<string> AllNames { get; private set; }
 
+		public string PartOfSpeechText { get; private set; }
 		public string MembersText { get; private set; }
 		public string HypernymsText { get; private set; }
 		public string HolonnymsText { get; private set; }
@@ -48,14 +48,13 @@ namespace Fabric.Apps.WordNet.Notes {
 		public string LexDerivesText { get; private set; }
 		public string GlossMajorsText { get; private set; }
 		public string GlossMinorsText { get; private set; }
-		public string GlossNoExamplesText { get; private set; }
+		public string GlossExamplesText { get; private set; }
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
 		public SynsetRelation(Synset pSynset) {
 			Synset = pSynset;
-			PartOfSpeechText = SynsetPosNames[Synset.PartOfSpeechId];
 
 			Members = Synset.WordList.ToList(); //copy
 			Hypernyms = GetSemanticWords(pSynset, IsHypernym);
@@ -70,8 +69,12 @@ namespace Fabric.Apps.WordNet.Notes {
 			LexPertains = GetLexicalWords(pSynset, IsLexPertains);
 			LexRelates = GetLexicalWords(pSynset, IsLexRelates);
 			LexDerives = GetLexicalWords(pSynset, IsLexDerived);
-			GlossMajors = GetGlossWords(Synset.Gloss, out List<string> minors, out string noExamples);
+
+			SplitGloss(Synset.Gloss, out string definition, out string examples);
+			GlossMajors = GetGlossWords(definition, out List<string> minors);
 			GlossMinors = minors;
+
+			PartOfSpeechText = SynsetPosNames[Synset.PartOfSpeechId];
 
 			AllNames = BuildAllNames();
 
@@ -90,9 +93,8 @@ namespace Fabric.Apps.WordNet.Notes {
 			LexDerivesText = BuildText(LexDerives);
 			GlossMajorsText = string.Join("|", GlossMajors.Distinct());
 			GlossMinorsText = string.Join("|", GlossMinors.Distinct());
-			GlossNoExamplesText = noExamples;
-
-			//TODO: be able to compare multiple gloss and pick out the first significant difference
+			GlossExamplesText = definition;
+			GlossExamplesText = examples;
 		}
 
 
@@ -204,14 +206,15 @@ namespace Fabric.Apps.WordNet.Notes {
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------*/
-		private static List<string> GetGlossWords(string pGloss,
-											out List<string> pMinorWords, out string pNoExamples) {
-			string g = pGloss;
+		public static void SplitGloss(string pGloss, out string pDefinition, out string pExamples) {
+			int ei = pGloss.IndexOf("; \"");
+			pDefinition = (ei == -1 ? pGloss : pGloss.Substring(0, ei));
+			pExamples = (ei == -1 ? null : pGloss.Substring(ei+2));
+		}
 
-			int ei = g.IndexOf("; \"");
-			pNoExamples = (ei == -1 ? g : g.Substring(0, ei));
-
-			List<string> words = Regex.Split(pNoExamples, @"[^\w]").ToList();
+		/*--------------------------------------------------------------------------------------------*/
+		private static List<string> GetGlossWords(string pGloss, out List<string> pMinorWords) {
+			List<string> words = Regex.Split(pGloss, @"[^\w]").ToList();
 			pMinorWords = new List<string>();
 
 			for ( int i = words.Count-1 ; i >= 0 ; i-- ) {
@@ -340,7 +343,7 @@ namespace Fabric.Apps.WordNet.Notes {
 				sep+(LexPertainsText	!= null ? " [LP] "+LexPertainsText : "")+
 				sep+(LexRelatesText		!= null ? " [LR] "+LexRelatesText : "")+
 				sep+(LexDerivesText		!= null ? " [LD] "+LexDerivesText : "")+
-				sep+" [GM] "+GlossMajorsText+" / "+GlossMinorsText+" { "+GlossNoExamplesText+" }";
+				sep+" [GM] "+GlossMajorsText+" / "+GlossMinorsText+" { "+GlossExamplesText+" }";
 		}
 
 	}
