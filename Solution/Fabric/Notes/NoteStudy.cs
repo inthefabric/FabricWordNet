@@ -102,6 +102,26 @@ namespace Fabric.Apps.WordNet.Notes {
 				AllNames.AddRange(GlossMinors);
 				AllNames = AllNames.Distinct().ToList();
 
+				for ( int a = AllNames.Count-1 ; a >= 0 ; a-- ) {
+					string allName = AllNames[a];
+
+					for ( int c = 2 ; c < allName.Length ; c++ ) {
+						if ( allName[c] != 's' ) {
+							continue;
+						}
+
+						string fixName = allName.Remove(c, 1).Insert(c, "z");
+
+						//if ( WordnameSynsetsMap.ContainsKey(fixName) ) {
+						if ( AllNames.Contains(fixName) ) {
+							AllNames.RemoveAt(a);
+							//Console.WriteLine("REMOVE "+allName+" / "+fixName);
+						}
+					}
+				}
+
+				//AllNames = AllNames.Distinct(new DistinctWordComparer()).ToList();
+
 				MembersText = BuildText(Members);
 				HypernymsText = BuildText(Hypernyms);
 				HolonnymsText = BuildText(Holonnyms);
@@ -155,11 +175,17 @@ namespace Fabric.Apps.WordNet.Notes {
 							case "was":
 							case "are":
 							case "for":
+							case "use":
+							case "may":
 							case "that":
 							case "this":
 							case "with":
 							case "kind":
 							case "into":
+							case "from":
+							case "some":
+							case "used":
+							case "what":
 							case "having":
 							case "relating":
 							case "denoting":
@@ -320,47 +346,12 @@ namespace Fabric.Apps.WordNet.Notes {
 
 				wordList.Sort((a,b) => 
 					WordnameSynsetsMap[a.Name].Count-WordnameSynsetsMap[b.Name].Count);
-
-				/*POS pos = (POS)synset.PartOfSpeechId;
-
-				if ( pos != POS.Noun ) {
-					continue;
-				}
-
-				int semHypernymCount = synset.SemanticList
-					.Count(s => (
-						s.RelationId == (byte)SynSetRelation.Hypernym ||
-						s.RelationId == (byte)SynSetRelation.InstanceHypernym /*||
-						s.RelationId == (byte)SynSetRelation.Entailment ||
-						s.RelationId == (byte)SynSetRelation.TopicDomain* /
-					));
-
-				if ( semHypernymCount == 0 ) {
-					Console.WriteLine("* "+synset.ToDebugString());
-
-					foreach ( Semantic semantic in synset.SemanticList ) {
-						SynSetRelation rel = (SynSetRelation)semantic.RelationId;
-
-						switch ( rel ) {
-							case SynSetRelation.Hyponym:
-							case SynSetRelation.InstanceHyponym:
-							case SynSetRelation.SimilarTo:
-							case SynSetRelation.AlsoSee:
-								continue;
-
-							default:
-								Console.WriteLine("    "+rel+": "+
-									semantic.TargetSynset.ToDebugString());
-								break;
-						}
-					}
-				}*/
 			}
 		}
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
-		/*--------------------------------------------------------------------------------------------*/
+		/*--------------------------------------------------------------------------------------------* /
 		private static string ToDebugString(this Synset pSynset) {
 			string gloss = pSynset.Gloss;
 			int glossEndI = gloss.IndexOf("; \"");
@@ -484,159 +475,6 @@ namespace Fabric.Apps.WordNet.Notes {
 
 		////////////////////////////////////////////////////////////////////////////////////////////////
 		/*--------------------------------------------------------------------------------------------* /
-		private static void FindSynsetsBasedOnRelations() {
-			Console.WriteLine("FindSynsetsBasedOnRelations...");
-
-			foreach ( Synset synset in SynsetList ) {
-				POS pos = (POS)synset.PartOfSpeechId;
-
-				if ( pos != POS.Noun ) {
-					continue;
-				}
-
-				int semHypernymCount = synset.SemanticList
-					.Count(s => (
-						s.RelationId == (byte)SynSetRelation.Hypernym ||
-						s.RelationId == (byte)SynSetRelation.InstanceHypernym /*||
-						s.RelationId == (byte)SynSetRelation.Entailment ||
-						s.RelationId == (byte)SynSetRelation.TopicDomain* /
-					));
-
-				if ( semHypernymCount > 0 ) {
-					continue;
-				}
-
-				Console.WriteLine("* "+synset.ToDebugString());
-
-				foreach ( Semantic semantic in synset.SemanticList ) {
-					SynSetRelation rel = (SynSetRelation)semantic.RelationId;
-
-					switch ( rel ) {
-						case SynSetRelation.Hyponym:
-						case SynSetRelation.InstanceHyponym:
-						case SynSetRelation.SimilarTo:
-						case SynSetRelation.AlsoSee:
-							continue;
-					}
-
-					Console.WriteLine("    "+rel+": "+semantic.TargetSynset.ToDebugString());
-				}
-			}
-		}
-		
-		/*--------------------------------------------------------------------------------------------* /
-		private static void PrintMostFrequentWords() {
-			Console.WriteLine("PrintMostFrequentWords...");
-
-			for ( int i = 0 ; i < 10 ; i++ ) {
-				WordnameSynsets ws = WordameSynsetList[i];
-				Console.WriteLine("\n"+ws.Name+" => "+ws.Synsets.Count);
-
-				foreach ( Synset synset in ws.Synsets ) {
-					Console.WriteLine("    "+synset.ToDebugString());
-
-					foreach ( Semantic semantic in synset.SemanticList ) {
-						SynSetRelation rel = (SynSetRelation)semantic.RelationId;
-
-						if ( rel != SynSetRelation.Hypernym ) {
-							continue;
-						}
-
-						Console.WriteLine("        "+semantic.TargetSynset.ToDebugString());
-					}
-				}
-			}
-		}*/
-
-		/*--------------------------------------------------------------------------------------------* /
-		private static void CalcUniqueSynsetNames() {
-			Console.WriteLine("CalcUniqueSynsetNames...");
-
-			var synsetHitMap = new HashSet<int>();
-			var synsetNameMap = new Dictionary<string, Synset>();
-			var synsetQueue = new Queue<Synset>();
-			int si = 0;
-			int ni = 0;
-
-			synsetQueue.Enqueue(WordnameSynsetsMap["entity"][0]);
-
-			while ( synsetQueue.Count > 0 ) {
-				Synset synset = synsetQueue.Dequeue();
-
-				synset.UniqueName = CalcUniqueSynsetName(synset, synsetNameMap, out bool usedNum);
-				//string suffix = "__wns"+SynsetPosAbbrevs[pSynset.PartOfSpeechId];
-
-				if ( usedNum ) {
-					Console.WriteLine(si+": "+synset.UniqueName+"  ...  "+synset.ToDebugString());
-					string origName = synset.UniqueName.Substring(0, synset.UniqueName.Length-1);
-					Synset origSynset = synsetNameMap[origName];
-					Console.WriteLine("    ORIGINAL: ["+ni+"] "+origSynset.ToDebugString());
-					ni++;
-				}
-
-				si++;
-
-				synsetNameMap.Add(synset.UniqueName, synset);
-				synsetHitMap.Add(synset.Id);
-
-				if ( ni >= 10 ) {
-					break;
-				}
-
-				List<Synset> children = GetHypernymSynsets(synset, false);
-
-				foreach ( Synset child in children ) {
-					synsetQueue.Enqueue(child);
-				}
-			}
-		}
-
-		/*--------------------------------------------------------------------------------------------* /
-		private static string CalcUniqueSynsetName(Synset pSynset, 
-										Dictionary<string, Synset> pNameMap, out bool pUsedNumbering) {
-			IList<Word> words = pSynset.WordList;
-
-			string name = string.Join("_", words.Select(w => w.Name))+"__";
-
-			IEnumerator<Word> hyperWords = GetHypernymSynsets(pSynset)
-				.SelectMany(s => s.WordList).GetEnumerator();
-			IEnumerator<Word> domainWords = GetDomainSynsets(pSynset)
-				.SelectMany(s => s.WordList).GetEnumerator();
-			IEnumerator<Word> attribWords = GetAttributeSynsets(pSynset)
-				.SelectMany(s => s.WordList).GetEnumerator();
-
-			int dedupI = 0;
-
-			while ( pNameMap.ContainsKey(name) ) {
-				Word addWord = null;
-
-				if ( hyperWords.MoveNext() ) {
-					addWord = hyperWords.Current;
-				}
-				else if ( domainWords.MoveNext() ) {
-					addWord = domainWords.Current;
-				}
-				else if ( attribWords.MoveNext() ) {
-					addWord = attribWords.Current;
-				}
-
-				if ( addWord != null ) {
-					name += "_"+addWord.Name;
-					continue;
-				}
-
-				name += (++dedupI+1);
-			}
-
-			hyperWords.Dispose();
-			domainWords.Dispose();
-			attribWords.Dispose();
-
-			pUsedNumbering = (dedupI > 0);
-			return name;
-		}
-
-		/*--------------------------------------------------------------------------------------------*/
 		private static void CalcUniqueSynsetNames() {
 			Console.WriteLine("CalcUniqueSynsetNames...");
 
@@ -776,14 +614,9 @@ namespace Fabric.Apps.WordNet.Notes {
 					return;
 				}
 
-				if ( SynNames.Count == 1 ) {
-					SynNames[0].Synset.UniqueName = ToUniqueString();
-					return;
-				}
-
 				var childMap = new Dictionary<string, Node>();
 
-				for ( int i = SynNames.Count-1 ; i >= 0 ; i-- ) {
+				for ( int i = (SynNames.Count > 1 ? SynNames.Count-1 : -1) ; i >= 0 ; i-- ) {
 					SynsetName synName = SynNames[i];
 
 					if ( Depth >= synName.AllNames.Count ) {
@@ -802,35 +635,52 @@ namespace Fabric.Apps.WordNet.Notes {
 					SynNames.RemoveAt(i);
 				}
 
+				if ( SynNames.Count == 1 ) {
+					SynNames[0].Synset.UniqueParts = ToUniqueParts();
+				}
+
 				foreach ( Node childNode in ChildNodes ) {
 					childNode.ConvertSynNamesIntoChildNodes();
 				}
 			}
 
 			public bool IsSilent() {
-				return (ChildNodes.Count == 1 && ParentNode?.ChildNodes.Count == 1);
+				if ( ParentNode?.ChildNodes.Count != 1 ) {
+					return false;
+				}
+
+				if ( ChildNodes.Count == 1 ) {
+					return true;
+				}
+
+				foreach ( Node childNode in ChildNodes ) {
+					if ( childNode.ChildNodes.Count > 0 ) {
+						return false; //at least one child has its own children
+					}
+				}
+
+				return true;
 			}
 
 			public override string ToString() {
 				return $"Node[{Depth}:{Name}:{SynNames.Count}:{ChildNodes.Count}]";
 			}
 
-			public string ToUniqueString() {
-				var sb = new StringBuilder();
-				sb.Append(Name);
+			public List<string> ToUniqueParts() {
+				var parts = new List<string>();
+				parts.Add(Name);
 
 				Node node = ParentNode;
 
 				while ( node != null ) {
 					if ( !node.IsSilent() ) {
-						sb.Insert(0, '|'); //(node.Depth < 2 ? '.' : '_'));
-						sb.Insert(0, node.Name);
+						parts.Insert(0, node.Name);
 					}
 
 					node = node.ParentNode;
 				}
 
-				return sb.ToString();
+				return parts;
 			}
 
 			public string ToTreeString() {
@@ -840,7 +690,7 @@ namespace Fabric.Apps.WordNet.Notes {
 					sb.Append("|   ");
 				}
 
-				if ( ChildNodes.Count == 1 ) {
+				if ( IsSilent() ) {
 					sb.Append('(');
 					sb.Append(Name);
 					sb.Append(')');
@@ -849,11 +699,18 @@ namespace Fabric.Apps.WordNet.Notes {
 					sb.Append(Name);
 				}
 
-				if ( SynNames.Count > 0 ) {
+				if ( SynNames.Count > 1 ) {
+					sb.Append(" <DUPLICATE>");
+				}
+				else if ( SynNames.Count == 1 ) {
+					List<string> parts = ToUniqueParts();
+
+					sb.Append("   @");
+					sb.Append(string.Join(".", parts));
 					sb.Append(' ');
-					sb.Append('*', SynNames.Count);
-					sb.Append(' ');
-					sb.Append(ToUniqueString());
+					sb.Append('[');
+					sb.Append('#', Math.Max(0, parts.Count-2));
+					sb.Append(']');
 				}
 
 				sb.Append('\n');
@@ -874,7 +731,11 @@ namespace Fabric.Apps.WordNet.Notes {
 			rootNode.SynNames.AddRange(SynsetList.Select(s => new SynsetName(s)));
 			rootNode.ConvertSynNamesIntoChildNodes();
 
-			List<string> uniqueSynsetNames = SynsetList.Select(s => s.UniqueName).ToList();
+			SimplifySynsetUniqueParts(SynsetList, 0);
+			GenerateSynsetUniqueNames();
+
+			List<string> uniqueSynsetNames = SynsetList.Select(s => 
+				s.UniqueName/*+"  ["+new string('#', s.UniqueParts.Count-2)+"]"*/).ToList();
 			uniqueSynsetNames.Sort();
 
 			var uniqueCheckMap = new HashSet<string>();
@@ -900,6 +761,72 @@ namespace Fabric.Apps.WordNet.Notes {
 
 						fsw.Write('\n');
 					}
+				}
+			}
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		private static void SimplifySynsetUniqueParts(List<Synset> pSynsets, int pDepth) {
+			var synPartMap = new Dictionary<string, List<Synset>>();
+			int partI = pDepth+2;
+
+			foreach ( Synset synset in pSynsets ) {
+				if ( partI >= synset.UniqueParts.Count ) {
+					continue;
+				}
+
+				string key = synset.UniqueParts[partI];
+
+				if ( !synPartMap.ContainsKey(key) ) {
+					synPartMap.Add(key, new List<Synset>());
+				}
+
+				synPartMap[key].Add(synset);
+			}
+
+			if ( synPartMap.Count == 1 ) {
+				foreach ( List<Synset> singleKeySynsets in synPartMap.Values ) {
+					foreach ( Synset singleKeySynset in singleKeySynsets ) {
+						string test = singleKeySynset.UniqueParts[partI]+"  //  "+
+							string.Join(".", singleKeySynset.UniqueParts);
+						singleKeySynset.UniqueParts.RemoveAt(partI);
+						test += "  =>  "+string.Join(".", singleKeySynset.UniqueParts);
+						Console.WriteLine("SIMPLIFY:  "+pDepth+"  //  "+test);
+					}
+				}
+
+				SimplifySynsetUniqueParts(pSynsets, pDepth); //get the new values at this depth
+				return;
+			}
+
+			foreach ( KeyValuePair<string, List<Synset>> pair in synPartMap ) {
+				SimplifySynsetUniqueParts(pair.Value, pDepth+1);
+			}
+		}
+
+		/*--------------------------------------------------------------------------------------------*/
+		private static void GenerateSynsetUniqueNames() {
+			const int maxLen = 64;
+
+			foreach ( Synset synset in SynsetList ) {
+				synset.UniqueName = synset.UniqueParts[0];
+
+				for ( var i = 1 ; i < synset.UniqueParts.Count ; i++ ) {
+					synset.UniqueName += (i > 2 ? '_' : '.')+synset.UniqueParts[i];
+				}
+
+				if ( synset.UniqueName.Length > maxLen ) {
+					//Console.WriteLine("LEN A: "+synset.UniqueName);
+					synset.UniqueName = synset.UniqueName.Substring(0, maxLen);
+
+					int dashI = synset.UniqueName.LastIndexOf('-');
+					int underI = synset.UniqueName.LastIndexOf('_');
+
+					if ( dashI > underI ) {
+						synset.UniqueName = synset.UniqueName.Substring(0, dashI);
+					}
+
+					Console.WriteLine("SHORTEN: "+synset.UniqueName);
 				}
 			}
 		}
