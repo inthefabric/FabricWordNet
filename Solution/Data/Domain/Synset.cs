@@ -18,6 +18,8 @@ namespace Fabric.Apps.WordNet.Data.Domain {
 		public virtual IList<Artifact> ArtifactList { get; set; } //0 or 1
 
 		public virtual int SortValue { get; set; }
+		public virtual string UniqueName { get; set; }
+		public virtual int UniqueNameParts { get; set; }
 
 
 		////////////////////////////////////////////////////////////////////////////////////////////////

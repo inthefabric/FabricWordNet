@@ -2,7 +2,7 @@
 
 	/*================================================================================================*/
 	public enum NoteType {
-		SynsetMeansGloss = 1,
+		SynsetWithGloss = 1,
 		WordMeansSynset,
 		Semantic,
 		Lexical

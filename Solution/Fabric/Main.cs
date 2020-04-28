@@ -23,7 +23,9 @@ namespace Fabric.Apps.WordNet {
 			//DbBuilder.UpdateSchema();
 			const int step = -1;
 
-			NoteUtil.GenerateNotes();
+			NoteStudy.Test();
+			//NoteUtil.GenerateNotes();
+			Console.ReadKey();
 			return;
 
 			switch ( step ) {
