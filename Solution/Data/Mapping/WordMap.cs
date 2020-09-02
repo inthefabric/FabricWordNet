@@ -18,7 +18,7 @@ namespace Fabric.Apps.WordNet.Data.Mapping {
 			Map(x => x.Name);
 
 			HasMany(x => x.LexicalList);
-			HasMany(x => x.TargetLexicalList).KeyColumn("Target"+typeof(Word).Name+"Id");
+			HasMany(x => x.LexicalTargetList).KeyColumn("Target"+typeof(Word).Name+"Id");
 			HasMany(x => x.ArtifactList); //0 or 1
 		}
 

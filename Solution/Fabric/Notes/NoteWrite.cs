@@ -15,27 +15,27 @@ namespace Fabric.Apps.WordNet.Notes {
 		private const string Wn3 = "WordNet 3.1";
 		private const string LineSep = "\n\n";
 
-		private const string AutoIs = "@wn.verb.be_identical.>is"; //verb2622439
+		//private const string AutoIs = "@wn.verb.be_identical.>is"; //verb2622439
 		private const string AutoEntail = "@wn.verb.implicate_entail.>entail"; //verb2640889
 		private const string AutoPertain = "@wn.verb.have-to-do-with.>pertain"; //verb2681865
 		private const string AutoRelate = "@wn.verb.colligate.>relate"; //verb715072
 
-		private const string AutoKind = "@wn.noun.type_kind.+kind"; //noun5848697
-		private const string AutoInstance = "@wn.noun.instance_example.+instance"; //noun7323507
-		private const string AutoMember = "@wn.noun.member_component-part.+member"; //noun13832827
-		private const string AutoPart = "@wn.noun.component-part.+part"; //noun13831419
-		private const string AutoSubst = "@wn.noun.substance_component-part.+substance"; //noun19793
-		private const string AutoTopic = "@wn.noun.topic_theme.+topic"; //noun6612141
-		private const string AutoUsage = "@wn.noun.usage_linguistic-communication.+usage"; //noun6294112
-		private const string AutoRegion = "@wn.noun.region_location.+region"; //noun8648560
-		private const string AutoCause = "@wn.noun.causal-agent.+cause"; //noun7347
-		private const string AutoParticiple = "@wn.noun.participle.+participle"; //noun6341521
-		private const string AutoAttrib = "@wn.noun.attribute_abstract-entity.+attribute"; //noun24444
-		private const string AutoOpposite = "@wn.noun.antonym.+opposite"; //noun6298695
+		private const string AutoKind = "@wn.noun.type_kind.>kind"; //noun5848697
+		private const string AutoInstance = "@wn.noun.instance_example.>instance"; //noun7323507
+		private const string AutoMember = "@wn.noun.member_component-part.>member"; //noun13832827
+		private const string AutoPart = "@wn.noun.component-part.>part"; //noun13831419
+		private const string AutoSubst = "@wn.noun.substance_component-part.>substance"; //noun19793
+		private const string AutoTopic = "@wn.noun.topic_theme.>topic"; //noun6612141
+		private const string AutoUsage = "@wn.noun.usage_linguistic-communication.>usage"; //noun6294112
+		private const string AutoRegion = "@wn.noun.region_location.>region"; //noun8648560
+		private const string AutoCause = "@wn.noun.causal-agent.>cause"; //noun7347
+		private const string AutoParticiple = "@wn.noun.participle.>participle"; //noun6341521
+		private const string AutoAttrib = "@wn.noun.attribute_abstract-entity.>attribute"; //noun24444
+		private const string AutoOpposite = "@wn.noun.antonym.>opposite"; //noun6298695
 
-		private const string AutoDerive = "@wn.adj.derived.+derived"; //adj701707
-		private const string AutoSimilar = "@wn.adj.similar_synonymous.+similar"; //adj2390063
-		private const string AutoIndirect = "@wn.adj.indirect_allusive.+indirect"; //adj770017
+		private const string AutoDerive = "@wn.adj.derived.>derived"; //adj701707
+		private const string AutoSimilar = "@wn.adj.similar_synonymous.>similar"; //adj2390063
+		private const string AutoIndirect = "@wn.adj.indirect_allusive.>indirect"; //adj770017
 
 		private struct RelInfo {
 
@@ -54,29 +54,29 @@ namespace Fabric.Apps.WordNet.Notes {
 		private static readonly RelInfo[] RelationList = {
 
 			//directional, with ignored inverse relation
-			new RelInfo(SynSetRelation.Hypernym, ">is +kind of", AutoIs, AutoKind),
-			new RelInfo(SynSetRelation.InstanceHypernym, ">is +instance of", AutoIs, AutoInstance),
-			new RelInfo(SynSetRelation.MemberHolonym, ">is +member of", AutoIs, AutoMember),
-			new RelInfo(SynSetRelation.PartHolonym, ">is +part of", AutoIs, AutoPart),
-			new RelInfo(SynSetRelation.SubstanceHolonym, ">is +substance in", AutoIs, AutoSubst),
-			new RelInfo(SynSetRelation.TopicDomain, ">is +topic of", AutoIs, AutoTopic),
-			new RelInfo(SynSetRelation.UsageDomain, ">is +usage of", AutoIs, AutoUsage),
-			new RelInfo(SynSetRelation.RegionDomain, ">is +region of", AutoIs, AutoRegion),
+			new RelInfo(SynSetRelation.Hypernym, ">kind %of", AutoKind),
+			new RelInfo(SynSetRelation.InstanceHypernym, ">instance %of", AutoInstance),
+			new RelInfo(SynSetRelation.MemberHolonym, ">member %of", AutoMember),
+			new RelInfo(SynSetRelation.PartHolonym, ">part %of", AutoPart),
+			new RelInfo(SynSetRelation.SubstanceHolonym, ">substance %in", AutoSubst),
+			new RelInfo(SynSetRelation.TopicDomain, ">topic %of", AutoTopic),
+			new RelInfo(SynSetRelation.UsageDomain, ">usage %of", AutoUsage),
+			new RelInfo(SynSetRelation.RegionDomain, ">region %of", AutoRegion),
 
 			//directional, no inverse relation
-			new RelInfo(SynSetRelation.VerbGroup, ">is +similar to", AutoIs, AutoSimilar),
+			new RelInfo(SynSetRelation.VerbGroup, ">similar %to", AutoSimilar),
 			new RelInfo(SynSetRelation.Entailment, ">entail}s", AutoEntail),
-			new RelInfo(SynSetRelation.Cause, ">is +cause of", AutoIs, AutoCause),
-			new RelInfo(SynSetRelation.Pertainym, ">pertain}s to", AutoPertain),
-			new RelInfo(SynSetRelation.DerivedFromAdjective, ">is +derived from", AutoDerive),
-			new RelInfo(SynSetRelation.ParticipleOfVerb, ">is +participle of", AutoParticiple),
+			new RelInfo(SynSetRelation.Cause, ">cause %of", AutoCause),
+			new RelInfo(SynSetRelation.Pertainym, ">pertain}s %to", AutoPertain),
+			new RelInfo(SynSetRelation.DerivedFromAdjective, ">derived %from", AutoDerive),
+			new RelInfo(SynSetRelation.ParticipleOfVerb, ">participle %of", AutoParticiple),
 
 			//bi-directional
-			new RelInfo(SynSetRelation.SimilarTo, ">is +similar to", AutoIs, AutoSimilar),
-			new RelInfo(SynSetRelation.AlsoSee, ">relate}s +indirect}ly to", AutoRelate, AutoIndirect),
-			new RelInfo(SynSetRelation.Attribute, ">is +attribute of", AutoIs, AutoAttrib),
-			new RelInfo(SynSetRelation.Antonym, ">is +opposite of", AutoIs, AutoOpposite),
-			new RelInfo(SynSetRelation.DerivationallyRelated, ">relate}s to", AutoRelate)
+			new RelInfo(SynSetRelation.SimilarTo, ">similar %to", AutoSimilar),
+			new RelInfo(SynSetRelation.AlsoSee, ">relate}s +indirect}ly %to", AutoRelate, AutoIndirect),
+			new RelInfo(SynSetRelation.Attribute, ">attribute %of", AutoAttrib),
+			new RelInfo(SynSetRelation.Antonym, ">opposite %of", AutoOpposite),
+			new RelInfo(SynSetRelation.DerivationallyRelated, ">relate}s %to", AutoRelate)
 
 		};
 
@@ -188,18 +188,25 @@ namespace Fabric.Apps.WordNet.Notes {
 		/*--------------------------------------------------------------------------------------------*/
 		private static void WriteWords(StreamWriter pFile) {
 			pFile.Write(GetStandardHeader("Words"));
-			pFile.Write(GetAutoHeader(
+			/*pFile.Write(GetAutoHeader(
 				"@wn.adv.sometimes.+sometimes",
 				"@wn.verb.signify_intend_stand-for.>mean"
-			));
+			));*/
 
 			foreach ( Synset synset in NotePrep.SynsetList ) {
 				foreach ( Word word in synset.WordList ) {
+					/*if ( synset.LexicalList.Any(l => l.Word == word) ||
+							synset.LexicalTargetList.Any(l => l.Word == word)) {
+						continue; //ignore anchor-item pairings already used by lexicals
+					}*/
+
 					pFile.Write(LineSep);
-					pFile.Write('#');
-					pFile.Write(word.Name);
-					pFile.Write(" sometimes+ >mean}s @");
+					pFile.Write('@');
 					pFile.Write(synset.UniqueName);
+					pFile.Write(". #");
+					pFile.Write(word.Name);
+					//pFile.Write(" sometimes+ >mean}s @");
+					//pFile.Write(synset.UniqueName);
 				}
 			}
 		}
@@ -332,13 +339,13 @@ namespace Fabric.Apps.WordNet.Notes {
 				pFile.Write(LineSep);
 				pFile.Write('@');
 				pFile.Write(lexical.Synset.UniqueName);
-				pFile.Write(".#");
+				pFile.Write(". #");
 				pFile.Write(lexical.Word.Name);
 				pFile.Write(" ");
 				pFile.Write(action);
 				pFile.Write(" @");
 				pFile.Write(lexical.TargetSynset.UniqueName);
-				pFile.Write(".#");
+				pFile.Write(". #");
 				pFile.Write(lexical.TargetWord.Name);
 			}
 		}

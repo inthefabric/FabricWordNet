@@ -90,7 +90,7 @@ namespace Fabric.Apps.WordNet.Notes {
 
 				word.Name = name;
 				word.LexicalList = new List<Lexical>();
-				word.TargetLexicalList = new List<Lexical>();
+				word.LexicalTargetList = new List<Lexical>();
 
 				word.Synset.WordList.Add(word);
 			}
@@ -105,7 +105,7 @@ namespace Fabric.Apps.WordNet.Notes {
 				lexical.Word.LexicalList.Add(lexical);
 
 				lexical.TargetSynset.LexicalTargetList.Add(lexical);
-				lexical.TargetWord.TargetLexicalList.Add(lexical);
+				lexical.TargetWord.LexicalTargetList.Add(lexical);
 			}
 		}
 

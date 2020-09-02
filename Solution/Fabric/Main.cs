@@ -24,6 +24,8 @@ namespace Fabric.Apps.WordNet {
 
 			NotePrep.Process();
 			NoteWrite.WriteAll();
+
+			Console.Write("Press any key to close...");
 			Console.ReadKey();
 			return;
 

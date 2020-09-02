@@ -10,7 +10,7 @@ namespace Fabric.Apps.WordNet.Data.Domain {
 		public virtual string Name { get; set; }
 
 		public virtual IList<Lexical> LexicalList { get; set; }
-		public virtual IList<Lexical> TargetLexicalList { get; set; }
+		public virtual IList<Lexical> LexicalTargetList { get; set; }
 		public virtual IList<Artifact> ArtifactList { get; set; } //0 or 1
 
 
@@ -18,7 +18,7 @@ namespace Fabric.Apps.WordNet.Data.Domain {
 		/*--------------------------------------------------------------------------------------------*/
 		public Word() {
 			LexicalList = new List<Lexical>();
-			TargetLexicalList = new List<Lexical>();
+			LexicalTargetList = new List<Lexical>();
 			ArtifactList = new List<Artifact>();
 		}
 
