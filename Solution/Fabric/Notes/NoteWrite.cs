@@ -47,6 +47,13 @@ namespace Fabric.Apps.WordNet.Notes {
 				Rel = pRel;
 				Action = pAction;
 				Autos = pAutos;
+
+				foreach ( string auto in pAutos ) {
+					int keyI = auto.LastIndexOf('.')+1;
+					string key = auto.Substring(keyI);
+
+					Action = Action.Replace(key, auto);
+				}
 			}
 
 		}
@@ -128,7 +135,7 @@ namespace Fabric.Apps.WordNet.Notes {
 
 		/*--------------------------------------------------------------------------------------------*/
 		private static string GetAutoHeader(params string[] pAutos) {
-			return string.Join("", pAutos.Select(a => "\n//// auto: "+a));
+			return ""; //string.Join("", pAutos.Select(a => "\n//// auto: "+a));
 		}
 
 
