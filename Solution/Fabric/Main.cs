@@ -23,7 +23,8 @@ namespace Fabric.Apps.WordNet {
 			const int step = -1;
 
 			NotePrep.Process();
-			NoteWrite.WriteAll();
+			//NoteWrite.WriteAll();
+			ToJson.WriteAll();
 
 			Console.Write("Press any key to close...");
 			Console.ReadKey();
